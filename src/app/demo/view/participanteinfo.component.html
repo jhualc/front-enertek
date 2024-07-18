@@ -1,0 +1,41 @@
+<div class="grid p-fluid">
+	<div class="col-12">
+		<div class="card widget-store-items">
+			<div class="store-cards-container">
+				<div class="grid store-cards" *ngFor="let persona of listaInfo">
+					<div class="col-12 lg:col-3 md:col-3">
+                        <div class="store-card">
+                            <div class="store-card-icons">
+                                <div class="grid grid-nogutter">
+                                    <div class="col-4">
+                                    </div>
+									<div class="col-4">
+									</div>
+                                    <div class="col-4">
+                                    </div>
+                                </div>
+                            </div>
+							<div class="store-card-image">
+								<img src="assets/media/participantes/{{persona.per_foto}}" alt="mirage-layout" />
+							</div>						
+							<div class="store-card-content">
+								<h5>{{persona.per_nombre}}</h5>
+								<span>{{persona.per_cargo}}</span>	
+							</div>
+                        </div>	
+					</div>
+					<div class="col-12 lg:col-9 md:col-9">
+                        <div class="store-card">
+                            <div class="store-card-icons">
+                            </div>
+							<div class="store-card-content" style="text-align: justify; padding: 15px;">
+								<span><p *ngFor="let linea of persona.per_bio.split('\n')">{{ linea }}</p></span><br>
+								<span><i class="pi pi-building"></i> {{persona.per_empresa}}</span><br>
+							</div>
+                        </div>	
+					</div>													
+				</div>
+			</div>
+		</div>
+	</div>							
+</div>

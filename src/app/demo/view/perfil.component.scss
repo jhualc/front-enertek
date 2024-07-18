@@ -1,0 +1,49 @@
+.cropper {
+    max-height: 500px; /* Ajusta la altura máxima del contenedor del cropper */
+    max-width: 100%; /* Ajusta el ancho máximo del contenedor del cropper */
+    margin: auto; /* Centra el contenedor del cropper */
+  }
+  
+  .cropper-view-box,
+  .cropper-face {
+    border-radius: 50%; /* Establece la forma redonda del cropper */
+    overflow: hidden;
+  }
+  
+  .cropper-view-box {
+    width: 200px; /* Ajusta el tamaño del cropper */
+    height: 200px;
+    border: 2px solid #fff; /* Establece el borde del cropper */
+  }
+  
+  .cropper-face {
+    width: 100%;
+    height: 100%;
+  }
+  
+  .cropper-line,
+  .cropper-point {
+    background-color: #fff; /* Establece el color de las líneas y puntos del cropper */
+  }
+  
+  .cropper-point {
+    width: 10px; /* Ajusta el tamaño de los puntos del cropper */
+    height: 10px;
+    border-radius: 50%;
+  }
+
+  .file-upload {
+    display: inline-block;
+    max-width: 150px;
+    color: #ffffff;
+    background: #5E81AC;
+    border: 1px solid #5E81AC;
+    padding: 0.5rem 0.75rem;
+    font-size: 1rem;
+    transition: background-color 0.15s, border-color 0.15s, box-shadow 0.15s;
+
+  }
+  
+  .file-upload input[type="file"] {
+    display: none;
+  }

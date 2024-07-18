@@ -1,0 +1,71 @@
+<div class="grid p-fluid">
+    <div class="col-12">
+		<div class="text-center" style="color:#00A79D;">
+			<h6><a href="https://www.hidrogenocolombia.com/wp-content/uploads/2024/04/AGENDA-3°-CONGRESO-INTERNACIONAL-DE-HIDROGENO-V6.pdf" target="_blank" style="color:#3CCA00;">Versión en Inglés</a></h6>
+		</div>	
+		<hr>
+		<div class="text-center" style="color:#00A79D;">
+			<h6><a href="#/pages/agenda/1" style="color:#00A79D;">Abril 9</a>  |  <a href="#/pages/agenda/2" style="color:#00A79D;">Abril 10</a>  |  <a href="#/pages/agenda/3" style="color:#00A79D;">Abril 11</a></h6>
+		</div>
+        <div class="card">
+            <h5>{{dia}}</h5>
+            <p-table [value]="listaAgenda1" sortMode="single">
+				<ng-template pTemplate="body" let-agenda let-rowIndex="rowIndex">
+					<tr>
+						<td  style="width: 15%;">
+							<a (click)="irAPaginaDestino(agenda.eve_id)">
+								{{agenda.eve_hora}}
+							</a>
+						</td>
+						<td>
+							<a (click)="irAPaginaDestino(agenda.eve_id)">
+								<div  style="color:#00A79D;" [innerHTML]><b>{{agenda.eve_tipo}}</b></div>
+								{{agenda.eve_descripcion}}
+							</a>
+						</td>
+					</tr>
+				</ng-template>
+			</p-table>          
+        </div>
+        <div class="card">
+            <h5>Cápsulas de Conocimiento</h5>
+            <p-table [value]="listaAgenda2" sortMode="single">
+				<ng-template pTemplate="body" let-agenda let-rowIndex="rowIndex">
+					<tr>
+						<td  style="width: 15%;">
+							<a (click)="irAPaginaDestino(agenda.eve_id)">
+								{{agenda.eve_hora}}
+							</a>
+						</td>
+						<td>
+							<a (click)="irAPaginaDestino(agenda.eve_id)">
+								
+								{{agenda.eve_descripcion}}
+							</a>
+						</td>
+					</tr>
+				</ng-template>
+			</p-table>          
+        </div>		
+<!--         <div class="card">
+            <h5>Dia 2 - Abril 21</h5>
+            <p-table [value]="listaAgenda2" sortMode="single" >
+				<ng-template pTemplate="body" let-agenda let-rowIndex="rowIndex">
+					<tr>
+                        <td  style="width: 15%;">
+							<a (click)="irAPaginaDestino(agenda.eve_id)">
+								{{agenda.eve_hora}}
+							</a>
+						</td>
+						<td>
+							<a (click)="irAPaginaDestino(agenda.eve_id)">
+								<div class="text-green-500" [innerHTML]><b>{{agenda.eve_tipo}}</b></div>
+								{{agenda.eve_descripcion}}
+							</a>
+						</td>
+					</tr>
+				</ng-template>
+			</p-table>          
+        </div> -->
+    </div>
+</div>

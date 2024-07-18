@@ -1,0 +1,41 @@
+<div class="grid">
+    <div class="col-12 lg:col-3 md:col-3">           
+        <div class="card">
+            <div class="text-center">
+                <label class="file-upload">
+                    <span>Seleccionar imagen</span>
+                    <input type="file" (change)="fileChangeEvent($event)" />
+                </label>
+            </div>
+            <div *ngIf="showCropper">
+            <image-cropper
+                [imageChangedEvent]="imageChangedEvent"
+                [maintainAspectRatio]="true"
+                [aspectRatio]="1"
+                [resizeToWidth]="500"
+                [resizeToHeight]="500"
+                (imageCropped)="imageCropped($event)"
+                (cropperReady)="cropperReady()"
+                (loadImageFailed)="loadImageFailed()"
+                (imageLoaded)="imageLoaded()"
+            ></image-cropper>
+            </div>
+        </div>
+    </div>
+
+    
+    <div class="col-12 lg:col-3 md:col-3" *ngIf="showCropper" >
+        <div class="card">
+            <div class="text-center">
+                <div>
+                    <span class="p-buttonset">
+                        <button pButton pRipple label="Guardar" (click)="cropImage()" icon="pi pi-check"></button>
+                        <a href="#/dash" pButton pRipple label="Cancelar" icon="pi pi-times"></a>
+                    </span>  
+                </div>
+                <br>
+                <img [src]="croppedImage" *ngIf="croppedImage" width="100%"/>
+            </div>
+        </div>
+    </div> 
+</div>

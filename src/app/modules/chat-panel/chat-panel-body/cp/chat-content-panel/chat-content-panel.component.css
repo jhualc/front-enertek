@@ -1,0 +1,20 @@
+#ScrollChat::-webkit-scrollbar {
+  width: .5rem;
+}
+
+/* Track */
+#ScrollChat::-webkit-scrollbar-track {
+  background: rgb(247, 247, 247);
+ 
+}
+
+/* Handle */
+#ScrollChat::-webkit-scrollbar-thumb {
+  background: rgb(247, 247, 247);
+  
+}
+
+/* Handle on hover */
+#ScrollChat::-webkit-scrollbar-thumb:hover {
+  background: rgb(247, 247, 247);
+}

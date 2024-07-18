@@ -1,0 +1,62 @@
+.contacts-list {
+    max-height: 700px; /* Altura máxima del panel */
+    overflow-y: auto; /* Agrega una barra de desplazamiento vertical cuando sea necesario */
+  }
+  .ps__rail-x,
+  .ps__rail-y {
+    background-color: transparent; /* Color del riel de la scrollbar */
+  }
+  
+  .ps__thumb-x,
+  .ps__thumb-y {
+    background-color: #ffffff00; /* Color del thumb (barra de desplazamiento) */
+    border-radius: 5px; /* Bordes redondeados */
+    height: 50px;
+  }
+  
+  .ps__rail-x:hover > .ps__thumb-x,
+  .ps__rail-y:hover > .ps__thumb-y {
+    background-color: #ffffff00; /* Color del thumb al pasar el mouse */
+  }
+
+  .chat-content {
+    height: 600px; width: 90%;
+  }
+
+  .chat-content-patrocinador {
+    height: 500px; width: 90%;
+    margin-left: 25px
+  }
+
+
+  @media (max-width: 767.98px) {
+    .input-group.custom-size {
+        width: 100%; /* Ocupa el ancho total en pantallas pequeñas */
+    }
+}
+
+/* Estilos específicos para pantallas medianas a grandes */
+@media (min-width: 768px) {
+    .input-group.custom-size {
+        width: auto; /* O define un ancho específico si prefieres */
+    }
+}
+.form-control.search {
+  width: auto; /* O define un ancho específico que prefieras */
+}
+
+/* Estilo para pantallas pequeñas (celulares) */
+@media (max-width: 768px) {
+  .form-control.search {
+    width: 100%; /* Ocupa el ancho completo del div contenedor */
+  }
+}
+.cdk-overlay-container {
+  z-index: 9999 !important;
+}
+
+.date-picker-modal .mat-form-field {
+  max-width: 300px; /* or whatever size you want */
+  width: 100%;
+}
+

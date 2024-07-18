@@ -1,0 +1,46 @@
+<div class="grid p-fluid">
+	<div class="col-12">
+		<div class="card widget-store-items">
+			<div class="store-cards-container">
+                
+                
+				<div class="grid store-cards" *ngFor="let persona of listaInfo">
+					<div class="col-12 lg:col-3 md:col-3">
+                        <div class="store-card">
+                            <div class="store-card-icons">
+                                <div class="grid grid-nogutter">
+                                    <div class="col-4">
+                                    </div>
+									<div class="col-4">
+									</div>
+                                    <div class="col-4">
+                                    </div>
+                                </div>
+                            </div>
+							<div class="store-card-image">
+								<img src="assets/media/sponsors/{{persona.spo_logo}}" alt="mirage-layout" />
+								
+							</div>						
+							<div class="store-card-content">
+								
+								<span>{{persona.spo_empresa}}</span>	
+							</div>
+                        </div>	
+					</div>
+					<div class="col-12 lg:col-9 md:col-9">
+                        <div class="store-card">
+                            <div class="store-card-icons">
+                            </div>
+							<div class="store-card-content" style="text-align: justify; padding: 15px;">
+                                <span><h6>Contacto</h6><p>{{ persona.spo_contacto }}</p></span><br>
+                                <span><h6>E-mail</h6><p>{{ persona.spo_correo }}</p></span><br>
+								<span><h6>Telefono</h6><p>{{ persona.spo_telefono }}</p></span><br>
+								<span><h6>WEB</h6><a href="{{persona.spo_web}}" target="_blank">{{persona.spo_web}}</a></span><br>
+							</div>
+                        </div>	
+					</div>													
+				</div>
+			</div>
+		</div>
+	</div>							
+</div>

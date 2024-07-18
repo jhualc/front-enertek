@@ -1,0 +1,30 @@
+<div class="login-body" [ngClass]="{'layout-dark': dark, 'layout-light': !dark}">
+
+    <div class="login-content">
+        <div class="login-panel">
+            <div class="login-panel-content">
+                <div class="logo">
+                    <img src="assets/layout/images/logo_hidro.svg" alt="mirage-layout" />
+                </div>
+                <h1>Iniciar Sesión</h1>
+                <p>Bienvenido, por favor use el correo electrónico registrado para el evento</p>
+
+                <form class="forms" [formGroup]="loginForm">
+                    <div class="login-input-wrapper">
+                        <input type="email" formControlName= "email" pInputText id="email" placeholder="Correo / email">
+                        <i class="pi pi-at"></i>
+                    </div>
+                    <ng-container *ngIf="hasError">
+                            <p class="text-danger text-center"><small>{{hasErrorText}}</small></p>
+                    </ng-container>
+                    <div class="buttons" style="display: flex; justify-content: center;">
+                        <button pButton type="submit" class="btn font-weight-semibold" (click)="submit()" [disabled]="loginForm.invalid">Iniciar Sesión</button>
+                        <!-- <a href="#/register" class="secondary-button">Regístrate Aquí</a> -->
+                    </div>
+                </form>                
+            </div>
+        </div>
+
+        <div class="desert"></div>
+    </div>
+</div>

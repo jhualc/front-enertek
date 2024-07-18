@@ -1,13 +1,31 @@
-import { Component } from '@angular/core';
-import { RouterOutlet } from '@angular/router';
+import {Component, OnInit} from '@angular/core';
+import {PrimeNGConfig} from 'primeng/api';
 
 @Component({
-  selector: 'app-root',
-  standalone: true,
-  imports: [RouterOutlet],
-  templateUrl: './app.component.html',
-  styleUrl: './app.component.css'
+    selector: 'app-root',
+    templateUrl: './app.component.html',
 })
-export class AppComponent {
-  title = 'front-enertek';
+export class AppComponent implements OnInit{
+
+    horizontalMenu: boolean;
+
+    darkMode = false;
+
+    menuColorMode = 'light';
+
+    menuColor = 'layout-menu-light';
+
+    themeColor = 'blue';
+
+    layoutColor = 'blue';
+
+    ripple = true;
+
+    inputStyle = 'outlined';
+
+    constructor(private primengConfig: PrimeNGConfig) {}
+
+    ngOnInit() {
+        this.primengConfig.ripple = true;
+    }
 }

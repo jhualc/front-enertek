@@ -1,0 +1,100 @@
+<div class="grid p-fluid">
+	<div class="col-12">
+		<div class="card widget-store-items">
+			<div class="store-cards-container">
+				<div class="grid store-cards" *ngFor="let evento of listaEvento1">
+					<div class="col-12 lg:col-6 md:col-6">
+                        <div class="store-card">
+                            <div class="store-card-icons">
+                                <div class="grid grid-nogutter">
+									<div class="col-12">
+                                        <h5>{{evento.eve_descripcion}}</h5>
+									</div>
+                                </div>
+                            </div>
+							<div class="store-card-icons">
+								<span><i class="pi pi-clock"></i> {{evento.eve_hora}}</span>
+							</div>							
+							<div class="store-card-content" style="text-align: justify; padding: 15px;" *ngIf="evento.eve_resumen!=null">
+								<span><p *ngFor="let linea of evento.eve_resumen.split('\n')">{{ linea }}</p></span>	
+								<br>
+								<a href="#/chat/{{evento.eve_orden}}" style="cursor: pointer; text-decoration: none;" *ngIf="evento.eve_orden!=null">
+									<span>
+										<h4><i class="pi pi-send"></i> Preguntas - Chat</h4>
+									</span>
+								</a>
+                        </div>	
+					</div>
+				</div>
+			</div>
+		</div>		
+		<div class="card widget-store-items" *ngIf="activa_conferencistas">
+			<div class="grid grid-nogutter">
+				<div class="col-6 title">
+					<h5>Conferencistas</h5>
+				</div>
+			</div>									
+			<div class="">
+				<div class="grid store-cards">
+					<div class="col-12 lg:col-6 md:col-6">
+						<div class="store-card">
+							<div class="store-card-content">
+								<p-table [value]="listaPersona1" sortMode="single">
+									<ng-template pTemplate="body" let-persona let-rowIndex="rowIndex">
+										<tr>
+											<td>
+												<a style="color: black;" (click)="irAPaginaDestino(persona.per_id)">
+													<div class="avatar avatar-md mr-2"><img src="assets/media/participantes/{{persona.per_foto}}" alt="mirage-layout" /></div>
+												</a>
+											</td>
+											<td>
+												<a style="color: black;" (click)="irAPaginaDestino(persona.per_id)">
+													<h5>{{persona.per_nombre}}</h5>
+													<span><small>{{persona.per_cargo}} - {{persona.per_empresa}}</small></span>	
+												</a>											
+											</td>
+										</tr>
+									</ng-template>
+								</p-table> 							
+							</div>
+						</div>
+					</div>								
+				</div>
+			</div>
+		</div>
+		<div class="card widget-store-items" *ngIf="activa_modera">
+			<div class="grid grid-nogutter">
+				<div class="col-6 title">
+					<h5>Modera</h5>
+				</div>
+			</div>									
+			<div class="">
+				<div class="grid store-cards">
+					<div class="col-12 lg:col-6 md:col-6">
+						<div class="store-card">
+							<div class="store-card-content">
+								<p-table [value]="listaPersona2" sortMode="single">
+									<ng-template pTemplate="body" let-persona let-rowIndex="rowIndex">
+										<tr>
+											<td>
+												<a style="color: black;" (click)="irAPaginaDestino(persona.per_id)">
+													<div class="avatar avatar-md mr-2"><img src="assets/media/participantes/{{persona.per_foto}}" alt="mirage-layout" /></div>
+												</a>
+											</td>
+											<td>
+												<a style="color: black;" (click)="irAPaginaDestino(persona.per_id)">
+													<h5>{{persona.per_nombre}}</h5>
+													<span><small>{{persona.per_cargo}} - {{persona.per_empresa}}</small></span>	
+												</a>											
+											</td>
+										</tr>
+									</ng-template>
+								</p-table> 							
+							</div>
+						</div>
+					</div>								
+				</div>
+			</div>
+		</div>		
+	</div>							
+</div>

@@ -1,0 +1,61 @@
+<div class="grid layout-dashboard">
+    <div class="col-12 lg:col-12 ">
+        <div class="grid flex-column grid-nogutter">
+             <div class="col-12 widget-news">
+                <div class="news-row" [ngStyle]="{'transform': activeNews === 1 ? 'translate3d(0px, 0px, 0px)':activeNews === 2
+                ?'translate3d(-100%, 0px, 0px)':'translate3d(-200%, 0px, 0px)'}">
+                     <div class="card news news-2 active-news">
+                        <div class="news-title">
+                            <h5>INFO</h5>
+                        </div>
+                        <h6>Acerca del evento</h6>
+                        <p style="text-align: justify;">Es tiempo de dar el siguiente paso en el desarrollo del ecosistema del Hidrógeno y empezar a materializar todos nuestros objetivos. 
+                            El tercer Congreso Internacional de Hidrógeno – del sueño a la realidad, será un espacio de relacionamiento y construcción 
+                            conjunta entre tomadores de decisiones y expertos del sector público, empresarial, financiero y académico nacional e internacional. 
+                            Tres días donde se presentará el avance de Colombia, la región y el mundo a través de apasionantes conferencias magistrales, paneles de discusión, 
+                            muestra comercial y actividades de networking.</p><br />
+                            <div class="grid link">
+                                <div class="col-9">
+                                    <a href="https://hidrogenocolombia.com" target="_blank">
+                                        Hidrógeno Colombia | WEC
+                                    </a>
+                                </div>
+                            </div>
+                    </div> 
+                    <div class="link-points">
+                        <div class="grid points">
+                            <div class="col-4 point point-2 " [ngClass]="{'active-point': activeNews === 2}" (click)="activeNews = 1"></div>
+                        </div>
+                    </div>
+                </div> 
+            </div>
+        </div>
+    </div>
+	<div class="col-12">
+		<div class="card widget-store-items">
+			<div class="store-cards-container">
+				<div class="grid store-cards">
+					<div class="col-12 lg:col-6 md:col-6">
+                        <div class="store-card">
+							<div class="store-card-image">
+							</div>						
+							<div class="store-card-content">
+								<span>Síguenos en nuestras redes sociales y registra tus momentos favoritos del evento con el</span><h5>#CongresoH2Col</h5>
+                                <hr>
+                                <div style="text-align: left; padding: 10px;">
+                                    <span><i class="pi pi-linkedin"></i> Hidrógeno Colombia</span><br>
+                                    <span><i class="pi pi-twitter"></i> asoh2colombia</span><br><br>
+                                    <span><i class="pi pi-linkedin"></i> Consejo Mundial de Energía Colombia</span><br>
+                                    <span><i class="pi pi-twitter"></i> WEC_COLOMBIA</span>
+                                    <span></span>	
+                                </div>
+							</div>
+                        </div>
+					</div>
+											
+				</div>
+			</div>
+		</div>
+	</div>	    
+</div>
+ 
