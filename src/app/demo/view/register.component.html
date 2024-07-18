@@ -1,0 +1,74 @@
+<div class="grid p-fluid">
+    <div class="col-12 md:col-6">
+        <div class="card">
+            <h1>Registrar usuario</h1>
+            <p>Complete los datos para registrar el usuario</p>
+
+            <form class="forms" [formGroup]="registerForm">
+                <div class="grid formgrid">
+                    <div class="col-12 mb-2 lg:col-6 lg:mb-0">
+                        <div [ngClass]="{'invalid': email.invalid && (email.dirty || email.touched), 'valid': email.valid}">
+                            <small><span *ngIf="email.hasError('required')" class="text-danger">Este campo es requerido </span></small>
+                            <small><span *ngIf="email.hasError('email')" class="text-danger">Ingrese un email válido </span></small>
+                            <small><span *ngIf="email.hasError('minlength')" class="text-danger">Mínimo 6 caracteres </span></small>
+                            <small><span *ngIf="email.hasError('maxlength')" class="text-danger">Máximo 100 caracteres </span></small>
+                          </div>
+                          <span class="p-input-icon-left">
+                            <i class="pi pi-at"></i>
+                            <input type="email" formControlName = "email" pInputText id="email" placeholder="Correo / email">
+                        </span>
+                        <br>
+                    </div>
+                </div>
+                <div class="grid formgrid">
+                    <div class="col-12 mb-2 lg:col-6 lg:mb-0">
+                        <div [ngClass]="{'invalid': name.invalid && (name.dirty || name.touched), 'valid': name.valid}">
+                            <small><span *ngIf="name.hasError('required')" class="text-danger">Este campo es requerido </span></small>
+                            <small><span *ngIf="name.hasError('minlength')" class="text-danger">Mínimo 6 caracteres </span></small>
+                            <small><span *ngIf="name.hasError('maxlength')" class="text-danger">Máximo 100 caracteres </span></small>
+                        </div>
+                        <span class="p-input-icon-left">
+                            <i class="pi pi-user"></i>
+                            <input type="text" formControlName= "name" pInputText id="name" placeholder="Nombres y Apellidos">
+                        </span> 
+                        <br>                        
+                    </div>
+                </div>                    
+                <div class="grid formgrid">
+                    <div class="col-12 mb-2 lg:col-6 lg:mb-0">
+                        <div [ngClass]="{'invalid': usr_empresa.invalid && (usr_empresa.dirty || usr_empresa.touched), 'valid': usr_empresa.valid}">
+                            <small><span *ngIf="usr_empresa.hasError('required')" class="text-danger">Este campo es requerido </span></small>
+                            <small><span *ngIf="usr_empresa.hasError('maxlength')" class="text-danger">Máximo 200 caracteres </span></small>
+                        </div> 
+                        <span class="p-input-icon-left">
+                            <i class="pi pi-building"></i>
+                            <input type="text" formControlName= "usr_empresa" pInputText id="usr_empresa" placeholder="Empresa">
+                        </span> 
+                        <br>                         
+                    </div>                 
+                </div>
+                <div class="grid formgrid">
+                    <div class="col-12 mb-2 lg:col-6 lg:mb-0">
+                        <div [ngClass]="{'invalid': usr_cargo.invalid && (usr_cargo.dirty || usr_cargo.touched), 'valid': usr_cargo.valid}">
+                            <small><span *ngIf="usr_cargo.hasError('required')" class="text-danger">Este campo es requerido </span></small>
+                            <small><span *ngIf="usr_cargo.hasError('maxlength')" class="text-danger">Máximo 200 caracteres </span></small>
+                        </div>
+                        <span class="p-input-icon-left">
+                            <i class="pi pi-users"></i>
+                            <input type="text" formControlName= "usr_cargo" pInputText id="usr_cargo" placeholder="Cargo">
+                        </span>
+                        <br>                     
+                    </div>
+                </div>
+                <div class="grid formgrid">
+                    <div class="col-12 mb-2 lg:col-6 lg:mb-0">                
+                        <span class="p-buttonset">
+                            <button pButton pRipple label="Registrar" type="submit" (click)="submit()" [disabled]="registerForm.invalid" icon="pi pi-check"></button>
+                            <a href="#/dash" pButton pRipple label="Cancel" icon="pi pi-times"></a>
+                        </span>
+                    </div>
+                </div>
+            </form>                
+        </div>
+    </div>
+</div>

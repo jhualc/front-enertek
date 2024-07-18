@@ -1,0 +1,393 @@
+<div class="layout-topbar">
+    <div class="layout-topbar-wrapper">
+        <div class="layout-topbar-left">
+            <div class="layout-topbar-logo-wrapper" >
+                <a href="#" height="40" >
+                    <img src="assets/layout/images/Logos_hidro_wec.png" alt="mirage-layout" />
+                </a>
+            </div>
+
+            <a href="#" class="sidebar-menu-button" >
+                <i class="pi pi-bars"></i>
+            </a>
+<!-- 
+            <a href="#" class="megamenu-mobile-button" (click)="appMain.onMegaMenuMobileButtonClick($event)">
+                <i class="pi pi-align-right megamenu-icon"></i>
+            </a>
+-->
+            <a href="#" class="topbar-menu-mobile-button" >
+                <i class="pi pi-ellipsis-v"></i>
+            </a>
+
+            <div class="layout-megamenu-wrapper">
+                <!--
+                <a class="layout-megamenu-button" href="#" (click)="appMain.onMegaMenuButtonClick($event)">
+                    <i class="pi pi-comment"></i>
+                    Mega Menu
+                </a>
+-->
+                <ul class="layout-megamenu" 
+                    >
+                    <li >
+                        <a href="#">JavaServer Faces <i class="pi pi-angle-down"></i></a>
+                        <ul>
+                            <li class="active-row ">
+                                <i class="pi pi-circle-on"></i>
+                                <span>
+                                <h5>PrimeFaces</h5>
+                                <span>UI Components for JSF</span>
+                            </span>
+                            </li>
+                            <li>
+                                <i class="pi pi-circle-on"></i>
+                                <span>
+                                <h5>Premium Templates</h5>
+                                <span>UI Components for JSF</span>
+                            </span>
+                            </li>
+                            <li>
+                                <i class="pi pi-circle-on"></i>
+                                <span>
+                                <h5>Extensions</h5>
+                                <span>UI Components for JSF</span>
+                            </span>
+                            </li>
+                        </ul>
+                    </li>
+                    <li >
+                        <a href="#">Angular <i class="pi pi-angle-down"></i></a>
+                        <ul>
+                            <li>
+                                <i class="pi pi-circle-on"></i>
+                                <span>
+                                <h5>PrimeNG</h5>
+                                <span>UI Components for Angular</span>
+                            </span>
+
+                            </li>
+                            <li>
+                                <i class="pi pi-circle-on"></i>
+                                <span>
+                                <h5>Premium Templates</h5>
+                                <span>UI Components for Angular</span>
+                            </span>
+                            </li>
+                        </ul>
+                    </li>
+                    <li >
+                        <a href="#">React <i class="pi pi-angle-down"></i></a>
+                        <ul>
+                            <li>
+                                <i class="pi pi-circle-on"></i>
+                                <span>
+                                <h5>PrimeReact</h5>
+                                <span>UI Components for React</span>
+                            </span>
+                            </li>
+                            <li class="active-row">
+                                <i class="pi pi-circle-on"></i>
+                                <span>
+                                <h5>Premium Templates</h5>
+                                <span>UI Components for React</span>
+                            </span>
+                            </li>
+                        </ul>
+                    </li>
+                </ul>
+            </div>
+        </div>
+        <div class="layout-topbar-right fadeInDown">
+            <ul class="layout-topbar-actions">
+                <li #search class="search-item topbar-item" >
+                    <a href="#" class="topbar-search-mobile-button" >
+                        <i class="topbar-icon pi pi-search"></i>
+                    </a>
+                    <ul class="search-item-submenu fadeInDown" >
+                        <li>
+                            <span class="md-inputfield search-input-wrapper">
+                                <input pInputText placeholder="Search..."/>
+                                <i class="pi pi-search"></i>
+                            </span>
+                        </li>
+                    </ul>
+                </li>
+                <li #calendar class="topbar-item" >
+                    <a href="#" >
+                        <i class="topbar-icon pi pi-calendar"></i>
+                    </a>
+                    <ul class="fadeInDown" >
+                        <li class="layout-submenu-header">
+                            <h1>Calendar</h1>
+                        </li>
+                       
+                    </ul>
+                </li>
+
+                <li #message class="topbar-item">
+                    <a href="#">
+                        <i class="topbar-icon pi pi-inbox"></i>
+                    </a>
+                    <ul class="fadeInDown">
+                        <li class="layout-submenu-header">
+                            <h1>Messages</h1>
+                            <span>Today, you have new 4 messages</span>
+                        </li>
+                        <li class="layout-submenu-item">
+                            <img src="assets/layout/images/topbar/avatar-cayla.png" alt="mirage-layout" width="35" />
+                            <div class="menu-text">
+                                <p>Override the digital divide</p>
+                                <span>Cayla Brister</span>
+                            </div>
+                            <i class="pi pi-angle-right"></i>
+                        </li>
+                        <li class="layout-submenu-item">
+                            <img src="assets/layout/images/topbar/avatar-gabie.png" alt="mirage-layout" width="35" />
+                            <div class="menu-text">
+                                <p>Nanotechnology immersion</p>
+                                <span>Gabie Sheber</span>
+                            </div>
+                            <i class="pi pi-angle-right"></i>
+                        </li>
+                        <li class="layout-submenu-item">
+                            <img src="assets/layout/images/topbar/avatar-gaspar.png" alt="mirage-layout" width="35" />
+                            <div class="menu-text">
+                                <p>User generated content</p>
+                                <span>Gaspar Antunes</span>
+                            </div>
+                            <i class="pi pi-angle-right"></i>
+                        </li>
+                        <li class="layout-submenu-item">
+                            <img src="assets/layout/images/topbar/avatar-tatiana.png" alt="mirage-layout" width="35" />
+                            <div class="menu-text">
+                                <p>The holistic world view</p>
+                                <span>Tatiana Gagelman</span>
+                            </div>
+                            <i class="pi pi-angle-right"></i>
+                        </li>
+                    </ul>
+                </li>
+
+                <li #gift class="topbar-item" >
+                    <a href="#">
+                        <i class="topbar-icon pi pi-envelope"></i>
+                    </a>
+                    <ul class="fadeInDown">
+                        <li class="layout-submenu-header">
+                            <h1>Deals</h1>
+                        </li>
+
+                        <li class="deals">
+                            <ul>
+                                <li>
+                                    <img src="assets/layout/images/topbar/deal-icon-sapphire.png" alt="mirage-layout" width="35" />
+                                    <div class="menu-text">
+                                        <p>Sapphire</p>
+                                        <span>Angular</span>
+                                    </div>
+                                    <i class="pi pi-angle-right"></i>
+                                </li>
+                                <li>
+                                    <img src="assets/layout/images/topbar/deal-icon-roma.png" alt="mirage-layout" width="35" />
+                                    <div class="menu-text">
+                                        <p>Roma</p>
+                                        <span>Minimalism</span>
+                                    </div>
+                                    <i class="pi pi-angle-right"></i>
+                                </li>
+                                <li>
+                                    <img src="assets/layout/images/topbar/deal-icon-babylon.png" alt="mirage-layout" width="35" />
+                                    <div class="menu-text">
+                                        <p>Babylon</p>
+                                        <span>Powerful</span>
+                                    </div>
+                                    <i class="pi pi-angle-right"></i>
+                                </li>
+                            </ul>
+                            <ul>
+                                <li>
+                                    <img src="assets/layout/images/topbar/deal-icon-harmony.png" alt="mirage-layout" width="35" />
+                                    <div class="menu-text">
+                                        <p>Harmony</p>
+                                        <span>USWDS</span>
+                                    </div>
+                                    <i class="pi pi-angle-right"></i>
+                                </li>
+                                <li>
+                                    <img src="assets/layout/images/topbar/deal-icon-prestige.png" alt="mirage-layout" width="35" />
+                                    <div class="menu-text">
+                                        <p>Prestige</p>
+                                        <span>Elegancy</span>
+                                    </div>
+                                    <i class="pi pi-angle-right"></i>
+                                </li>
+                                <li>
+                                    <img src="assets/layout/images/topbar/deal-icon-ultima.png" alt="mirage-layout" width="35" />
+                                    <div class="menu-text">
+                                        <p>Ultima</p>
+                                        <span>Material</span>
+                                    </div>
+                                    <i class="pi pi-angle-right"></i>
+                                </li>
+                            </ul>
+                        </li>
+                    </ul>
+                </li>
+
+                <li #profile class="topbar-item profile-item" >
+                    <a href="#" >
+                    <span class="profile-image-wrapper">
+                        <img src="assets/layout/images/topbar/avatar-eklund.png" alt="mirage-layout" />
+                    </span>
+                        <span class="profile-info-wrapper">
+                        <h3>Olivia Eklund</h3>
+                        <span>Participante</span>
+                    </span>
+                    </a>
+                    <ul class="profile-item-submenu fadeInDown">
+                        <li class="profile-submenu-header">
+                            <div class="performance">
+                                <span>Weekly Performance</span>
+                                <img src="assets/layout/images/topbar/asset-bars.svg" alt="mirage-layout" />
+                            </div>
+                            <div class="profile">
+                                <img src="assets/layout/images/topbar/avatar-eklund.png" alt="mirage-layout"
+                                                width="40" />
+                                <h1>Olivia Eklund</h1>
+                                <span>Design</span>
+                            </div>
+                        </li>
+                        <li class="layout-submenu-item">
+                            <i class="pi pi-list icon icon-1"></i>
+                            <div class="menu-text">
+                                <p>Tasks</p>
+                                <span>3 open issues</span>
+                            </div>
+                            <i class="pi pi-angle-right"></i>
+                        </li>
+                        <li class="layout-submenu-item">
+                            <i class="pi pi-shopping-cart icon icon-2"></i>
+                            <div class="menu-text">
+                                <p>Payments</p>
+                                <span>24 new</span>
+                            </div>
+                            <i class="pi pi-angle-right"></i>
+                        </li>
+                        <li class="layout-submenu-item">
+                            <i class="pi pi-users icon icon-3"></i>
+                            <div class="menu-text">
+                                <p>Clients</p>
+                                <span>+80%</span>
+                            </div>
+                            <i class="pi pi-angle-right"></i>
+                        </li>
+                        <li class="layout-submenu-footer">
+                            <button class="signout-button">Sign Out</button>
+                            <button class="buy-mirage-button">Buy Mirage</button>
+                        </li>
+                    </ul>
+                </li>
+                <li>
+                    <a href="#" class="layout-rightpanel-button" >
+                        <i class="pi pi-arrow-left"></i>
+                    </a>
+                </li>
+            </ul>
+
+            <ul class="profile-mobile-wrapper">
+                <li #mobileProfile class="topbar-item profile-item" >
+                    <a href="#" >
+                    <span class="profile-image-wrapper">
+                        <img src="assets/layout/images/topbar/avatar-eklund.png" alt="mirage-layout" />
+                    </span>
+                        <span class="profile-info-wrapper">
+                        <h3>Olivia Eklund</h3>
+                        <span>Design</span>
+                    </span>
+                    </a>
+                    <ul class="fadeInDown">
+                        <li class="profile-submenu-header">
+                            <div class="performance">
+                                <span>Weekly Performance</span>
+                                <img src="assets/layout/images/topbar/asset-bars.svg" alt="mirage-layout" />
+                            </div>
+                            <div class="profile">
+                                <img src="assets/layout/images/topbar/avatar-eklund.png" alt="mirage-layout" width="45" />
+                                <h1>Olivia Eklund</h1>
+                                <span>Design</span>
+                            </div>
+                        </li>
+                        <li>
+                            <i class="pi pi-list icon icon-1"></i>
+                            <div class="menu-text">
+                                <p>Tasks</p>
+                                <span>3 open issues</span>
+                            </div>
+                            <i class="pi pi-angle-right"></i>
+                        </li>
+                        <li>
+                            <i class="pi pi-shopping-cart icon icon-2"></i>
+                            <div class="menu-text">
+                                <p>Payments</p>
+                                <span>24 new</span>
+                            </div>
+                            <i class="pi pi-angle-right"></i>
+                        </li>
+                        <li>
+                            <i class="pi pi-users icon icon-3"></i>
+                            <div class="menu-text">
+                                <p>Clients</p>
+                                <span>+80%</span>
+                            </div>
+                            <i class="pi pi-angle-right"></i>
+                        </li>
+                        <li class="layout-submenu-footer">
+                            <button class="signout-button">Sign Out</button>
+                            <button class="buy-mirage-button">Buy Mirage</button>
+                        </li>
+                    </ul>
+                </li>
+            </ul>
+        </div>
+    </div>
+<div class="main-layout">
+    <div class="navigation navbar navbar-light ">
+        <!-- Logo Start -->
+        <a routerLink="/">
+            <img alt="logo" src="assets/layout/images/Logo_simplificado_fondo_blanco_40h.png" />
+            
+        </a>
+        <!-- Logo End -->
+
+        <!-- Main Nav Start -->
+        <ul class="nav nav-minimal flex-row flex-grow-1 justify-content-between flex-xl-column justify-content-xl-center" id="mainNavTab" role="tablist">
+            
+            <!-- Chats Tab Start -->
+            <li class="nav-item">
+                <a class="nav-link p-0 py-xl-3 active" id="chats-tab" href="#chats-content" title="Chats">
+                    <!-- Default :: Inline SVG -->
+                    <svg class="hw-24" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8h2a2 2 0 012 2v6a2 2 0 01-2 2h-2v4l-4-4H9a1.994 1.994 0 01-1.414-.586m0 0L11 14h4a2 2 0 002-2V6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2v4l.586-.586z"/>
+                    </svg>
+
+                    <!-- Alternate :: External File link -->
+                    <!-- <img class="injectable hw-24" src="./assets/media/heroicons/outline/chat-alt-2.svg" alt="Chat icon"> -->
+                </a>
+            </li>
+            <!-- Chats Tab End -->
+
+            <!-- Calls Tab Start -->
+            
+            <!-- Profile Tab End -->
+        </ul>
+        <!-- Main Nav End -->
+    </div>    <!-- Navigation Start -->
+<div style="height:400px;">
+    <router-outlet></router-outlet>
+</div> <!-- App Add-ons Start -->
+
+</div>
+
+
+
+
+</div>
