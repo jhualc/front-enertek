@@ -1,0 +1,33 @@
+<div class="grid p-fluid">
+    <div class="col-12 md:col-6">
+        <div class="card">
+            <h1>Registrar marca</h1>
+            <p>Complete los datos para registrar la marca</p>
+
+            <form class="forms" [formGroup]="marcaForm">
+                <div class="grid formgrid">
+                    <div class="col-12 mb-2 lg:col-6 lg:mb-0">
+                        <div [ngClass]="{'invalid': descripcion.invalid && (descripcion.dirty || descripcion.touched), 'valid': descripcion.valid}">
+                            <small><span *ngIf="descripcion.hasError('required')" class="text-danger">Este campo es requerido </span></small>
+                            <small><span *ngIf="descripcion.hasError('minlength')" class="text-danger">Mímimo 3 caracteres </span></small>
+                            <small><span *ngIf="descripcion.hasError('maxlength')" class="text-danger">Máximo 100 caracteres </span></small>
+                        </div> 
+                        <span class="p-input-icon-left">
+                            <i class="pi pi-th-large"></i>
+                            <input type="text" formControlName= "descripcion" pInputText id="descripcion" placeholder="Descripción">
+                        </span> 
+                        <br>                         
+                    </div>                 
+                </div>
+                <div class="grid formgrid">
+                    <div class="col-12 mb-2 lg:col-6 lg:mb-0">                
+                        <span class="p-buttonset">
+                            <button pButton pRipple label="Insertar" type="submit" (click)="submit()" [disabled]="marcaForm.invalid" icon="pi pi-check"></button>
+                            <a href="#/dash" pButton pRipple label="Cancel" icon="pi pi-times"></a>
+                        </span>
+                    </div>
+                </div>
+            </form>                
+        </div>
+    </div>
+</div>

@@ -18,7 +18,14 @@ export class AppMenuComponent implements OnInit {
 
     ngOnInit() {
         this.model = [
-            {label: 'Hidrógeno Colombia', icon: 'pi pi-fw pi-home', routerLink: ['dash']},
+            {label: 'Inicio', icon: 'pi pi-fw pi-home', routerLink: ['dash']},
+            {
+                label:'Administración', icon:'pi pi-fw pi-cog',
+                items:[
+                    {label: 'Agregar Marca', icon: 'pi pi-fw pi-th-large', routerLink: ['pages/marca']},
+                    {label: 'Equipos', icon: 'pi pi-fw pi-desktop', routerLink: ['equipos']},
+                ]
+            },            
             {label: 'Agenda', icon: 'pi pi-fw pi-calendar', routerLink: ['pages/agenda/1']},
             {label: 'Conferencistas', icon: 'pi pi-fw pi-megaphone', routerLink: ['pages/participantes']},
             {label: 'Networking', icon: 'pi pi-fw pi-send', routerLink: ['chat']},

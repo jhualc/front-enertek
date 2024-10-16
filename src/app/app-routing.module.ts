@@ -21,6 +21,7 @@ import {FileDemoComponent} from './demo/view/filedemo.component';
 import {DocumentationComponent} from './demo/view/documentation.component';
 import {IconsComponent} from './utilities/icons.component';
 import {RegisterComponent} from './demo/view/register.component';
+import {MarcaComponent } from './demo/view/marca.component';
 import {AgendaComponent} from './demo/view/agenda.component';
 import {ParticipantesComponent} from './demo/view/participantes.component';
 import {ParticipanteInfoComponent} from './demo/view/participanteinfo.component';
@@ -38,11 +39,12 @@ import {AppCalendarComponent} from './pages/app.calendar.component';
 import {AppTimelineDemoComponent} from './pages/app.timelinedemo.component';
 import {BlocksComponent} from './blocks/blocks/blocks.component';
 import {AuthGuard} from './modules/auth/_services/auth.guard';
-import { AuthComponent } from './modules/auth/auth.component';
-import { ChatPanelComponent } from './modules/chat-panel/chat-panel.component';
-import { AcercadeComponent } from './demo/view/acercade.component';
-import { PerfilComponent } from './demo/view/perfil.component';
-import { SponsorsViewComponent } from './demo/view/sponsors-view/sponsors-view.component';
+import {AuthComponent } from './modules/auth/auth.component';
+import {ChatPanelComponent } from './modules/chat-panel/chat-panel.component';
+import {AcercadeComponent } from './demo/view/acercade.component';
+import {PerfilComponent } from './demo/view/perfil.component';
+import {SponsorsViewComponent } from './demo/view/sponsors-view/sponsors-view.component';
+
 
 export const routes: Routes = [
     {path: 'login', component: AppLoginComponent},
@@ -100,6 +102,7 @@ export const routes: Routes = [
             {path: 'chat/:id', loadChildren: () => import('src/app/modules/chat-panel/chat-panel.module').then(m => m.ChatPanelModule)},
             {path: 'chat', loadChildren: () => import('src/app/modules/chat-panel/chat-panel.module').then(m => m.ChatPanelModule)},
             {path: 'pages/register', component: RegisterComponent},
+            {path: 'pages/marca', component: MarcaComponent},
             {path: 'pages/agenda/:id', component: AgendaComponent},
             {path: 'pages/participantes', component: ParticipantesComponent},
             {path: 'pages/participanteinfo/:id', component: ParticipanteInfoComponent},

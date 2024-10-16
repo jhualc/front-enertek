@@ -132,15 +132,16 @@ import {IconsComponent} from './utilities/icons.component';
 import {BlocksComponent} from './blocks/blocks/blocks.component';
 import {BlockViewer} from './blocks/blockviewer/blockviewer.component';
 import {RegisterComponent} from './demo/view/register.component';
-import { ChatPanelComponent } from './modules/chat-panel/chat-panel.component';
-import { ChatPanelBodyComponent } from './modules/chat-panel/chat-panel-body/chat-panel-body.component';
-import { AgendaComponent } from './demo/view/agenda.component';
-import { ParticipantesComponent } from './demo/view/participantes.component';
-import { ParticipanteInfoComponent } from './demo/view/participanteinfo.component';
-import { EventoComponent } from './demo/view/evento.component';
-import { SponsorsComponent } from './demo/view/sponsors.component';
-import { AcercadeComponent } from './demo/view/acercade.component';
-import { PerfilComponent } from './demo/view/perfil.component';
+import {MarcaComponent } from './demo/view/marca.component';
+import {ChatPanelComponent } from './modules/chat-panel/chat-panel.component';
+import {ChatPanelBodyComponent } from './modules/chat-panel/chat-panel-body/chat-panel-body.component';
+import {AgendaComponent } from './demo/view/agenda.component';
+import {ParticipantesComponent } from './demo/view/participantes.component';
+import {ParticipanteInfoComponent } from './demo/view/participanteinfo.component';
+import {EventoComponent } from './demo/view/evento.component';
+import {SponsorsComponent } from './demo/view/sponsors.component';
+import {AcercadeComponent } from './demo/view/acercade.component';
+import {PerfilComponent } from './demo/view/perfil.component';
 
 // Demo services
 import {CountryService} from './demo/service/countryservice';
@@ -158,28 +159,27 @@ import {AgendaService} from './demo/service/agenda.service';
 import {BreadcrumbService} from './breadcrumb.service';
 import {MenuService} from './app.menu.service';
 import {AppCodeModule} from './blocks/app-code/app.code.component';
-import { RouterModule } from '@angular/router';
-import { ImageCropperModule } from 'ngx-image-cropper';
+import {RouterModule } from '@angular/router';
+import {ImageCropperModule } from 'ngx-image-cropper';
 
 //Auth services
-import { AuthRoutingModule } from './modules/auth/auth-routing.module';
-import { AuthComponent } from './modules/auth/auth.component';
-import { ChatPanelModule } from './modules/chat-panel/chat-panel.module';
-import { authInterceptorProviders } from './modules/chat-panel/services/authInterceptor';
+import {AuthRoutingModule } from './modules/auth/auth-routing.module';
+import {AuthComponent } from './modules/auth/auth.component';
+import {ChatPanelModule } from './modules/chat-panel/chat-panel.module';
+import {authInterceptorProviders } from './modules/chat-panel/services/authInterceptor';
 import * as bootstrap from 'bootstrap';
 import * as $ from 'jquery';
-import { ChatContentPanelComponent } from './modules/chat-panel/chat-panel-body/cp/chat-content-panel/chat-content-panel.component';
-import { FilterChatPipe } from 'src/app/pipes/filter-chat.pipe'; 
-import { FilterContactsPipe } from 'src/app/pipes/filter-contacts.pipe'; 
+import {ChatContentPanelComponent } from './modules/chat-panel/chat-panel-body/cp/chat-content-panel/chat-content-panel.component';
+import {FilterChatPipe } from 'src/app/pipes/filter-chat.pipe'; 
+import {FilterContactsPipe } from 'src/app/pipes/filter-contacts.pipe'; 
 
 
-import { MatDatepickerModule } from '@angular/material/datepicker';
-import { MatFormFieldModule } from '@angular/material/form-field';
-import { MatInputModule } from '@angular/material/input';
-import { MatNativeDateModule, MAT_DATE_LOCALE } from '@angular/material/core';
-import { ScheduleContentPanelComponent } from './chat-panel/chat-panel-body/schedule-content-panel/schedule-content-panel.component';
-import { SponsorsViewComponent } from './demo/view/sponsors-view/sponsors-view.component';
-
+import {MatDatepickerModule } from '@angular/material/datepicker';
+import {MatFormFieldModule } from '@angular/material/form-field';
+import {MatInputModule } from '@angular/material/input';
+import {MatNativeDateModule, MAT_DATE_LOCALE } from '@angular/material/core';
+import {ScheduleContentPanelComponent } from './chat-panel/chat-panel-body/schedule-content-panel/schedule-content-panel.component';
+import {SponsorsViewComponent } from './demo/view/sponsors-view/sponsors-view.component';
 
 
 
@@ -342,7 +342,8 @@ import { SponsorsViewComponent } from './demo/view/sponsors-view/sponsors-view.c
         FilterChatPipe,
         FilterContactsPipe,
         ScheduleContentPanelComponent,
-        SponsorsViewComponent
+        SponsorsViewComponent,
+        MarcaComponent
     ],
     providers: [authInterceptorProviders,
         {provide: LocationStrategy, useClass: HashLocationStrategy},
