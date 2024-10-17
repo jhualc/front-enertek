@@ -17,7 +17,7 @@ export class CrearChatGrupalService {
     
     CreateGroupChat(data:any){
       console.log("los datos del crear grupo::"+ data);
-      let headers =  new HttpHeaders({'Authorization': 'Bearer'+ this.authService.token});
+      let headers =  new HttpHeaders({'Authorization': 'Bearer'+ this.authService.getToken()});
       let LINK = URL_SERVICIOS+"/chat-grupal";
       return this.http.post(LINK,data, { headers: headers});
     }

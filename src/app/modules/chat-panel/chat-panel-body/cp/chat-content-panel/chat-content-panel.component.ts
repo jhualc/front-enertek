@@ -10,88 +10,13 @@ declare var $:any;
   styleUrls: ['./chat-content-panel.component.css']
 
 })
-export class ChatContentPanelComponent implements OnInit, AfterViewInit{
- 
-  @Input() to_user:any = null;
+export class ChatContentPanelComponent implements OnInit {
   user: any;
-  group: any; 
-  page:number = 1;
-  last_page:number = 1;
-  LIST_MESSAGES: any = [];
-  path: string =  URL_FILESERVER + '/storage/';
 
-  constructor(  private _chatPanelService: ChatPanelService,
-                    public authService: AuthService
-
-    ){}
-
+  constructor(private authService: AuthService) {}
 
   ngOnInit(): void {
-    this.user = this.authService.user;
-
-    console.log("El id del usuario",this.user);
-    this.to_user.messages.forEach((element: any) =>{
-      this.LIST_MESSAGES.unshift(element);
-    });0
-
-    this.last_page = this.to_user.last_page;
-
-    /*setTimeout(() => {
-      $("#ScrollChat").scrollTop( $("#ScrollChat").height());
-    }, 50);*/
-
-
-    //console.log("EL uniqd:::",this.to_user.room_uniqd );
-
-    const ECHO_PUSHER_INST = ECHO_PUSHER(this._chatPanelService.authServices.token);
-    ECHO_PUSHER_INST.channel("chat.room."+this.to_user.room_uniqd)
-      .listen('SendMessageChat', (e:any) => {
-        console.log(e);
-        this.LIST_MESSAGES.push(e);
-        console.log('mensaje', this.LIST_MESSAGES);
-        this.actualizarScroll();
-      });
-
-     
-      this.group = this._chatPanelService.listMyGroups()
-      .subscribe((response: any) =>{
-        console.log("Mis grupos:::",response);
-      })
-
-      $("#ScrollChat").scroll(()=>{
-        var position = $("#ScrollChat").scrollTop();
-        //console.log(position);
-        if(this.last_page > this.page && position == 0){
-          this.page ++;
-          //haces una peticion al servidor para que te devuelva los chats anteriores
-          this.paginateScroll(this.page,{chat_room_id: this.to_user.room_id});
-        }
-      })
-    
+  //  this.user = this.authService.getUser(); // Obtener el usuario autenticado
+  //  console.log('Usuario autenticado:', this.user);
   }
-
-  ngAfterViewInit() {
-    this.actualizarScroll();
-  }
-
-  paginateScroll(page:any,data:any) {
-    this._chatPanelService.paginateScroll(page,data).subscribe((resp:any)=>{
-      console.log(resp);
-      let last_message = this.LIST_MESSAGES[0];
-      var etiqueta = $("#tag"+last_message.id).last();
-  
-      resp.messages.forEach((element:any) => {
-        this.LIST_MESSAGES.unshift(element);
-      });
-    })
-  }
-
-  actualizarScroll()
-  {
-    document.querySelector('.chat-finished').scrollIntoView({
-      block: 'end',
-      behavior: 'auto'
-    });
-  }
-
 }

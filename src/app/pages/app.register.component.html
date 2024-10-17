@@ -9,52 +9,69 @@
                 <h1>Registrar usuario</h1>
                 <p>Complete los datos para su registro</p>
 
-                <form class="forms" [formGroup]="registerForm">
+                <form class="forms" [formGroup]="registerForm" (ngSubmit)="submit()">
+                    <!-- Nombres y Apellidos -->
+                    <div fxLayout="row">
+                        <div [ngClass]="{'invalid': name.invalid && (name.dirty || name.touched), 'valid': name.valid}">
+                            <small><span *ngIf="name.hasError('required')" class="text-danger">Este campo es requerido </span></small>
+                            <small><span *ngIf="name.hasError('minlength')" class="text-danger">Mínimo 6 caracteres </span></small>
+                            <small><span *ngIf="name.hasError('maxlength')" class="text-danger">Máximo 100 caracteres </span></small>
+                        </div> 
+                        <div class="login-input-wrapper">
+                            <input type="text" formControlName="name" pInputText id="name" placeholder="Nombres y Apellidos">
+                            <i class="pi pi-user"></i>
+                        </div>
+                    </div>   
+
+                    <!-- Email -->
                     <div fxLayout="row">
                         <div [ngClass]="{'invalid': email.invalid && (email.dirty || email.touched), 'valid': email.valid}">
                             <small><span *ngIf="email.hasError('required')" class="text-danger">Este campo es requerido </span></small>
                             <small><span *ngIf="email.hasError('email')" class="text-danger">Ingrese un email válido </span></small>
                             <small><span *ngIf="email.hasError('minlength')" class="text-danger">Mínimo 6 caracteres </span></small>
                             <small><span *ngIf="email.hasError('maxlength')" class="text-danger">Máximo 100 caracteres </span></small>
-                          </div>
+                        </div>
                         <div class="login-input-wrapper">
-                            <input type="email" formControlName = "email" pInputText id="email" placeholder="Correo / email">
+                            <input type="email" formControlName="email" pInputText id="email" placeholder="Correo / email">
                             <i class="pi pi-at"></i>
                         </div>
                     </div>
+
+                    <!-- Teléfono -->
                     <div fxLayout="row">
-                        <div [ngClass]="{'invalid': name.invalid && (name.dirty || name.touched), 'valid': name.valid}">
-                            <small><span *ngIf="name.hasError('required')" class="text-danger">Este campo es requerido </span></small>
-                            <small><span *ngIf="name.hasError('minlength')" class="text-danger">Mínimo 6 caracteres </span></small>
-                            <small><span *ngIf="name.hasError('maxlength')" class="text-danger">Máximo 100 caracteres </span></small>
-                          </div> 
                         <div class="login-input-wrapper">
-                            <input type="text" formControlName= "name" pInputText id="name" placeholder="Nombres y Apellidos">
-                            <i class="pi pi-user"></i>
-                        </div>
-                    </div>                    
-                    <div fxLayout="row">
-                        <div [ngClass]="{'invalid': usr_empresa.invalid && (usr_empresa.dirty || usr_empresa.touched), 'valid': usr_empresa.valid}">
-                            <small><span *ngIf="usr_empresa.hasError('required')" class="text-danger">Este campo es requerido </span></small>
-                            <small><span *ngIf="usr_empresa.hasError('maxlength')" class="text-danger">Máximo 200 caracteres </span></small>
-                          </div>                         
-                        <div class="login-input-wrapper">
-                            <input type="text" formControlName= "usr_empresa" pInputText id="usr_empresa" placeholder="Empresa">
+                            <input type="text" formControlName="phone" pInputText id="phone" placeholder="Teléfono">
                             <i class="pi pi-building"></i>
                         </div>                  
                     </div>
+
+                    <!-- Contraseña -->
                     <div fxLayout="row">
-                        <div [ngClass]="{'invalid': usr_cargo.invalid && (usr_cargo.dirty || usr_cargo.touched), 'valid': usr_cargo.valid}">
-                            <small><span *ngIf="usr_cargo.hasError('required')" class="text-danger">Este campo es requerido </span></small>
-                            <small><span *ngIf="usr_cargo.hasError('maxlength')" class="text-danger">Máximo 200 caracteres </span></small>
-                          </div>                         
+                        <div [ngClass]="{'invalid': usr_password.invalid && (usr_password.dirty || usr_password.touched), 'valid': usr_password.valid}">
+                            <small><span *ngIf="usr_password.hasError('required')" class="text-danger">Este campo es requerido </span></small>
+                            <small><span *ngIf="usr_password.hasError('maxlength')" class="text-danger">Máximo 200 caracteres </span></small>
+                        </div>                         
                         <div class="login-input-wrapper">
-                            <input type="text" formControlName= "usr_cargo" pInputText id="usr_cargo" placeholder="Cargo">
-                            <i class="pi pi-users"></i>
+                            <input type="password" formControlName="usr_password" pInputText id="usr_password" placeholder="Contraseña">
+                            <i class="pi pi-key"></i>
                         </div>  
                     </div>
+
+                    <!-- Confirmar Contraseña -->
+                    <div fxLayout="row">
+                        <div [ngClass]="{'invalid': usr_password_confirm.invalid && (usr_password_confirm.dirty || usr_password_confirm.touched), 'valid': usr_password_confirm.valid}">
+                            <small><span *ngIf="usr_password_confirm.hasError('required')" class="text-danger">Este campo es requerido </span></small>
+                            <small><span *ngIf="usr_password_confirm.hasError('maxlength')" class="text-danger">Máximo 200 caracteres </span></small>
+                        </div>                         
+                        <div class="login-input-wrapper">
+                            <input type="password" formControlName="usr_password_confirm" pInputText id="usr_password_confirm" placeholder="Confirmar Contraseña">
+                            <i class="pi pi-key"></i>
+                        </div>  
+                    </div>
+
+                    <!-- Botones -->
                     <div class="buttons">
-                        <button pButton type="submit" class="btn font-weight-semibold" (click)="submit()" [disabled]="registerForm.invalid">Registrar</button>
+                        <button pButton type="submit" class="btn font-weight-semibold" [disabled]="registerForm.valid">Registrar</button>
                         <a href="#/login" class="secondary-button">Inicia sesión Aquí</a>
                     </div>
                 </form>                

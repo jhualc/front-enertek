@@ -72,7 +72,7 @@ export const routes: Routes = [
         children: [
             {path: '', component: DashboardDemoComponent},
             {path: 'dash', component: DashboardDemoComponent},
-            {path: 'uikit/formlayout', component: FormLayoutDemoComponent},
+            {path: 'uikit/register', component: FormLayoutDemoComponent},
             {path: 'uikit/floatlabel', component: FloatLabelDemoComponent},
             {path: 'uikit/invalidstate', component: InvalidStateDemoComponent},
             {path: 'uikit/input', component: InputDemoComponent},

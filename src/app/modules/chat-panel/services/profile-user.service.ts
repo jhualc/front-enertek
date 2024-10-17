@@ -15,21 +15,21 @@ export class ProfileUserService {
 
     
     ContactUsers(){
-      console.log("autorizaciobn::"+ this.authService.token);
-      let headers =  new HttpHeaders({'Authorization': 'Bearer'+ this.authService.token});
+      console.log("autorizaciobn::"+ this.authService.getToken());
+      let headers =  new HttpHeaders({'Authorization': 'Bearer'+ this.authService.getToken()});
       let LINK = URL_SERVICIOS+"/users/contact";
       return this.http.get(LINK,{ headers: headers});
     }
 
     ContactUsersSponsor(){
-      console.log("autorizaciobn::"+ this.authService.token);
-      let headers =  new HttpHeaders({'Authorization': 'Bearer'+ this.authService.token});
+      console.log("autorizaciobn::"+  this.authService.getToken());
+      let headers =  new HttpHeaders({'Authorization': 'Bearer'+  this.authService.getToken()});
       let LINK = URL_SERVICIOS+"/users/sponsors";
       return this.http.get(LINK,{ headers: headers});
     }
 
     AvatarChangeUser(file:any){
-      let headers = new HttpHeaders({'Authorization': 'Bearer '+ this.authService.token})
+      let headers = new HttpHeaders({'Authorization': 'Bearer '+  this.authService.getToken()})
       let LINK = URL_SERVICIOS+"/profile-user";
       let formData = new FormData();
       formData.append("imagen",file,file.name);

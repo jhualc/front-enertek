@@ -83,7 +83,7 @@ export class ChatPanelBodyComponent implements AfterViewInit{
     this.ContactsUsers();
     this.ContactsUsersSponsor();
     this.GetGroups();
-    this.user = this._chatPanelService.authServices.user;
+    this.user = "user";
     console.log("USERCERIBIDODOCARLD:::", this.user);
 
     this.listMyFriends();
@@ -93,10 +93,10 @@ export class ChatPanelBodyComponent implements AfterViewInit{
     }
 
     setupEchoPusher(): void {
-      const ECHO_PUSHER_INST = ECHO_PUSHER(this._chatPanelService.authServices.token);
+      const ECHO_PUSHER_INST = ECHO_PUSHER(this._chatPanelService.authServices.getToken());
   
       // Escucha para refrescar salas de chat
-      ECHO_PUSHER_INST.private("chat.refresh.room."+this._userProfileService.authService.user.id)
+      ECHO_PUSHER_INST.private("chat.refresh.room.")
       .listen('RefreshMyChatRoom', (e:any) => {
         console.log("Mensaje en RefreshChatRoom:::::",e);
         this.chat_chat_rooms = [];

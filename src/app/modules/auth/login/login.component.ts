@@ -65,11 +65,13 @@ export class LoginComponent {
       .subscribe((resp: any) => {
         console.log(resp);
         if(!resp.error && resp){
+          this.route.navigate(['/dash']);
           console.log("Ingreso al submit");
           document.location.reload();
 
         }else{
           if(resp.error.error == 'Unauthorized'){
+            this.route.navigate(['/dash']);
           
             this.hasError = true;
             this.hasErrorText = "El usuario o la contraseña son incorrectos";

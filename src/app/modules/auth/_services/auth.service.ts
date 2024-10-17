@@ -1,104 +1,52 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
+import { Observable } from 'rxjs';
 import { Router } from '@angular/router';
-import { map, of, catchError } from 'rxjs';
-import { URL_SERVICIOS } from 'src/app/config/config';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class AuthService {
+  private apiUrl = 'https://cityalertapi-dev.azurewebsites.net/auth'; 
+  private registryUrl = 'https://cityalertapi-dev.azurewebsites.net/user';// URL base de la API
+  private tokenKey = 'auth_token'; // Clave para almacenar el token
 
-  token:any = '';
-  user:any = null;
-  id: any = null;
+  constructor(private http: HttpClient, private router: Router) {}
 
-  constructor( private http: HttpClient,
-                private router: Router
-                ) { 
-                  
-                  this.loadLocalStorage();                
-                }
+  // Método para autenticar con el endpoint real
+  login(email: string, password: string): Observable<any> {
+    console.log("ingreso autenticacion");
+    const body = { email, password }; // Cuerpo de la solicitud con las credenciales
+    const headers = new HttpHeaders({ 'Content-Type': 'application/json' });
 
-  loadLocalStorage(){
-  
-    if(localStorage.getItem("token") && localStorage.getItem("user")){
-    
-      this.token = localStorage.getItem("token");
-      this.user = JSON.parse(localStorage.getItem("user") ?? '');
-
-      console.log("Usuario del sTAorage:::", this.user);
-    }else{
-    
-      this.token='';
-      this.user=null;
-    }
-  }
-  
-  login(email:string, password: string){
-  
-    let url = URL_SERVICIOS+'/login';
-
-    return this.http.post(url, {email, password}).pipe(
-      
-        map( (auth:any) =>{
-          if(auth.access_token){
-            return this.storeLocalStorageToken(auth);
-          }else{
-            return of(undefined);
-          }
-        }), 
-        catchError(error => {
-
-          console.log(error);
-          return of(error);
-          
-        })
-      )
+    // Realiza la solicitud HTTP POST al endpoint real de login
+    return this.http.post(`${this.apiUrl}/login`, body, { headers });
   }
 
-
-
-  storeLocalStorageToken(auth: any){
-
-    if(auth.access_token){
-      localStorage.setItem("token", auth.access_token);
-      localStorage.setItem("user",  JSON.stringify( auth.user));
-      localStorage.setItem("id",  JSON.stringify( auth.id))
-      this.token = auth.access_token;
-      this.user = auth.user;
-      this.id= auth.id;
-      return true;
-    }else{
-      return false;
-    }
-  
+  // Guardar el token en el localStorage
+  setToken(token: string): void {
+    localStorage.setItem(this.tokenKey, token);
   }
 
-  register(data:any){
-    
-    let url = URL_SERVICIOS +"/register";
-    return this.http.post(url, data);
-      
+  // Obtener el token desde el localStorage
+  getToken(): string | null {
+    return localStorage.getItem(this.tokenKey);
   }
 
-  logout(){
-    
-    this.token='';
-    this.user=null;
-    localStorage.removeItem("token");
-    localStorage.removeItem("user");
-    this.router.navigate(['/login'],{
-      queryParams: {}
-    });
+  // Verificar si el usuario está autenticado (existe token)
+  isLogin(): boolean {
+    return !!this.getToken();
   }
 
-  isLogin(){
-    return localStorage.getItem("token") !== null;
+  // Eliminar token al hacer logout
+  logout(): void {
+    localStorage.removeItem(this.tokenKey);
+    this.router.navigate(['/login']); // Redirige al login después de cerrar sesión
   }
 
-  public getToken(): string | null {
-   
-    return localStorage.getItem("token");
-}
+  // Método para registrar nuevos usuarios
+  register(data: any): Observable<any> {
+    const headers = new HttpHeaders({ 'Content-Type': 'application/json' });
+    return this.http.post(`${this.registryUrl}/register`, data, { headers });
+  }
 }

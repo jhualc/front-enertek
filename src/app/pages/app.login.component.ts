@@ -1,69 +1,80 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { ActivatedRoute, Router } from '@angular/router';
+import { Router, ActivatedRoute } from '@angular/router';
 import { AuthService } from '../modules/auth/_services/auth.service';
-
 
 @Component({
   selector: 'app-login',
   templateUrl: './app.login.component.html',
 })
-export class AppLoginComponent {
+export class AppLoginComponent implements OnInit {
   loginForm!: FormGroup;
-  hasError: Boolean= false;
-  hasErrorText: any = '';
-  generica = 'rHJ7$p583YL@';
-  dark: boolean;
-  checked: boolean;
+  hasError: boolean = false;
+  hasErrorText: string = '';
 
-  constructor( private fb: FormBuilder,
+  constructor(
+    private fb: FormBuilder,
     private authService: AuthService,
-    private route: Router,
-    private router: ActivatedRoute){
-    
-if(this.authService.isLogin()){
-  this.route.navigate(['dash']);
-}
-    
-}
+    private router: Router,
+    private route: ActivatedRoute
+  ) {}
 
-ngOnInit(): void {
-this.initForm();
-}
-
-initForm(){
-this.loginForm = this.fb.group({
-    email:[
-      null,
-      Validators.compose([
-      Validators.required,
-      Validators.email,
-      Validators.minLength(6),
-      Validators.maxLength(100)
-      ])
-    ]
-  })
-}
-
-submit(){
-  this.hasError= false;
-//  console.log(this.loginForm.value);
-
-  this.authService.login(this.loginForm.value.email, this.generica)
-    .subscribe((resp: any) => {
-      console.log(resp);
-      if(!resp.error && resp){
-        console.log("Ingreso al submit");
-        document.location.reload();
-
-      }else{
-        if(resp.error.error == 'Unauthorized'){
-        
-          this.hasError = true;
-          this.hasErrorText = "Por favor inicie con el correo registrado";
-        }
-      }
-    })
+  ngOnInit(): void {
+    this.initForm();
   }
 
+  initForm(): void {
+    this.loginForm = this.fb.group({
+      email: [
+        null,
+        Validators.compose([
+          Validators.required,
+          Validators.email,
+          Validators.minLength(6),
+          Validators.maxLength(100),
+        ]),
+      ],
+      password: [
+        null,
+        Validators.compose([
+          Validators.required,
+          Validators.minLength(6),
+          Validators.maxLength(100),
+        ]),
+      ],
+    });
+  }
+
+  submit(): void {
+    this.hasError = false;
+
+    if (this.loginForm.invalid) {
+      this.hasError = true;
+      this.hasErrorText = 'Por favor complete el formulario correctamente.';
+      return;
+    }
+
+    // Llamada al servicio de autenticación
+    this.authService
+      .login(this.loginForm.value.email, this.loginForm.value.password)
+      .subscribe(
+        (resp: any) => {
+          console.log(resp);
+          if (resp && !resp.error) {
+            // Guardar el token y redirigir
+            let response = this.authService.setToken(resp.token);
+            console.log("REsponse::", response);
+            this.router.navigate(['/dashboard']); // Redirigir después del login exitoso
+          } else {
+            this.hasError = true;
+            this.hasErrorText = 'Usuario o contraseña incorrectos.';
+          }
+        },
+        (error) => {
+          this.hasError = true;
+          this.hasErrorText = 'Error al iniciar sesión. Intente nuevamente.';
+          console.error('Login failed', error);
+        }
+      );
+  }
 }

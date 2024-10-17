@@ -1,50 +1,6 @@
 <div style="height: 200px;" id="Scrollcontiner">
     <div class="container" id="ScrollChat" style="max-height: 100vh; overflow-y: auto;">
 
-        <!-- Message Day Start -->
-        <div class="message-day" id="ScrollBase">
-                <ng-container *ngFor="let message of LIST_MESSAGES">
-                    <!-- Received Message Start -->
-                    
-                    <div class="message" *ngIf="message.sender.id != user.id">
-                        <div class="message-wrapper">
-                            <div class="message-content">
-                                <h6 class="text-dark">{{message.sender.full_name}}</h6>
-                                <span [innerHtml]="message.message"></span>
-                            </div>
-                        </div>
-                        <div class="message-options">
-                            <div class="avatar avatar-sm"><img alt="" src={{path}}{{message.sender.avatar}}></div>
-                            <span class="message-date">{{message.time}}</span>
-                        </div>
-                    </div>
-                    <!-- Received Message End -->
-        
-                    <!-- Self Message Start -->
-                    <div class="message self" *ngIf="message.sender.id == user.id">
-                        <div class="message-wrapper">
-                            <div class="message-content"> 
-                             
-                                <span>{{message.message}}</span>
-                            </div>
-                        </div>
-                        <div class="message-options">
-                            <div class="avatar avatar-sm"><img alt="" src="{{path}}{{user.avatar}}"></div>
-                           
-                            <span class="message-date">{{message.time}}</span>
-                            <span class="message-status">Enviado</span>
-        
-                        </div>
-                    </div>
-                    <!-- Self Message End -->
-                    
-                    <!-- Received Message End -->
-                   </ng-container>                
-        </div>
-        <!-- Message Day End -->
-        <!-- Scroll to finish -->
-        <div class="chat-finished" id="chat-finished" style="height: 10px;"></div>
-        <!-- Message Day Start -->
     </div>
 
 

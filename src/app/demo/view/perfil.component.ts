@@ -79,7 +79,7 @@ export class PerfilComponent {
      }
 
       AvatarChangeUser(file:any){
-        let headers = new HttpHeaders({'Authorization': 'Bearer '+ this.authService.token})
+        let headers = new HttpHeaders({'Authorization': 'Bearer '+ this.authService.getToken()})
         let LINK = URL_SERVICIOS+"/profile-user";
         let formData = new FormData();
         formData.append("imagen",file,'axalta.png');
