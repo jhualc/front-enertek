@@ -107,6 +107,7 @@ import {AppConfigComponent} from './app.config.component';
 import {AppRightPanelComponent} from './app.rightpanel.component';
 import {AppTopBarComponent} from './app.topbar.component';
 import {AppFooterComponent} from './app.footer.component';
+import {AppMarcasComponent} from './pages/app.marcas.component';
 
 // Demo pages
 import {DashboardDemoComponent} from './demo/view/dashboarddemo.component';
@@ -133,6 +134,7 @@ import {BlocksComponent} from './blocks/blocks/blocks.component';
 import {BlockViewer} from './blocks/blockviewer/blockviewer.component';
 import {RegisterComponent} from './demo/view/register.component';
 import {MarcaComponent } from './demo/view/marca.component';
+import {MarcasComponent } from './demo/view/marcas.component';
 import {ChatPanelComponent } from './modules/chat-panel/chat-panel.component';
 import {ChatPanelBodyComponent } from './modules/chat-panel/chat-panel-body/chat-panel-body.component';
 import {AgendaComponent } from './demo/view/agenda.component';
@@ -343,7 +345,9 @@ import {SponsorsViewComponent } from './demo/view/sponsors-view/sponsors-view.co
         FilterContactsPipe,
         ScheduleContentPanelComponent,
         SponsorsViewComponent,
-        MarcaComponent
+        MarcaComponent,
+        MarcasComponent,
+        AppMarcasComponent
     ],
     providers: [authInterceptorProviders,
         {provide: LocationStrategy, useClass: HashLocationStrategy},

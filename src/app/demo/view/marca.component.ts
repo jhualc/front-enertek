@@ -2,7 +2,7 @@ import {Component} from '@angular/core';
 import {BreadcrumbService} from '../../breadcrumb.service';
 import { FormBuilder, FormGroup, Validators, FormControl } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
-import { MarcaService } from '../../modules/auth/_services/marca.service';
+import { MarcaService } from '../service/marca.service';
 import swal from 'sweetalert2'
 
 @Component({

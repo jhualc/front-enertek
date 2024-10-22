@@ -35,6 +35,7 @@ import {AppAccessdeniedComponent} from './pages/app.accessdenied.component';
 import {AppLoginComponent} from './pages/app.login.component';
 import {AppRegisterComponent} from './pages/app.register.component';
 import {AppCrudComponent} from './pages/app.crud.component';
+import {AppMarcasComponent} from './pages/app.marcas.component';
 import {AppCalendarComponent} from './pages/app.calendar.component';
 import {AppTimelineDemoComponent} from './pages/app.timelinedemo.component';
 import {BlocksComponent} from './blocks/blocks/blocks.component';
@@ -45,6 +46,7 @@ import {AcercadeComponent } from './demo/view/acercade.component';
 import {PerfilComponent } from './demo/view/perfil.component';
 import {SponsorsViewComponent } from './demo/view/sponsors-view/sponsors-view.component';
 
+import {MarcasComponent } from './demo/view/marcas.component';
 
 export const routes: Routes = [
     {path: 'login', component: AppLoginComponent},
@@ -103,6 +105,7 @@ export const routes: Routes = [
             {path: 'chat', loadChildren: () => import('src/app/modules/chat-panel/chat-panel.module').then(m => m.ChatPanelModule)},
             {path: 'pages/register', component: RegisterComponent},
             {path: 'pages/marca', component: MarcaComponent},
+            {path: 'pages/marcas', component: AppMarcasComponent},
             {path: 'pages/agenda/:id', component: AgendaComponent},
             {path: 'pages/participantes', component: ParticipantesComponent},
             {path: 'pages/participanteinfo/:id', component: ParticipanteInfoComponent},

@@ -17,10 +17,23 @@ export class MarcaService {
                 }
 
   store(data:any){
-    
-    let url = URL_SERVICIOS +"/marcas";
+    let url = URL_SERVICIOS + "/marcas";
     return this.http.post(url, data);
-      
+  }
+
+  get(data:any){
+    let url = URL_SERVICIOS + "/marcas";
+    return this.http.get(url);
+  } 
+
+  update(data:any){
+    let url = URL_SERVICIOS + "/marcas/" + data.mar_id;
+    return this.http.put(url, data);
+  }
+
+  delete(data:any){
+    let url = URL_SERVICIOS + "/marcas/" + data.mar_id;
+    return this.http.delete(url, data);
   }
 
 }

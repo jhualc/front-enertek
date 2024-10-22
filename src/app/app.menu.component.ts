@@ -22,14 +22,14 @@ export class AppMenuComponent implements OnInit {
             {
                 label:'Administración', icon:'pi pi-fw pi-cog',
                 items:[
-                    {label: 'Agregar Marca', icon: 'pi pi-fw pi-th-large', routerLink: ['pages/marca']},
+                    {label: 'Marcas', icon: 'pi pi-fw pi-th-large', routerLink: ['pages/marcas']},
                     {label: 'Equipos', icon: 'pi pi-fw pi-desktop', routerLink: ['equipos']},
                 ]
             },            
-            {label: 'Agenda', icon: 'pi pi-fw pi-calendar', routerLink: ['pages/agenda/1']},
-            {label: 'Conferencistas', icon: 'pi pi-fw pi-megaphone', routerLink: ['pages/participantes']},
-            {label: 'Networking', icon: 'pi pi-fw pi-send', routerLink: ['chat']},
-            {label: 'Patrocinadores', icon: 'pi pi-fw pi-bars', routerLink: ['pages/sponsors']},
+            /*{label: 'Agenda', icon: 'pi pi-fw pi-calendar', routerLink: ['pages/agenda/1']},*/
+            /*{label: 'Conferencistas', icon: 'pi pi-fw pi-megaphone', routerLink: ['pages/participantes']},*/
+            /*{label: 'Networking', icon: 'pi pi-fw pi-send', routerLink: ['chat']},*/
+            /*{label: 'Patrocinadores', icon: 'pi pi-fw pi-bars', routerLink: ['pages/sponsors']},*/
 /*             {
                 label: 'Agenda', icon: 'pi pi-fw pi-star-fill', routerLink: ['/uikit'],
                 items: [
@@ -134,9 +134,9 @@ export class AppMenuComponent implements OnInit {
             },
             {
                 label: 'Buy Now', icon: 'pi pi-fw pi-money-bill', url: ['https://www.primefaces.org/store']
-            }
- */
+            },
             {label: 'Información Evento', icon: 'pi pi-fw pi-info-circle', routerLink: ['pages/acerca']},
+            */
         ];
 
         if(this.authService.isLogin()){

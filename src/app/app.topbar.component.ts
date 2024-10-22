@@ -12,7 +12,7 @@ import { ActivatedRoute, Router } from '@angular/router';
                 <div class="layout-topbar-left">
 					<div class="layout-topbar-logo-wrapper" >
 						<a (click)="irAPaginaDestino('dash')">
-							<img src="assets/layout/images/Logo_3er_Congreso.svg" alt="mirage-layout" height="50" />
+							<img src="assets/layout/images/Logo_grande_enertek.png" alt="mirage-layout" height="25" />
 						</a>
 					</div>
 
@@ -124,9 +124,11 @@ import { ActivatedRoute, Router } from '@angular/router';
 					-->
 						<li #calendar class="topbar-item" [ngClass]="{'active-topmenuitem': appMain.activeTopbarItem === calendar}">
 							<!-- <a href="#" (click)="appMain.onTopbarItemClick($event,calendar)"> -->
+							<!--
 							<a (click)="irAPaginaDestino('pages/agenda/1')">
 								<i class="topbar-icon pi pi-calendar"></i>
 							</a>
+							-->
 							<!--
 							<ul class="fadeInDown" (click)="appMain.topbarItemClick = true">
 								<li class="layout-submenu-header">
@@ -141,9 +143,11 @@ import { ActivatedRoute, Router } from '@angular/router';
 
 						<li #message class="topbar-item" [ngClass]="{'active-topmenuitem': appMain.activeTopbarItem === message}">
 							<!-- <a href="#" (click)="appMain.onTopbarItemClick($event,message)"> -->
+							<!--
 							<a (click)="irAPaginaDestino('pages/participantes')">
 								<i class="topbar-icon pi pi-megaphone"></i>
 							</a>
+							-->
 							<!--
 							<ul class="fadeInDown">
 								<li class="layout-submenu-header">
@@ -188,9 +192,11 @@ import { ActivatedRoute, Router } from '@angular/router';
 
 						<li #gift class="topbar-item" [ngClass]="{'active-topmenuitem': appMain.activeTopbarItem === gift}">
 							<!-- <a href="#" (click)="appMain.onTopbarItemClick($event,gift)"> -->
+							<!--
 							<a (click)="irAPaginaDestino('chat')">
 								<i class="topbar-icon pi pi-envelope"></i>
 							</a>
+							-->
 							<ul class="fadeInDown">
 								<li class="layout-submenu-header">
 									<h1>Deals</h1>

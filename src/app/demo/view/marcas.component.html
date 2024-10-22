@@ -1,0 +1,39 @@
+<div class="grid p-fluid">
+    <div class="col-12">
+        <div class="card">
+            <h5>Marcas</h5>
+            <p-table [value]="listaMarcas" sortMode="single">
+				<ng-template pTemplate="body" let-marca let-rowIndex="rowIndex">
+					<tr>
+						<td  style="width: 15%;">
+							<a (click)="irAPaginaDestino(marca.mar_id)">
+								{{marca.mar_descripcion}}
+							</a>
+						</td>
+					</tr>
+				</ng-template>
+			</p-table>  
+        </div>		
+	<!--
+		<div class="card">
+            <h5>Dia 2 - Abril 21</h5>
+            <p-table [value]="listaAgenda2" sortMode="single" >
+				<ng-template pTemplate="body" let-agenda let-rowIndex="rowIndex">
+					<tr>
+                        <td  style="width: 15%;">
+							<a (click)="irAPaginaDestino(agenda.eve_id)">
+								{{agenda.eve_hora}}
+							</a>
+						</td>
+						<td>
+							<a (click)="irAPaginaDestino(agenda.eve_id)">
+								<div class="text-green-500" [innerHTML]><b>{{agenda.eve_tipo}}</b></div>
+								{{agenda.eve_descripcion}}
+							</a>
+						</td>
+					</tr>
+				</ng-template>
+			</p-table>          
+        </div> -->
+    </div>
+</div>
