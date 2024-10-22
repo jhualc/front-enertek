@@ -1,4 +1,4 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
 import { map, of, catchError } from 'rxjs';
@@ -36,9 +36,20 @@ export class MarcaService {
     return this.http.delete(url, data);
   }
 
-  deleteMultiple(data:any){
+  deleteMultiple(dataMultiple: any) {
+    console.log("InsideDAta:::", dataMultiple);
     let url = URL_SERVICIOS + "/marca/delete-multiple";
-    return this.http.delete(url, data);
+    
+    // Debes especificar el body como parte de las opciones de la solicitud
+    const httpOptions = {
+      headers: new HttpHeaders({
+        'Content-Type': 'application/json'
+      }),
+      body: dataMultiple // Aquí pasas el cuerpo (datos que quieres enviar)
+    };
+  
+    return this.http.delete(url, httpOptions);
   }
+  
 
 }

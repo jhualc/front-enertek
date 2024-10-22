@@ -85,6 +85,7 @@ export class AppMarcasComponent implements OnInit {
 
     confirmDeleteSelected() {
         this.deleteRowsDialog = false;
+        console.log(JSON.stringify(this.selectedMarcas));
         this.marcaservice.deleteMultiple(this.selectedMarcas)
         .subscribe((resp: any) => {
           console.log(resp);
