@@ -36,4 +36,9 @@ export class MarcaService {
     return this.http.delete(url, data);
   }
 
+  deleteMultiple(data:any){
+    let url = URL_SERVICIOS + "/marca/delete-multiple";
+    return this.http.delete(url, data);
+  }
+
 }

@@ -16,7 +16,7 @@ export class AppMarcasComponent implements OnInit {
 
     deleteDataDialog: boolean = false;
 
-    deleteProductsDialog: boolean = false;
+    deleteRowsDialog: boolean = false;
 
     marcas: Marca[] = [];
 
@@ -69,8 +69,8 @@ export class AppMarcasComponent implements OnInit {
         this.dataDialog = true;
     }
 
-    deleteSelectedProducts() {
-        this.deleteProductsDialog = true;
+    deleteSelectedRows() {
+        this.deleteRowsDialog = true;
     }
 
     editData(marca: Marca) {
@@ -84,10 +84,19 @@ export class AppMarcasComponent implements OnInit {
     }
 
     confirmDeleteSelected() {
-        this.deleteProductsDialog = false;
-        //this.marcas = this.marcas.filter(val => !this.selectedProducts.includes(val));
-        //this.messageService.add({ severity: 'success', summary: 'Successful', detail: 'Products Deleted', life: 3000 });
-        //this.selectedProducts = [];
+        this.deleteRowsDialog = false;
+        this.marcaservice.deleteMultiple(this.selectedMarcas)
+        .subscribe((resp: any) => {
+          console.log(resp);
+          this.deleteRowsDialog = false;
+          if(!resp.error && resp){
+            this.messageService.add({ severity: 'success', summary: 'Exitoso!', detail: resp.message, life: 3000 });
+            this.loadData();
+          }else{
+            this.messageService.add({ severity: 'error', summary: 'Error!', detail: resp.message, life: 3000 });
+          }
+        }) 
+        this.marcas = [];
     }
 
     confirmDelete() {
