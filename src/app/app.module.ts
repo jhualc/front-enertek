@@ -108,6 +108,7 @@ import {AppRightPanelComponent} from './app.rightpanel.component';
 import {AppTopBarComponent} from './app.topbar.component';
 import {AppFooterComponent} from './app.footer.component';
 import {AppMarcasComponent} from './pages/app.marcas.component';
+import {AppTipoEquipoComponent} from './pages/app.tipo.equipo.component';
 
 // Demo pages
 import {DashboardDemoComponent} from './demo/view/dashboarddemo.component';
@@ -347,7 +348,8 @@ import {SponsorsViewComponent } from './demo/view/sponsors-view/sponsors-view.co
         SponsorsViewComponent,
         MarcaComponent,
         MarcasComponent,
-        AppMarcasComponent
+        AppMarcasComponent,
+        AppTipoEquipoComponent
     ],
     providers: [authInterceptorProviders,
         {provide: LocationStrategy, useClass: HashLocationStrategy},

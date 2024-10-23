@@ -1,16 +1,16 @@
 import {Component, OnInit} from '@angular/core';
-import {Marca} from '../demo/domain/marca';
-import { MarcaService } from '../../app/demo/service/marca.service';
+import {TipoEquipo} from '../demo/domain/tipo.equipo';
+import {TipoEquipoService } from '../demo/service/tipo.equipo.service';
 import {ConfirmationService, MessageService} from 'primeng/api';
 import {BreadcrumbService} from '../breadcrumb.service';
 import {Table} from 'primeng/table';
 
 @Component({
-    templateUrl: './app.marcas.component.html',
+    templateUrl: './app.tipo.equipo.component.html',
     providers: [MessageService, ConfirmationService],
     styleUrls: ['../../assets/demo/badges.scss']
 })
-export class AppMarcasComponent implements OnInit {
+export class AppTipoEquipoComponent implements OnInit {
 
     dataDialog: boolean = false;
 
@@ -18,11 +18,11 @@ export class AppMarcasComponent implements OnInit {
 
     deleteRowsDialog: boolean = false;
 
-    marcas: Marca[] = [];
+    tiposequipo: TipoEquipo[] = [];
 
-    marca: Marca = {};
+    tipoequipo: TipoEquipo = {};
 
-    selectedRows: Marca[] = [];
+    selectedRows: TipoEquipo[] = [];
 
     submitted: boolean = false;
 
@@ -34,7 +34,7 @@ export class AppMarcasComponent implements OnInit {
     
     carga: boolean = true;
 
-    constructor(private marcaservice: MarcaService, private messageService: MessageService,
+    constructor(private tipoequiposervice: TipoEquipoService, private messageService: MessageService,
                 private confirmationService: ConfirmationService, private breadcrumbService: BreadcrumbService) {
         this.breadcrumbService.setItems([
             { label: 'Administracion' },
@@ -49,10 +49,10 @@ export class AppMarcasComponent implements OnInit {
 
     loadData(){
         this.carga = true;
-        this.marcaservice.get(null).subscribe((resp: any) => {
+        this.tipoequiposervice.get(null).subscribe((resp: any) => {
           console.log(resp);
           if(!resp.error && resp){
-                  this.marcas=resp.marca;
+                  this.tiposequipo=resp.tipo_equipo;
                   this.carga = false;
           }else{
             if(resp.error == 'Unauthorized'){
@@ -64,7 +64,7 @@ export class AppMarcasComponent implements OnInit {
       }
 
     openNew() {
-        this.marca = {};
+        this.tipoequipo = {};
         this.submitted = false;
         this.dataDialog = true;
     }
@@ -73,20 +73,20 @@ export class AppMarcasComponent implements OnInit {
         this.deleteRowsDialog = true;
     }
 
-    editData(marca: Marca) {
-        this.marca = { ...marca };
+    editData(tipoequipo: TipoEquipo) {
+        this.tipoequipo = { ...tipoequipo };
         this.dataDialog = true;
     }
 
-    deleteData(marca: Marca) {
+    deleteData(tipoequipo: TipoEquipo) {
         this.deleteDataDialog = true;
-        this.marca = { ...marca };
+        this.tipoequipo = { ...tipoequipo };
     }
 
     confirmDeleteSelected() {
         this.deleteRowsDialog = false;
         console.log(this.selectedRows);
-        this.marcaservice.deleteMultiple(this.selectedRows)
+        this.tipoequiposervice.deleteMultiple(this.selectedRows)
         .subscribe((resp: any) => {
           console.log(resp);
           this.deleteRowsDialog = false;
@@ -102,7 +102,7 @@ export class AppMarcasComponent implements OnInit {
 
     confirmDelete() {
         this.deleteDataDialog = false;
-        this.marcaservice.delete(this.marca)
+        this.tipoequiposervice.delete(this.tipoequipo)
         .subscribe((resp: any) => {
           console.log(resp);
           this.deleteDataDialog = false;
@@ -113,20 +113,20 @@ export class AppMarcasComponent implements OnInit {
             this.messageService.add({ severity: 'error', summary: 'Error!', detail: resp.message, life: 3000 });
           }
         }) 
-        this.marca = {};
+        this.tipoequipo = {};
     }
 
     hideDialog() {
         this.dataDialog = false;
         this.submitted = false;
-        this.marca = {};
+        this.tipoequipo = {};
         this.loadData();
     }
 
     saveData() {
         this.submitted = true;
-        if (this.marca.mar_id) {
-            this.marcaservice.update(this.marca)
+        if (this.tipoequipo.teq_id) {
+            this.tipoequiposervice.update(this.tipoequipo)
             .subscribe((resp: any) => {
               console.log(resp);
               if(!resp.error && resp){
@@ -140,12 +140,12 @@ export class AppMarcasComponent implements OnInit {
         }
         else
         {
-            this.marcaservice.store(this.marca)
+            this.tipoequiposervice.store(this.tipoequipo)
             .subscribe((resp: any) => {
               console.log(resp);
               if(!resp.error && resp){
                 this.messageService.add({ severity: 'success', summary: 'Exitoso!', detail: resp.message, life: 3000 });
-                this.marca = {};
+                this.tipoequipo = {};
               }else{
                 this.messageService.add({ severity: 'error', summary: 'Error!', detail: resp.message, life: 3000 });
               }

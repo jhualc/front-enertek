@@ -16,14 +16,14 @@
                 </ng-template>
             </p-toolbar>
 
-            <p-table #dt [value]="marcas" [columns]="cols" responsiveLayout="scroll" [rows]="10" 
+            <p-table #dt [value]="tiposequipo" [columns]="cols" responsiveLayout="scroll" [rows]="10" 
                     [globalFilterFields]="['name','country.name','representative.name','status']" [rows]="10" 
                     [paginator]="true" [rowsPerPageOptions]="[10,20,50,100]" [showCurrentPageReport]="true" currentPageReportTemplate="Mostrando {first} a {last} de {totalRecords} registros" 
-                    [(selection)]="selectedRows" selectionMode="multiple" [rowHover]="true" dataKey="mar_id"
+                    [(selection)]="selectedRows" selectionMode="multiple" [rowHover]="true" dataKey="teq_id"
                     [loading]="carga" loadingIcon="pi pi-spin pi-spinner">
                 <ng-template pTemplate="caption">
                     <div class="flex flex-column md:flex-row md:justify-content-between md:align-items-center">
-                        <h5 class="m-0">Administrar Marcas</h5>
+                        <h5 class="m-0">Administrar Tipos Equipo</h5>
                         <span class="block mt-2 md:mt-0 p-input-icon-left">
                             <i class="pi pi-search"></i>
                             <input pInputText type="text" (input)="onGlobalFilter(dt, $event)" placeholder="Buscar..."  class="w-full sm:w-auto"/>
@@ -35,27 +35,27 @@
                         <th style="width: 3rem">
                             <p-tableHeaderCheckbox></p-tableHeaderCheckbox>
                         </th>
-                        <th pSortableColumn="marca.mar_id">Id <p-sortIcon field="marca.mar_id"></p-sortIcon></th>
-                        <th pSortableColumn="marca.mar_descripcion">Descripción <p-sortIcon field="marca.mar_descripcion"></p-sortIcon></th>
+                        <th pSortableColumn="tipoequipo.teq_id">Id <p-sortIcon field="tipoequipo.teq_id"></p-sortIcon></th>
+                        <th pSortableColumn="tipoequipo.teq_descripcion">Descripción <p-sortIcon field="tipoequipo.teq_descripcion"></p-sortIcon></th>
                         <th></th>
                     </tr>
                 </ng-template>
-                <ng-template pTemplate="body" let-marca>
+                <ng-template pTemplate="body" let-tipoequipo>
                     <tr>
                         <td>
-                            <p-tableCheckbox [value]="marca"></p-tableCheckbox>
+                            <p-tableCheckbox [value]="tipoequipo"></p-tableCheckbox>
                         </td>
                         <td style="width:14%; min-width:10rem;"><span class="p-column-title">Id</span>
-                            {{marca.mar_id}}
+                            {{tipoequipo.teq_id}}
                         </td>
                         <td style="width:24%; min-width:10rem;">
                             <span class="p-column-title">Descripción</span>
-                            {{marca.mar_descripcion}}
+                            {{tipoequipo.teq_descripcion}}
                         </td>
                         <td style="text-align: rigth;">
                             <div class="flex" style="margin-left: auto; width: fit-content;">
-                                <button pButton pRipple icon="pi pi-pencil" class="p-button-rounded p-button-success mr-2" (click)="editData(marca)"></button>
-                                <button pButton pRipple icon="pi pi-trash" class="p-button-rounded p-button-warning" (click)="deleteData(marca)"></button>
+                                <button pButton pRipple icon="pi pi-pencil" class="p-button-rounded p-button-success mr-2" (click)="editData(tipoequipo)"></button>
+                                <button pButton pRipple icon="pi pi-trash" class="p-button-rounded p-button-warning" (click)="deleteData(tipoequipo)"></button>
                             </div>
                         </td>
                     </tr>
@@ -63,12 +63,12 @@
             </p-table>
         </div>
 
-        <p-dialog [(visible)]="dataDialog" [style]="{width: '450px'}" header="Guardar Marca" [modal]="true" class="p-fluid" (onHide)="hideDialog()">
+        <p-dialog [(visible)]="dataDialog" [style]="{width: '450px'}" header="Guardar Tipo Equipo" [modal]="true" class="p-fluid" (onHide)="hideDialog()">
             <ng-template pTemplate="content">
                 <div class="field">
-                    <label for="mar_descripcion">Descripción</label>
-                    <input type="text" pInputText id="name" [(ngModel)]="marca.mar_descripcion" required autofocus [ngClass]="{'ng-invalid ng-dirty' : submitted && !marca.mar_descripcion}"/>
-                    <small class="ng-dirty ng-invalid" *ngIf="submitted && !marca.mar_descripcion">Requerido.</small>
+                    <label for="teq_descripcion">Descripción</label>
+                    <input type="text" pInputText id="name" [(ngModel)]="tipoequipo.teq_descripcion" required autofocus [ngClass]="{'ng-invalid ng-dirty' : submitted && !tipoequipo.teq_descripcion}"/>
+                    <small class="ng-dirty ng-invalid" *ngIf="submitted && !tipoequipo.teq_descripcion">Requerido.</small>
                 </div>
             </ng-template>
             <ng-template pTemplate="footer">
@@ -80,7 +80,7 @@
         <p-dialog [(visible)]="deleteDataDialog" header="Confirmación" [modal]="true" [style]="{width:'450px'}">
             <div class="flex align-items-center justify-content-center">
                 <i class="pi pi-exclamation-triangle mr-3" style="font-size: 2rem"></i>
-                <span *ngIf="marca">Seguro que desea eliminar el registro <b>{{marca.mar_descripcion}}</b>?</span>
+                <span *ngIf="tipoequipo">Seguro que desea eliminar el registro <b>{{tipoequipo.teq_descripcion}}</b>?</span>
             </div>
             <ng-template pTemplate="footer">
                 <button pButton pRipple icon="pi pi-times" class="p-button-text" label="No" (click)="deleteDataDialog = false"></button>

@@ -23,6 +23,7 @@ export class AppMenuComponent implements OnInit {
                 label:'Administración', icon:'pi pi-fw pi-cog',
                 items:[
                     {label: 'Marcas', icon: 'pi pi-fw pi-th-large', routerLink: ['pages/marcas']},
+                    {label: 'Tipos Equipo', icon: 'pi pi-fw pi-box', routerLink: ['pages/tipos-equipo']},
                     {label: 'Equipos', icon: 'pi pi-fw pi-desktop', routerLink: ['equipos']},
                 ]
             },            
