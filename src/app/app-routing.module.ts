@@ -47,7 +47,8 @@ import {PerfilComponent } from './demo/view/perfil.component';
 import {SponsorsViewComponent } from './demo/view/sponsors-view/sponsors-view.component';
 
 import {MarcasComponent } from './demo/view/marcas.component';
-import { AppTipoEquipoComponent } from './pages/app.tipo.equipo.component';
+import {AppTipoEquipoComponent } from './pages/app.tipo.equipo.component';
+import {AppEquiposComponent} from './pages/app.equipos.component';
 
 export const routes: Routes = [
     {path: 'login', component: AppLoginComponent},
@@ -116,6 +117,7 @@ export const routes: Routes = [
             {path: 'pages/perfil', component: PerfilComponent},
             {path: 'pages/sponsors-view/:id', component: SponsorsViewComponent},
             {path: 'pages/tipos-equipo', component: AppTipoEquipoComponent},
+            {path: 'pages/equipos', component: AppEquiposComponent},
         ], canActivate: [AuthGuard]
     },
     {path: 'error', component: AppErrorComponent},
