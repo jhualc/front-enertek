@@ -90,7 +90,7 @@ export class AppEquiposComponent implements OnInit {
           if(!resp.error && resp){
                   this.equipos=resp.equipo;
                   // "Join" de los dos arrays basados en la clave 'mar_id'
-                  const joinedData = this.equipos.map(equipo => {
+                /*  const joinedData = this.equipos.map(equipo => {
                     const marca = this.marcas.find(g => g.mar_id === equipo.mar_id);
                     const tipoequipo = this.tiposequipo.find(g => g.teq_id === equipo.teq_id);
                     return {
@@ -99,7 +99,8 @@ export class AppEquiposComponent implements OnInit {
                       tipoequipo: tipoequipo ? tipoequipo.teq_descripcion : 'Sin tipo'
                     };
                   });
-                  this.equipos=joinedData;
+                  this.equipos=joinedData; 
+                */
                   this.carga = false;
           }else{
             if(resp.error == 'Unauthorized'){
