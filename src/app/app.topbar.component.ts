@@ -389,35 +389,43 @@ import { ActivatedRoute, Router } from '@angular/router';
     `
 })
 export class AppTopBarComponent {
-
-    activeItem: number;
-	user:any = null;
-	back:string = URL_FILESERVER +"/storage/";
-
-    constructor(public appMain: AppMainComponent,
-		private route: Router,
-		private authService: AuthService) {
-
-			if(this.authService.isLogin()){
-				this.user = JSON.parse(localStorage.getItem("user") ?? '');
-				if (this.user.avatar==null || this.user.avatar==""){
-					this.user.avatar="users/non-avatar.svg";
-				}
-			  }
-
+	activeItem: number;
+	user: any = null;
+	back: string = URL_FILESERVER + "/storage/";
+  
+	constructor(
+	  public appMain: AppMainComponent,
+	  private route: Router,
+	  private authService: AuthService
+	) {
+	  if (this.authService.isLogin()) {
+		try {
+		  const userString = localStorage.getItem("user");
+		  this.user = userString
+			? JSON.parse(userString)
+			: { avatar: "users/non-avatar.svg" }; // Valor predeterminado
+		  if (!this.user.avatar) {
+			this.user.avatar = "users/non-avatar.svg"; // Validación del avatar
+		  }
+		} catch (error) {
+		  console.error("Error parsing user data:", error);
+		  this.user = { avatar: "users/non-avatar.svg" }; // Objeto predeterminado en caso de error
 		}
-
-    mobileMegaMenuItemClick(index) {
-        this.appMain.megaMenuMobileClick = true;
-        this.activeItem = this.activeItem === index ? null : index;
-	}
-
-	signout(){
-		this.authService.logout();
-	}
-
-	irAPaginaDestino(pagina: string) {
-		this.appMain.topbarMobileMenuActive=false;
-		this.route.navigate([pagina]);
 	  }
-}
+	}
+  
+	mobileMegaMenuItemClick(index) {
+	  this.appMain.megaMenuMobileClick = true;
+	  this.activeItem = this.activeItem === index ? null : index;
+	}
+  
+	signout() {
+	  this.authService.logout();
+	}
+  
+	irAPaginaDestino(pagina: string) {
+	  this.appMain.topbarMobileMenuActive = false;
+	  this.route.navigate([pagina]);
+	}
+  }
+  

@@ -132,15 +132,26 @@ export class AppMenuComponent implements OnInit {
             {label: 'Información Evento', icon: 'pi pi-fw pi-info-circle', routerLink: ['pages/acerca']},
         ];
 
-        if(this.authService.isLogin()){
-            this.user = JSON.parse(localStorage.getItem("user") ?? '');
-            if (this.user.perfil==null || this.user.perfil=="Invitado"){
-                const index = this.model.findIndex(p => p.label === 'Registrar Usuario');
-                if (index !== -1) {
-                    this.model.splice(index, 1);
+        if (this.authService.isLogin()) {
+            try {
+              const userString = localStorage.getItem("user");
+              this.user = userString ? JSON.parse(userString) : null;
+          
+              if (this.user?.perfil === null || this.user?.perfil === "Invitado") {
+                if (Array.isArray(this.model)) {
+                  const index = this.model.findIndex(p => p.label === "Registrar Usuario");
+                  if (index !== -1) {
+                    this.model.splice(index, 1); // Elimina la opción "Registrar Usuario"
+                  }
+                } else {
+                  console.warn("El modelo de menú (this.model) no está inicializado o no es un array.");
                 }
+              }
+            } catch (error) {
+              console.error("Error al procesar los datos del usuario:", error);
             }
-          };        
+          }
+             
     }
 
     onMenuClick() {

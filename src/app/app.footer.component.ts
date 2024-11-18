@@ -69,31 +69,62 @@ export class AppFooterComponent implements OnInit {
  constructor(private authService: AuthService,
 			private PersonaDataService: PersonaDataService){}
 	
-    ngOnInit() {
-
-        
-
-        if(!this.authService.isLogin()){
+      ngOnInit() {
+        try {
+          // Verifica si el usuario está autenticado
+          if (!this.authService.isLogin()) {
             this.authService.logout();
-          
-        }
-        this.user = JSON.parse(localStorage.getItem("user") ?? '');
-        console.log("USERID:::", this.user);
-        
-        this.PersonaDataService.getUser(this.user.id)
-        .subscribe({
-            next: (respuesta) =>{
-                if ((respuesta as any).user.usr_datos_personales == 0  ){
-                    this.isAccepted = true;
-                    }
-        
+            return;
+          }
+      
+          // Intenta obtener los datos del usuario desde localStorage
+          const userString = localStorage.getItem("user");
+          this.user = userString ? JSON.parse(userString) : null;
+      
+          if (!this.user || !this.user.id) {
+            console.error("Error: No se pudo recuperar el usuario o falta el ID.");
+            this.authService.logout();
+            return;
+          }
+      
+          console.log("USERID:::", this.user);
+      
+          // Realiza la solicitud para obtener información adicional del usuario
+          this.PersonaDataService.getUser(this.user.id).subscribe({
+            next: (respuesta) => {
+              if (respuesta && (respuesta as any).user?.usr_datos_personales === 0) {
+                this.isAccepted = true;
+              } else {
+                console.warn("Los datos de la respuesta no son válidos:", respuesta);
+              }
             },
             error: (error) => {
-              console.error('Error al autorizar datos de la persona', error);
-            }
-            
-        })
-	}
+              console.error("Error al autorizar datos de la persona:", error);
+          
+              // Manejo de errores comunes
+              if (error.status === 0) {
+                console.error(
+                  "No se pudo conectar al servidor. Verifica la URL o la conectividad."
+                );
+              } else if (error.status >= 400 && error.status < 500) {
+                console.error(
+                  "Error del cliente. Verifica los datos enviados en la solicitud.",
+                  error.message
+                );
+              } else if (error.status >= 500) {
+                console.error(
+                  "Error del servidor. Es posible que el backend tenga un problema."
+                );
+              }
+            },
+          });
+          
+        } catch (error) {
+          console.error("Error en ngOnInit:", error);
+          this.authService.logout();
+        }
+      }
+      
 	
 	handleAuthorization(accepted: boolean) {
 

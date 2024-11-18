@@ -22,7 +22,7 @@ export class PersonaDataService {
 
   getUser(id: any) {
     let url = `${URL_SERVICIOS}/getUser/${id}`;
-    return this.http.get(url); 
+    return     this.http.get(url); 
   }
 
   

@@ -43,10 +43,15 @@ import { ChatPanelComponent } from './modules/chat-panel/chat-panel.component';
 import { AcercadeComponent } from './demo/view/acercade.component';
 import { PerfilComponent } from './demo/view/perfil.component';
 import { SponsorsViewComponent } from './demo/view/sponsors-view/sponsors-view.component';
+import { LocationPickerComponent } from './demo/view/location-picker/location-picker.component';
+import { ReportListComponent } from './demo/view/report-list/report-list.component';
+
 
 export const routes: Routes = [
     {path: 'login', component: AppLoginComponent},
     {path: 'register', component: AppRegisterComponent},
+    {path: 'inicio', component: LocationPickerComponent},
+    {path: 'reporte', component: ReportListComponent},
 /*
     {
         path: '',
@@ -113,7 +118,7 @@ export const routes: Routes = [
     {path: 'error', component: AppErrorComponent},
     {path: 'accessdenied', component: AppAccessdeniedComponent},
     {path: 'notfound', component: AppNotfoundComponent},
-    {path: '**', redirectTo: '/notfound'}
+    {path: '**', redirectTo: '/dash'}
 
 ];
 

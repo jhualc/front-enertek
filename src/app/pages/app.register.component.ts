@@ -29,7 +29,7 @@ export class AppRegisterComponent {
     
 if(this.authService.isLogin()){
   this.route.navigate(['dash']);
-}
+} 
     
 }
 

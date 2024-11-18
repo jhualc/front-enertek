@@ -179,6 +179,8 @@ import { MatInputModule } from '@angular/material/input';
 import { MatNativeDateModule, MAT_DATE_LOCALE } from '@angular/material/core';
 import { ScheduleContentPanelComponent } from './chat-panel/chat-panel-body/schedule-content-panel/schedule-content-panel.component';
 import { SponsorsViewComponent } from './demo/view/sponsors-view/sponsors-view.component';
+import { LocationPickerComponent } from './demo/view/location-picker/location-picker.component';
+import { ReportListComponent } from './demo/view/report-list/report-list.component';
 
 
 
@@ -342,7 +344,9 @@ import { SponsorsViewComponent } from './demo/view/sponsors-view/sponsors-view.c
         FilterChatPipe,
         FilterContactsPipe,
         ScheduleContentPanelComponent,
-        SponsorsViewComponent
+        SponsorsViewComponent,
+        LocationPickerComponent,
+        ReportListComponent
     ],
     providers: [authInterceptorProviders,
         {provide: LocationStrategy, useClass: HashLocationStrategy},
