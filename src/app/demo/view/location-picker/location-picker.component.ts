@@ -68,13 +68,15 @@ export class LocationPickerComponent implements OnInit {
     }
     this.marker = L.marker(latlng).addTo(this.map);
   }
-
+  
   getAddressFromCoordinates(lat: number, lng: number): void {
     const url = `https://cityalertapi-dev.azurewebsites.net/geo/addresses?lat=${lat}&lon=${lng}`;
-    
-    this.http.get(url, { responseType: 'text' }).subscribe(
+  
+    // No es necesario especificar 'responseType' si deseas que Angular maneje la respuesta como JSON por defecto
+    this.http.get<{ Address: string }>(url).subscribe(
       (response) => {
-        this.address = response; // Usamos directamente la respuesta de texto como la dirección
+        // Accedemos a la propiedad 'Address' de la respuesta JSON
+        this.address = response.Address;
       },
       (error) => {
         console.error('Error fetching address:', error);
@@ -82,6 +84,7 @@ export class LocationPickerComponent implements OnInit {
       }
     );
   }
+  
   
   onSubmit(): void {
     this.data = {

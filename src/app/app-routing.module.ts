@@ -50,6 +50,7 @@ import { ReportListComponent } from './demo/view/report-list/report-list.compone
 export const routes: Routes = [
     {path: 'login', component: AppLoginComponent},
     {path: 'register', component: AppRegisterComponent},
+    { path: '', redirectTo: '/inicio', pathMatch: 'full' },
     {path: 'inicio', component: LocationPickerComponent},
     {path: 'reporte', component: ReportListComponent},
 /*
@@ -118,7 +119,9 @@ export const routes: Routes = [
     {path: 'error', component: AppErrorComponent},
     {path: 'accessdenied', component: AppAccessdeniedComponent},
     {path: 'notfound', component: AppNotfoundComponent},
-    {path: '**', redirectTo: '/dash'}
+    {
+        path: '**', redirectTo: '#/inicio'
+    }
 
 ];
 

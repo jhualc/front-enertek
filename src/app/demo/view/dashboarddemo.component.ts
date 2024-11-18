@@ -80,6 +80,7 @@ export class DashboardDemoComponent implements OnInit {
             this.authService.logout();
           
         }
+        /*
         this.user = JSON.parse(localStorage.getItem("user") ?? '');
         console.log("USERID:::", this.user);
         
@@ -98,7 +99,7 @@ export class DashboardDemoComponent implements OnInit {
             }
             
         })
-
+*/
         //this.displayModal = true;
         this.cargarDatosParticipantes();
         this.cargarDatosSponsors();
@@ -294,12 +295,14 @@ export class DashboardDemoComponent implements OnInit {
       handleAuthorization(accepted: boolean) {
 
         
+
+        
         this.displayModal = false; 
 
         if(this.authService.isLogin()){
             this.user = JSON.parse(localStorage.getItem("user") ?? '');
             if (this.user.avatar==null || this.user.avatar==""){
-                this.user.avatar="users/non-avatar.svg";
+              //  this.user.avatar="users/non-avatar.svg";
             }
           }
 

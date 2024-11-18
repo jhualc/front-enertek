@@ -90,6 +90,7 @@ export class AppFooterComponent implements OnInit {
           console.log("USERID:::", this.user);
       
           // Realiza la solicitud para obtener información adicional del usuario
+/*
           this.PersonaDataService.getUser(this.user.id).subscribe({
             next: (respuesta) => {
               if (respuesta && (respuesta as any).user?.usr_datos_personales === 0) {
@@ -118,7 +119,7 @@ export class AppFooterComponent implements OnInit {
               }
             },
           });
-          
+          */
         } catch (error) {
           console.error("Error en ngOnInit:", error);
           this.authService.logout();
@@ -134,7 +135,7 @@ export class AppFooterComponent implements OnInit {
         if(this.authService.isLogin()){
             this.user = JSON.parse(localStorage.getItem("user") ?? '');
             if (this.user.avatar==null || this.user.avatar==""){
-                this.user.avatar="users/non-avatar.svg";
+             //   this.user.avatar="users/non-avatar.svg";
             }
           }
 

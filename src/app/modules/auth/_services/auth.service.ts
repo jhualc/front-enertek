@@ -7,8 +7,8 @@ import { Router } from '@angular/router';
   providedIn: 'root',
 })
 export class AuthService {
-  private apiUrl = 'https://cityalertapi-dev.azurewebsites.net/auth'; 
-  private registryUrl = 'https://cityalertapi-dev.azurewebsites.net/user';// URL base de la API
+  private apiUrl = 'https://cityalertapi-dev.azurewebsites.net/auth/'; 
+  private registryUrl = 'https://cityalertapi-dev.azurewebsites.net/api/user/';// URL base de la API
   private tokenKey = 'auth_token'; // Clave para almacenar el token
 
   constructor(private http: HttpClient, private router: Router) {}
@@ -25,6 +25,7 @@ export class AuthService {
 
   // Guardar el token en el localStorage
   setToken(token: string): void {
+    console.log("SetarToken::", token);
     localStorage.setItem(this.tokenKey, token);
   }
 

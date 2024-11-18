@@ -8,6 +8,8 @@ import { AuthService } from '../modules/auth/_services/auth.service';
   templateUrl: './app.login.component.html',
 })
 export class AppLoginComponent implements OnInit {
+
+  
   loginForm!: FormGroup;
   hasError: boolean = false;
   hasErrorText: string = '';
@@ -20,6 +22,8 @@ export class AppLoginComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
+
+    console.log("Ingrsarndo");
     this.initForm();
   }
 
@@ -59,12 +63,12 @@ export class AppLoginComponent implements OnInit {
       .login(this.loginForm.value.email, this.loginForm.value.password)
       .subscribe(
         (resp: any) => {
-          console.log(resp);
+          console.log("Autenticado",resp);
           if (resp && !resp.error) {
             // Guardar el token y redirigir
-            let response = this.authService.setToken(resp.token);
+            let response = this.authService.setToken(resp.Token);
             console.log("REsponse::", response);
-            this.router.navigate(['/dashboard']); // Redirigir después del login exitoso
+            this.router.navigate(['/inicio']); // Redirigir después del login exitoso
           } else {
             this.hasError = true;
             this.hasErrorText = 'Usuario o contraseña incorrectos.';

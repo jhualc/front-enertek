@@ -256,11 +256,11 @@ import { ActivatedRoute, Router } from '@angular/router';
 						<li #profile class="topbar-item profile-item" [ngClass]="{'active-topmenuitem': appMain.activeTopbarItem === profile}">
 							<a href="#" (click)="appMain.onTopbarItemClick($event,profile)">
                             <span class="profile-image-wrapper">
-								<div class="avatar avatar-online mr-2"><img src="{{back}}{{user.avatar}}" alt="mirage-layout" /></div>
+								<!--div class="avatar avatar-online mr-2"><img src="{{back}}{{user.avatar}}" alt="mirage-layout" /></div -->
                             </span>
 								<span class="profile-info-wrapper">
-                                <h3>{{user.name}}</h3>
-                                <span>{{user.perfil}}</span>
+                                <!--h3>{{user.name}}</h3-->
+                                <!--span>{{user.perfil}}</span-->
                             </span>
 							</a>
 							<ul class="profile-item-submenu fadeInDown">
@@ -270,10 +270,10 @@ import { ActivatedRoute, Router } from '@angular/router';
 										<img src="assets/layout/images/topbar/asset-bars.svg" alt="mirage-layout" />
 									</div>
 									<div class="profile">
-										<div class="avatar avatar-online mr-2"><img src="{{back}}{{user.avatar}}" alt="mirage-layout"
-														width="40" /></div>
-										<h1>{{user.name}}</h1>
-										<span>{{user.perfil}}</span>
+										<!--div class="avatar avatar-online mr-2"><img src="{{back}}{{user.avatar}}" alt="mirage-layout"
+														width="40" /></div-->
+										<!--h1>{{user.name}}</h1-->
+										<!--span>{{user.perfil}}</span-->
 									</div>
 								</li>
 <!--
@@ -326,11 +326,11 @@ import { ActivatedRoute, Router } from '@angular/router';
 						<li #mobileProfile class="topbar-item profile-item" [ngClass]="{'active-topmenuitem': appMain.activeTopbarItem === mobileProfile}">
 							<a href="#" (click)="appMain.onTopbarItemClick($event,mobileProfile)">
                             <span class="profile-image-wrapper">
-							<div class="avatar avatar-online mr-2"><img src="{{back}}{{user.avatar}}"  alt="mirage-layout" /></div>
+							<!--div class="avatar avatar-online mr-2"><img src="{{back}}{{user.avatar}}"  alt="mirage-layout" /></div>
                             </span>
 								<span class="profile-info-wrapper">
                                 <h3>{{user.name}}</h3>
-                                <span>{{user.perfil}}</span>
+                                <span>{{user.perfil}}</span-->
                             </span>
 							</a>
 							<ul class="fadeInDown">
@@ -340,9 +340,9 @@ import { ActivatedRoute, Router } from '@angular/router';
 										<img src="assets/layout/images/topbar/asset-bars.svg" alt="mirage-layout" />
 									</div>
 									<div class="profile">
-										<div class="avatar avatar-online mr-2"><img src=  "{{back}}{{user.avatar}}" alt="mirage-layout" width="45" /></div>
+										<!--div class="avatar avatar-online mr-2"><img src=  "{{back}}{{user.avatar}}" alt="mirage-layout" width="45" /></div>
 										<h1>{{user.name}}</h1>
-										<span>{{user.perfil}}</span>
+										<span>{{user.perfil}}</span-->
 									</div>
 								</li>
 <!-- 								<li>
@@ -400,13 +400,13 @@ export class AppTopBarComponent {
 	) {
 	  if (this.authService.isLogin()) {
 		try {
-		  const userString = localStorage.getItem("user");
+	/*	  const userString = localStorage.getItem("user");
 		  this.user = userString
 			? JSON.parse(userString)
 			: { avatar: "users/non-avatar.svg" }; // Valor predeterminado
 		  if (!this.user.avatar) {
 			this.user.avatar = "users/non-avatar.svg"; // Validación del avatar
-		  }
+		  }*/
 		} catch (error) {
 		  console.error("Error parsing user data:", error);
 		  this.user = { avatar: "users/non-avatar.svg" }; // Objeto predeterminado en caso de error
