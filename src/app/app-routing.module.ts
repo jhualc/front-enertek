@@ -50,6 +50,7 @@ import {MarcasComponent } from './demo/view/marcas.component';
 import {AppTipoEquipoComponent } from './pages/app.tipo.equipo.component';
 import {AppEquiposComponent} from './pages/app.equipos.component';
 import {AppUsuariosComponent} from './pages/app.usuarios.component';
+import {AppBateriasComponent} from './pages/app.baterias.component';
 
 export const routes: Routes = [
     {path: 'login', component: AppLoginComponent},
@@ -120,6 +121,7 @@ export const routes: Routes = [
             {path: 'pages/tipos-equipo', component: AppTipoEquipoComponent},
             {path: 'pages/equipos', component: AppEquiposComponent},
             {path: 'pages/usuarios', component: AppUsuariosComponent},
+            {path: 'pages/baterias', component: AppBateriasComponent},
         ], canActivate: [AuthGuard]
     },
     {path: 'error', component: AppErrorComponent},
