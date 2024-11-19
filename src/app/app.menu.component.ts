@@ -18,11 +18,11 @@ export class AppMenuComponent implements OnInit {
 
     ngOnInit() {
         this.model = [
-            {label: 'Hidrógeno Colombia', icon: 'pi pi-fw pi-home', routerLink: ['dash']},
-            {label: 'Agenda', icon: 'pi pi-fw pi-calendar', routerLink: ['pages/agenda/1']},
-            {label: 'Conferencistas', icon: 'pi pi-fw pi-megaphone', routerLink: ['pages/participantes']},
-            {label: 'Networking', icon: 'pi pi-fw pi-send', routerLink: ['chat']},
-            {label: 'Patrocinadores', icon: 'pi pi-fw pi-bars', routerLink: ['pages/sponsors']},
+            {label: 'Registrar incidente', icon: 'pi pi-fw pi-home', routerLink: ['/inicio']},
+            {label: 'Ver reportes', icon: 'pi pi-fw pi-calendar', routerLink: ['/reporte']},
+            {label: 'Otros reportes', icon: 'pi pi-fw pi-megaphone', routerLink: ['/reporte']},
+            {label: 'Acerca de', icon: 'pi pi-fw pi-send', routerLink: ['/inicio']},
+            {label: 'Patrocinadores', icon: 'pi pi-fw pi-bars', routerLink: ['/inicio']},
 /*             {
                 label: 'Agenda', icon: 'pi pi-fw pi-star-fill', routerLink: ['/uikit'],
                 items: [
@@ -78,7 +78,7 @@ export class AppMenuComponent implements OnInit {
                     {label: 'Mensajes', icon: 'pi pi-fw pi-inbox', routerLink: ['chat']},
                                     ]
             }, */
-            {label: 'Registrar Usuario', icon: 'pi pi-fw pi-user-plus', routerLink: ['pages/register']},
+            {label: 'Registrar Usuario', icon: 'pi pi-fw pi-user-plus', routerLink: ['register']},
             /*,
             {
                 label: 'Hierarchy', icon: 'pi pi-fw pi-sitemap',

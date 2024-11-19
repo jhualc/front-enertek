@@ -50,9 +50,9 @@ import { ReportListComponent } from './demo/view/report-list/report-list.compone
 export const routes: Routes = [
     {path: 'login', component: AppLoginComponent},
     {path: 'register', component: AppRegisterComponent},
-    { path: '', redirectTo: '/inicio', pathMatch: 'full' },
-    {path: 'inicio', component: LocationPickerComponent},
-    {path: 'reporte', component: ReportListComponent},
+    
+    
+    
 /*
     {
         path: '',
@@ -77,6 +77,9 @@ export const routes: Routes = [
         path: '', component: AppMainComponent,
         children: [
             {path: '', component: DashboardDemoComponent},
+            { path: '', redirectTo: '/inicio', pathMatch: 'full' },
+            {path: 'inicio', component: LocationPickerComponent},
+            {path: 'reporte', component: ReportListComponent},
             {path: 'dash', component: DashboardDemoComponent},
             {path: 'uikit/register', component: FormLayoutDemoComponent},
             {path: 'uikit/floatlabel', component: FloatLabelDemoComponent},
