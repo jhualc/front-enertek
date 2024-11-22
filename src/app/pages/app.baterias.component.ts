@@ -1,10 +1,8 @@
 import {Component, OnInit} from '@angular/core';
-import {Equipo} from '../demo/domain/equipo';
+import {Bateria} from '../demo/domain/bateria';
 import {Marca} from '../demo/domain/marca';
-import {TipoEquipo} from '../demo/domain/tipo.equipo';
-import {EquipoService } from '../demo/service/equipo.service';
+import {BateriaService } from '../demo/service/bateria.service';
 import {MarcaService } from '../demo/service/marca.service';
-import {TipoEquipoService } from '../demo/service/tipo.equipo.service';
 import {ConfirmationService, MessageService} from 'primeng/api';
 import {BreadcrumbService} from '../breadcrumb.service';
 import {Table} from 'primeng/table';
@@ -24,13 +22,11 @@ export class AppBateriasComponent implements OnInit {
 
     marcas: Marca[] = [];
 
-    tiposequipo: TipoEquipo[] = [];
+    baterias: Bateria[] = [];
 
-    equipos: Equipo[] = [];
+    bateria: Bateria = {};
 
-    equipo: Equipo = {};
-
-    selectedRows: Equipo[] = [];
+    selectedRows: Bateria[] = [];
 
     submitted: boolean = false;
 
@@ -42,11 +38,11 @@ export class AppBateriasComponent implements OnInit {
     
     carga: boolean = true;
 
-    constructor(private equiposervice: EquipoService, private marcaservice: MarcaService, private tiposequiposervice: TipoEquipoService, private messageService: MessageService,
+    constructor(private bateriaservice: BateriaService, private marcaservice: MarcaService,  private messageService: MessageService,
                 private confirmationService: ConfirmationService, private breadcrumbService: BreadcrumbService) {
         this.breadcrumbService.setItems([
             { label: 'Administracion' },
-            { label: 'Equipos', routerLink: ['/pages/equipos'] }
+            { label: 'Baterías', routerLink: ['/pages/baterias'] }
         ]);
     }
  
@@ -68,27 +64,13 @@ export class AppBateriasComponent implements OnInit {
       })
     }
 
-    loadDataTiposEquipo(){
-      this.tiposequiposervice.get(null).subscribe((resp: any) => {
-        console.log(resp);
-        if(!resp.error && resp){
-                this.tiposequipo=resp.tipo_equipo;
-        }else{
-          if(resp.error == 'Unauthorized'){
-            console.log("Usuario no Autorizado");
-          }
-        }
-      })
-    }
-
     loadData(){
         this.carga = true;
         this.loadDataMarcas();
-        this.loadDataTiposEquipo();
-        this.equiposervice.get(null).subscribe((resp: any) => {
+        this.bateriaservice.get(null).subscribe((resp: any) => {
           console.log(resp);
           if(!resp.error && resp){
-                  this.equipos=resp.equipo;
+                  this.baterias=resp.bateria;
                   // "Join" de los dos arrays basados en la clave 'mar_id'
                 /*  const joinedData = this.equipos.map(equipo => {
                     const marca = this.marcas.find(g => g.mar_id === equipo.mar_id);
@@ -112,7 +94,7 @@ export class AppBateriasComponent implements OnInit {
       }
 
     openNew() {
-        this.equipo = {};
+        this.bateria = {};
         this.submitted = false;
         this.dataDialog = true;
     }
@@ -121,20 +103,20 @@ export class AppBateriasComponent implements OnInit {
         this.deleteRowsDialog = true;
     }
 
-    editData(equipo: Equipo) {
-        this.equipo = { ...equipo };
+    editData(bateria: Bateria) {
+        this.bateria = { ...bateria };
         this.dataDialog = true;
     }
 
-    deleteData(equipo: Equipo) {
+    deleteData(bateria: Bateria) {
         this.deleteDataDialog = true;
-        this.equipo = { ...equipo };
+        this.bateria = { ...bateria };
     }
 
     confirmDeleteSelected() {
         this.deleteRowsDialog = false;
         console.log(this.selectedRows);
-        this.equiposervice.deleteMultiple(this.selectedRows)
+        this.bateriaservice.deleteMultiple(this.selectedRows)
         .subscribe((resp: any) => {
           console.log(resp);
           this.deleteRowsDialog = false;
@@ -150,7 +132,7 @@ export class AppBateriasComponent implements OnInit {
 
     confirmDelete() {
         this.deleteDataDialog = false;
-        this.equiposervice.delete(this.equipo)
+        this.bateriaservice.delete(this.bateria)
         .subscribe((resp: any) => {
           console.log(resp);
           this.deleteDataDialog = false;
@@ -161,20 +143,20 @@ export class AppBateriasComponent implements OnInit {
             this.messageService.add({ severity: 'error', summary: 'Error!', detail: resp.message, life: 3000 });
           }
         }) 
-        this.equipo = {};
+        this.bateria = {};
     }
 
     hideDialog() {
         this.dataDialog = false;
         this.submitted = false;
-        this.equipo = {};
+        this.bateria = {};
         this.loadData();
     }
 
     saveData() {
         this.submitted = true;
-        if (this.equipo.equ_id) {
-            this.equiposervice.update(this.equipo)
+        if (this.bateria.bat_id) {
+            this.bateriaservice.update(this.bateria)
             .subscribe((resp: any) => {
               console.log(resp);
               if(!resp.error && resp){
@@ -188,12 +170,12 @@ export class AppBateriasComponent implements OnInit {
         }
         else
         {
-            this.equiposervice.store(this.equipo)
+            this.bateriaservice.store(this.bateria)
             .subscribe((resp: any) => {
               console.log(resp);
               if(!resp.error && resp){
                 this.messageService.add({ severity: 'success', summary: 'Exitoso!', detail: resp.message, life: 3000 });
-                this.equipo = {};
+                this.bateria = {};
               }else{
                 this.messageService.add({ severity: 'error', summary: 'Error!', detail: resp.message, life: 3000 });
               }

@@ -39,7 +39,8 @@
                         <th pSortableColumn="equ_modelo">Modelo <p-sortIcon field="equ_modelo"></p-sortIcon></th>
                         <th pSortableColumn="equ_serial">Serial <p-sortIcon field="equ_serial"></p-sortIcon></th>
                         <th pSortableColumn="equ_cant_baterias">Cantidad Baterías <p-sortIcon field="equ_cant_baterias"></p-sortIcon></th>
-                        <th pSortableColumn="marca">Marca <p-sortIcon field="emarca"></p-sortIcon></th>
+                        <th pSortableColumn="equ_potencia">Potencia <p-sortIcon field="equ_potencia"></p-sortIcon></th>
+                        <th pSortableColumn="marca">Marca <p-sortIcon field="marca"></p-sortIcon></th>
                         <th pSortableColumn="tipoequipo">Tipo Equipo <p-sortIcon field="tipoequipo"></p-sortIcon></th>
                         <th></th>
                     </tr>
@@ -64,6 +65,10 @@
                             <span class="p-column-title">Cantidad Baterías</span>
                             {{equipo.equ_cant_baterias}}
                         </td>
+                        <td style="width:15%; min-width:10rem;">
+                            <span class="p-column-title">Potencia</span>
+                            {{equipo.equ_potencia}}
+                        </td>                        
                         <td style="width:15%; min-width:10rem;">
                             <span class="p-column-title">Marca</span>
                             {{equipo.marca.mar_descripcion}}
@@ -104,7 +109,7 @@
                 </div>
                 <div class="field">
                     <label for="equ_serial">Serial</label>
-                    <input type="text" pInputText id="equ_serial" [(ngModel)]="equipo.equ_serial" required autofocus [ngClass]="{'ng-invalid ng-dirty' : submitted && !equipo.equ_serial}"/>
+                    <input type="text" pInputText id="equ_serial" [(ngModel)]="equipo.equ_serial" required [ngClass]="{'ng-invalid ng-dirty' : submitted && !equipo.equ_serial}"/>
                     <small class="ng-dirty ng-invalid" *ngIf="submitted && !equipo.equ_serial">Requerido.</small>
                 </div>
                 <div class="formgrid grid">
@@ -114,11 +119,16 @@
                         <small class="ng-dirty ng-invalid" *ngIf="submitted && !equipo.equ_cant_baterias">Requerido.</small>
                     </div>
                     <div class="field col">
-                        <label for="equ_qr_code">Código QR</label>
-                        <input type="text" pInputText id="equ_qr_code" [(ngModel)]="equipo.equ_qr_code" required autofocus [ngClass]="{'ng-invalid ng-dirty' : submitted && !equipo.equ_qr_code}"/>
-                        <small class="ng-dirty ng-invalid" *ngIf="submitted && !equipo.equ_qr_code">Requerido.</small>
-                    </div>                   
+                        <label for="equ_potencia">Potencia</label>
+                        <input type="text" pInputText id="equ_potencia" [(ngModel)]="equipo.equ_potencia" [ngClass]="{'ng-invalid ng-dirty' : submitted && !equipo.equ_potencia}" />
+                        <small class="ng-dirty ng-invalid" *ngIf="submitted && !equipo.equ_potencia">Requerido.</small>
+                    </div>                    
                 </div>                
+                <div class="field">
+                    <label for="equ_qr_code">Código QR</label>
+                    <input type="text" pInputText id="equ_qr_code" [(ngModel)]="equipo.equ_qr_code" required autofocus [ngClass]="{'ng-invalid ng-dirty' : submitted && !equipo.equ_qr_code}"/>
+                    <small class="ng-dirty ng-invalid" *ngIf="submitted && !equipo.equ_qr_code">Requerido.</small>
+                </div>  
             </ng-template>
             <ng-template pTemplate="footer">
                 <button pButton pRipple label="Cancelar" icon="pi pi-times" class="p-button-text" (click)="hideDialog()"></button>

@@ -6,4 +6,5 @@ export interface Equipo {
     teq_id?: string;
     equ_cant_baterias?: string;
     equ_qr_code?: string;
+    equ_potencia?: string;
 }

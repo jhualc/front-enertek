@@ -16,10 +16,10 @@
                 </ng-template>
             </p-toolbar>
 
-            <p-table #dt [value]="equipos" [columns]="cols" responsiveLayout="scroll" [rows]="10" 
+            <p-table #dt [value]="baterias" [columns]="cols" responsiveLayout="scroll" [rows]="10" 
                     [globalFilterFields]="['name','country.name','representative.name','status']" [rows]="10" 
                     [paginator]="true" [rowsPerPageOptions]="[10,20,50,100]" [showCurrentPageReport]="true" currentPageReportTemplate="Mostrando {first} a {last} de {totalRecords} registros" 
-                    [(selection)]="selectedRows" selectionMode="multiple" [rowHover]="true" dataKey="equ_id"
+                    [(selection)]="selectedRows" selectionMode="multiple" [rowHover]="true" dataKey="bat_id"
                     [loading]="carga" loadingIcon="pi pi-spin pi-spinner">
                 <ng-template pTemplate="caption">
                     <div class="flex flex-column md:flex-row md:justify-content-between md:align-items-center">
@@ -35,47 +35,42 @@
                         <th style="width: 3rem">
                             <p-tableHeaderCheckbox></p-tableHeaderCheckbox>
                         </th>
-                        <th pSortableColumn="equ_id">Id <p-sortIcon field="equ_id"></p-sortIcon></th>
-                        <th pSortableColumn="equ_modelo">Modelo <p-sortIcon field="equ_modelo"></p-sortIcon></th>
-                        <th pSortableColumn="equ_serial">Serial <p-sortIcon field="equ_serial"></p-sortIcon></th>
-                        <th pSortableColumn="equ_cant_baterias">Cantidad Baterías <p-sortIcon field="equ_cant_baterias"></p-sortIcon></th>
-                        <th pSortableColumn="marca">Marca <p-sortIcon field="emarca"></p-sortIcon></th>
-                        <th pSortableColumn="tipoequipo">Tipo Equipo <p-sortIcon field="tipoequipo"></p-sortIcon></th>
+                        <th pSortableColumn="bat_id">Id <p-sortIcon field="bat_id"></p-sortIcon></th>
+                        <th pSortableColumn="bat_modelo">Modelo <p-sortIcon field="bat_modelo"></p-sortIcon></th>
+                        <th pSortableColumn="bat_voltaje">Voltaje <p-sortIcon field="bat_voltaje"></p-sortIcon></th>
+                        <th pSortableColumn="bat_capacidad">Capacidad <p-sortIcon field="bat_capacidad"></p-sortIcon></th>
+                        <th pSortableColumn="marca">Marca <p-sortIcon field="marca"></p-sortIcon></th>
                         <th></th>
                     </tr>
                 </ng-template>
-                <ng-template pTemplate="body" let-equipo>
+                <ng-template pTemplate="body" let-bateria>
                     <tr>
                         <td>
-                            <p-tableCheckbox [value]="equipo"></p-tableCheckbox>
+                            <p-tableCheckbox [value]="bateria"></p-tableCheckbox>
                         </td>
                         <td style="width:14%; min-width:10rem;"><span class="p-column-title">Id</span>
-                            {{equipo.equ_id}}
+                            {{bateria.bat_id}}
                         </td>
                         <td style="width:20%; min-width:10rem;">
                             <span class="p-column-title">Modelo</span>
-                            {{equipo.equ_modelo}}
+                            {{bateria.bat_modelo}}
                         </td>                        
                         <td style="width:20%; min-width:10rem;">
-                            <span class="p-column-title">Serial</span>
-                            {{equipo.equ_serial}}
+                            <span class="p-column-title">Voltaje</span>
+                            {{bateria.bat_voltaje}}
                         </td>
                         <td style="width:15%; min-width:10rem;">
-                            <span class="p-column-title">Cantidad Baterías</span>
-                            {{equipo.equ_cant_baterias}}
+                            <span class="p-column-title">Capacidad</span>
+                            {{bateria.bat_capacidad}}
                         </td>
                         <td style="width:15%; min-width:10rem;">
                             <span class="p-column-title">Marca</span>
-                            {{equipo.marca.mar_descripcion}}
+                            {{bateria.marca.mar_descripcion}}
                         </td>
-                        <td style="width:15%; min-width:10rem;">
-                            <span class="p-column-title">Tipo Equipo</span>
-                            {{equipo.tipo_equipo.teq_descripcion}}
-                        </td>                                   
                         <td style="text-align: rigth;">
                             <div class="flex" style="margin-left: auto; width: fit-content;">
-                                <button pButton pRipple icon="pi pi-pencil" class="p-button-rounded p-button-success mr-2" (click)="editData(equipo)"></button>
-                                <button pButton pRipple icon="pi pi-trash" class="p-button-rounded p-button-warning" (click)="deleteData(equipo)"></button>
+                                <button pButton pRipple icon="pi pi-pencil" class="p-button-rounded p-button-success mr-2" (click)="editData(bateria)"></button>
+                                <button pButton pRipple icon="pi pi-trash" class="p-button-rounded p-button-warning" (click)="deleteData(bateria)"></button>
                             </div>
                         </td>
                     </tr>
@@ -83,41 +78,30 @@
             </p-table>
         </div>
 
-        <p-dialog [(visible)]="dataDialog" [style]="{width: '450px'}" header="Guardar Equipo" [modal]="true" class="p-fluid" (onHide)="hideDialog()">
+        <p-dialog [(visible)]="dataDialog" [style]="{width: '450px'}" header="Guardar Batería" [modal]="true" class="p-fluid" (onHide)="hideDialog()">
             <ng-template pTemplate="content">
                 <div class="field">
                     <label for="marca">Marca</label>
-                    <p-dropdown [(ngModel)]="equipo.mar_id" optionValue="mar_id" filter="true" optionLabel="mar_descripcion" [options]="marcas" placeholder="Seleccione..." [ngClass]="{'ng-invalid ng-dirty' : submitted && !equipo.mar_id}">
+                    <p-dropdown [(ngModel)]="bateria.mar_id" optionValue="mar_id" filter="true" optionLabel="mar_descripcion" [options]="marcas" placeholder="Seleccione..." [ngClass]="{'ng-invalid ng-dirty' : submitted && !bateria.mar_id}">
                     </p-dropdown>
-                    <small class="ng-dirty ng-invalid" *ngIf="submitted && !equipo.mar_id">Requerido.</small>
+                    <small class="ng-dirty ng-invalid" *ngIf="submitted && !bateria.mar_id">Requerido.</small>
                 </div>     
                 <div class="field">
-                    <label for="tipoequipo">Tipo Equipo</label>
-                    <p-dropdown [(ngModel)]="equipo.teq_id" optionValue="teq_id" filter="true" optionLabel="teq_descripcion" [options]="tiposequipo" placeholder="Seleccione..." [ngClass]="{'ng-invalid ng-dirty' : submitted && !equipo.teq_id}">
-                    </p-dropdown>
-                    <small class="ng-dirty ng-invalid" *ngIf="submitted && !equipo.teq_id">Requerido.</small>
-                </div>                  
-                <div class="field">
                     <label for="equ_modelo">Modelo</label>
-                    <input type="text" pInputText id="equ_modelo" [(ngModel)]="equipo.equ_modelo" required autofocus [ngClass]="{'ng-invalid ng-dirty' : submitted && !equipo.equ_modelo}"/>
-                    <small class="ng-dirty ng-invalid" *ngIf="submitted && !equipo.equ_modelo">Requerido.</small>
-                </div>
-                <div class="field">
-                    <label for="equ_serial">Serial</label>
-                    <input type="text" pInputText id="equ_serial" [(ngModel)]="equipo.equ_serial" required autofocus [ngClass]="{'ng-invalid ng-dirty' : submitted && !equipo.equ_serial}"/>
-                    <small class="ng-dirty ng-invalid" *ngIf="submitted && !equipo.equ_serial">Requerido.</small>
+                    <input type="text" pInputText id="bat_modelo" [(ngModel)]="bateria.bat_modelo" required autofocus [ngClass]="{'ng-invalid ng-dirty' : submitted && !bateria.bat_modelo}"/>
+                    <small class="ng-dirty ng-invalid" *ngIf="submitted && !bateria.bat_modelo">Requerido.</small>
                 </div>
                 <div class="formgrid grid">
                     <div class="field col">
-                        <label for="equ_cant_baterias">Cantidad Baterías</label>
-                        <input type="number" pInputText id="equ_cant_baterias" [(ngModel)]="equipo.equ_cant_baterias" [ngClass]="{'ng-invalid ng-dirty' : submitted && !equipo.equ_cant_baterias}" />
-                        <small class="ng-dirty ng-invalid" *ngIf="submitted && !equipo.equ_cant_baterias">Requerido.</small>
+                        <label for="equ_serial">Voltaje</label>
+                        <input type="number" pInputText id="bat_voltaje" [(ngModel)]="bateria.bat_voltaje" required autofocus [ngClass]="{'ng-invalid ng-dirty' : submitted && !bateria.bat_voltaje}"/>
+                        <small class="ng-dirty ng-invalid" *ngIf="submitted && !bateria.bat_voltaje">Requerido.</small>
                     </div>
                     <div class="field col">
-                        <label for="equ_qr_code">Código QR</label>
-                        <input type="text" pInputText id="equ_qr_code" [(ngModel)]="equipo.equ_qr_code" required autofocus [ngClass]="{'ng-invalid ng-dirty' : submitted && !equipo.equ_qr_code}"/>
-                        <small class="ng-dirty ng-invalid" *ngIf="submitted && !equipo.equ_qr_code">Requerido.</small>
-                    </div>                   
+                        <label for="equ_cant_baterias">Capacidad</label>
+                        <input type="text" pInputText id="bat_capacidad" [(ngModel)]="bateria.bat_capacidad" [ngClass]="{'ng-invalid ng-dirty' : submitted && !bateria.bat_capacidad}" />
+                        <small class="ng-dirty ng-invalid" *ngIf="submitted && !bateria.bat_capacidad">Requerido.</small>
+                    </div>
                 </div>                
             </ng-template>
             <ng-template pTemplate="footer">
@@ -129,7 +113,7 @@
         <p-dialog [(visible)]="deleteDataDialog" header="Confirmación" [modal]="true" [style]="{width:'450px'}">
             <div class="flex align-items-center justify-content-center">
                 <i class="pi pi-exclamation-triangle mr-3" style="font-size: 2rem"></i>
-                <span *ngIf="equipo">Seguro que desea eliminar el registro, modelo <b>{{equipo.equ_modelo}}</b>, serial <b>{{equipo.equ_serial}}</b>?</span>
+                <span *ngIf="bateria">Seguro que desea eliminar el registro, modelo <b>{{bateria.bat_modelo}}</b>, voltaje <b>{{bateria.bat_voltaje}}</b>?</span>
             </div>
             <ng-template pTemplate="footer">
                 <button pButton pRipple icon="pi pi-times" class="p-button-text" label="No" (click)="deleteDataDialog = false"></button>

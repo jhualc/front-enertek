@@ -1,4 +1,4 @@
-export interface Equipo {
+export interface Bateria {
     bat_id?: string;
     bat_modelo?: string;
     bat_voltaje?: string;
