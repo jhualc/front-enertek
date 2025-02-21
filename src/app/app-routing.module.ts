@@ -51,6 +51,7 @@ import {AppTipoEquipoComponent } from './pages/app.tipo.equipo.component';
 import {AppEquiposComponent} from './pages/app.equipos.component';
 import {AppUsuariosComponent} from './pages/app.usuarios.component';
 import {AppBateriasComponent} from './pages/app.baterias.component';
+import {AppClientesComponent} from './pages/app.clientes.component';
 
 export const routes: Routes = [
     {path: 'login', component: AppLoginComponent},
@@ -122,6 +123,7 @@ export const routes: Routes = [
             {path: 'pages/equipos', component: AppEquiposComponent},
             {path: 'pages/usuarios', component: AppUsuariosComponent},
             {path: 'pages/baterias', component: AppBateriasComponent},
+            {path: 'pages/clientes', component: AppClientesComponent},
         ], canActivate: [AuthGuard]
     },
     {path: 'error', component: AppErrorComponent},
