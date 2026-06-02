@@ -6,7 +6,8 @@
                 <ng-template pTemplate="left">
                     <div class="my-2">
                         <button pButton pRipple label="Agregar" icon="pi pi-plus" class="p-button-success mr-2" (click)="openNew()"></button>
-                        <button pButton pRipple label="Borrar" icon="pi pi-trash" class="p-button-danger" (click)="deleteSelectedRows()" [disabled]="!selectedRows || !selectedRows.length"></button>
+                        <button pButton pRipple label="Borrar" icon="pi pi-trash" class="p-button-danger mr-2" (click)="deleteSelectedRows()" [disabled]="!selectedRows || !selectedRows.length"></button>
+                        <button pButton pRipple label="Cargar Excel" icon="pi pi-file" class="p-button-warning mr-2" (click)="openCargar()"></button>
                     </div>
                 </ng-template>
 
@@ -134,6 +135,19 @@
                 <button pButton pRipple label="Cancelar" icon="pi pi-times" class="p-button-text" (click)="hideDialog()"></button>
                 <button pButton pRipple label="Guardar" icon="pi pi-check" class="p-button-text" (click)="saveData()"></button>
             </ng-template>
+        </p-dialog>
+
+        <p-dialog [(visible)]="dataCargar" [style]="{width: '450px'}" header="Carga Masiva Equipos" [modal]="true" class="p-fluid" (onHide)="hideDialog()">
+            <p-fileUpload name="file" 
+            accept=".xlsx"
+            url="{{urlsubirarchivo}}"
+            [maxFileSize]="10000000"
+            [auto]="false"
+            (onUpload)="onUpload($event)"
+            (onError)="onError($event)"
+            chooseLabel="Seleccionar"
+            uploadLabel="Cargar"
+            cancelLabel="Cancelar">></p-fileUpload>
         </p-dialog>
 
         <p-dialog [(visible)]="deleteDataDialog" header="Confirmación" [modal]="true" [style]="{width:'450px'}">

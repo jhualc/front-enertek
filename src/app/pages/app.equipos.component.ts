@@ -8,6 +8,7 @@ import {TipoEquipoService } from '../demo/service/tipo.equipo.service';
 import {ConfirmationService, MessageService} from 'primeng/api';
 import {BreadcrumbService} from '../breadcrumb.service';
 import {Table} from 'primeng/table';
+import { URL_SERVICIOS } from '../config/config';
 
 @Component({
     templateUrl: './app.equipos.component.html',
@@ -42,6 +43,10 @@ export class AppEquiposComponent implements OnInit {
     
     carga: boolean = true;
 
+    dataCargar: boolean = false;
+
+    urlsubirarchivo: string = '';
+
     constructor(private equiposervice: EquipoService, private marcaservice: MarcaService, private tiposequiposervice: TipoEquipoService, private messageService: MessageService,
                 private confirmationService: ConfirmationService, private breadcrumbService: BreadcrumbService) {
         this.breadcrumbService.setItems([
@@ -52,6 +57,7 @@ export class AppEquiposComponent implements OnInit {
  
     ngOnInit() {
         //this.productService.getProducts().then(data => this.products = data);
+        this.urlsubirarchivo=URL_SERVICIOS + '/upload-cliente-full';
         this.loadData();
     }
 
@@ -117,6 +123,12 @@ export class AppEquiposComponent implements OnInit {
         this.dataDialog = true;
     }
 
+    openCargar() {
+      this.equipo = {};
+      this.submitted = false;
+      this.dataCargar = true;
+  }
+
     deleteSelectedRows() {
         this.deleteRowsDialog = true;
     }
@@ -167,6 +179,7 @@ export class AppEquiposComponent implements OnInit {
     hideDialog() {
         this.dataDialog = false;
         this.submitted = false;
+        this.dataCargar = false;
         this.equipo = {};
         this.loadData();
     }
@@ -200,6 +213,15 @@ export class AppEquiposComponent implements OnInit {
             })            
         }
     }
+
+    onUpload(event: any) {
+      this.messageService.add({severity: 'success', summary: 'Exitoso!', detail: event.originalEvent.body.message, life: 3000});
+      this.hideDialog();
+    }
+
+    onError(event: any) {
+      this.messageService.add({ severity: 'error', summary: 'Error!', detail: event.error.message, life: 3000 });
+    }    
 
     onGlobalFilter(table: Table, event: Event) {
         table.filterGlobal((event.target as HTMLInputElement).value, 'contains');
