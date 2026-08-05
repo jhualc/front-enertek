@@ -1,19 +1,19 @@
 import { Component, OnInit } from '@angular/core';
-import { Cliente } from '../demo/domain/cliente';
-import { ClienteService } from '../demo/service/cliente.service';
+import { Sede } from '../demo/domain/sede';
+import { SedeService } from '../demo/service/sede.service';
 import { ConfirmationService, MessageService } from 'primeng/api';
 import { BreadcrumbService } from '../breadcrumb.service';
 import { Table } from 'primeng/table';
 import { TipoIdentificacion } from '../demo/domain/tipo.identificacion';
 import { URL_SERVICIOS } from '../config/config';
-import { Router } from '@angular/router';
+import { ActivatedRoute } from '@angular/router';
 
 @Component({
-  templateUrl: './app.clientes.component.html',
+  templateUrl: './app.cliente.sedes.component.html',
   providers: [MessageService, ConfirmationService],
   styleUrls: ['../../assets/demo/badges.scss']
 })
-export class AppClientesComponent implements OnInit {
+export class AppClientesSedesComponent implements OnInit {
 
   dataDialog: boolean = false;
 
@@ -23,11 +23,11 @@ export class AppClientesComponent implements OnInit {
 
   deleteRowsDialog: boolean = false;
 
-  clientes: Cliente[] = [];
+  sedes: Sede[] = [];
 
-  cliente: Cliente = {};
+  sede: Sede = {};
 
-  selectedRows: Cliente[] = [];
+  selectedRows: Sede[] = [];
 
   submitted: boolean = false;
 
@@ -41,6 +41,8 @@ export class AppClientesComponent implements OnInit {
 
   urlsubirarchivo: string = '';
 
+  cli_id: any;
+
   tiposId: TipoIdentificacion[] = [
     { tipid_id: 'CC', tipid_descripcion: 'CC' },
     { tipid_id: 'CE', tipid_descripcion: 'CE' },
@@ -48,10 +50,12 @@ export class AppClientesComponent implements OnInit {
     // más elementos aquí
   ];
 
-  constructor(private clienteservice: ClienteService, private messageService: MessageService,
+  constructor(
+    private messageService: MessageService,
     private confirmationService: ConfirmationService,
+    private route: ActivatedRoute,
     private breadcrumbService: BreadcrumbService,
-    private router: Router) {
+    private sedeservice: SedeService) {
     this.breadcrumbService.setItems([
       { label: 'Administracion' },
       { label: 'Clientes', routerLink: ['/pages/clientes'] }
@@ -61,15 +65,16 @@ export class AppClientesComponent implements OnInit {
   ngOnInit() {
     //this.productService.getProducts().then(data => this.products = data);
     this.urlsubirarchivo = URL_SERVICIOS + '/upload-excel';
+    this.cli_id = this.route.snapshot.params['id'];
     this.loadData();
   }
 
   loadData() {
     this.carga = true;
-    this.clienteservice.get(null).subscribe((resp: any) => {
+    this.sedeservice.get(this.cli_id).subscribe((resp: any) => {
       console.log(resp);
       if (!resp.error && resp) {
-        this.clientes = resp.cliente;
+        this.sedes = resp.data;
         this.carga = false;
       } else {
         if (resp.error == 'Unauthorized') {
@@ -81,13 +86,13 @@ export class AppClientesComponent implements OnInit {
   }
 
   openNew() {
-    this.cliente = {};
+    this.sede = {};
     this.submitted = false;
     this.dataDialog = true;
   }
 
   openCargar() {
-    this.cliente = {};
+    this.sede = {};
     this.submitted = false;
     this.dataCargar = true;
   }
@@ -96,24 +101,20 @@ export class AppClientesComponent implements OnInit {
     this.deleteRowsDialog = true;
   }
 
-  editData(cliente: Cliente) {
-    this.cliente = { ...cliente };
+  editData(sede: Sede) {
+    this.sede = { ...sede };
     this.dataDialog = true;
   }
 
-  deleteData(cliente: Cliente) {
+  deleteData(sede: Sede) {
     this.deleteDataDialog = true;
-    this.cliente = { ...cliente };
-  }
-
-  sedes(cliente: Cliente) {
-    this.router.navigate(['/pages/clientes/' + cliente.cli_id + '/sedes']);
+    this.sede = { ...sede };
   }
 
   confirmDeleteSelected() {
     this.deleteRowsDialog = false;
     console.log(this.selectedRows);
-    this.clienteservice.deleteMultiple(this.selectedRows)
+    this.sedeservice.deleteMultiple(this.selectedRows)
       .subscribe((resp: any) => {
         console.log(resp);
         this.deleteRowsDialog = false;
@@ -129,7 +130,7 @@ export class AppClientesComponent implements OnInit {
 
   confirmDelete() {
     this.deleteDataDialog = false;
-    this.clienteservice.delete(this.cliente)
+    this.sedeservice.delete(this.sede)
       .subscribe((resp: any) => {
         console.log(resp);
         this.deleteDataDialog = false;
@@ -140,21 +141,21 @@ export class AppClientesComponent implements OnInit {
           this.messageService.add({ severity: 'error', summary: 'Error!', detail: resp.message, life: 3000 });
         }
       })
-    this.cliente = {};
+    this.sede = {};
   }
 
   hideDialog() {
     this.dataDialog = false;
     this.dataCargar = false;
     this.submitted = false;
-    this.cliente = {};
+    this.sede = {};
     this.loadData();
   }
 
   saveData() {
     this.submitted = true;
-    if (this.cliente.cli_id) {
-      this.clienteservice.update(this.cliente)
+    if (this.sede.cls_id) {
+      this.sedeservice.update(this.sede)
         .subscribe((resp: any) => {
           console.log(resp);
           if (!resp.error && resp) {
@@ -167,12 +168,12 @@ export class AppClientesComponent implements OnInit {
         })
     }
     else {
-      this.clienteservice.store(this.cliente)
+      this.sedeservice.store(this.sede)
         .subscribe((resp: any) => {
           console.log(resp);
           if (!resp.error && resp) {
             this.messageService.add({ severity: 'success', summary: 'Exitoso!', detail: resp.message, life: 3000 });
-            this.cliente = {};
+            this.sede = {};
           } else {
             this.messageService.add({ severity: 'error', summary: 'Error!', detail: resp.message, life: 3000 });
           }

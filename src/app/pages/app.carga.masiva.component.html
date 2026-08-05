@@ -1,0 +1,133 @@
+<div class="grid">
+    <div class="col-12">
+        <div class="card px-6 py-6">
+            <p-toast></p-toast>
+            
+            <div class="flex flex-column md:flex-row md:justify-content-between md:align-items-center mb-5">
+                <div>
+                    <h4 class="m-0 font-bold text-900">Carga Masiva de Datos</h4>
+                    <p class="text-600 m-0 mt-1">Sube archivos en formato Excel (.xlsx, .xls) o CSV para registrar información de forma masiva.</p>
+                </div>
+                <div class="mt-3 md:mt-0">
+                    <span class="p-input-icon-left w-full">
+                        <i class="pi pi-cog"></i>
+                        <p-dropdown 
+                            [options]="tiposCarga" 
+                            [(ngModel)]="tipoSeleccionado" 
+                            optionLabel="label" 
+                            (onChange)="onTipoChange()"
+                            placeholder="Seleccione el Tipo de Carga"
+                            styleClass="w-full md:w-20rem">
+                        </p-dropdown>
+                    </span>
+                </div>
+            </div>
+
+            <hr class="border-300 mb-5" />
+
+            <div class="grid" *ngIf="tipoSeleccionado">
+                <!-- Panel de Instrucciones y Formatos -->
+                <div class="col-12 lg:col-5">
+                    <div class="surface-card p-4 shadow-1 border-round border-1 border-300 h-full">
+                        <div class="flex align-items-center mb-3">
+                            <i class="pi pi-info-circle text-blue-500 mr-2 text-2xl"></i>
+                            <span class="text-xl font-medium text-900">Formato del Archivo</span>
+                        </div>
+                        <p class="text-600 line-height-3 mb-4">
+                            {{ tipoSeleccionado.description }}
+                        </p>
+                        
+                        <div class="text-900 font-semibold mb-2">Columnas Requeridas en el Excel:</div>
+                        <div class="flex flex-wrap gap-2">
+                            <p-tag 
+                                *ngFor="let col of tipoSeleccionado.helpColumns" 
+                                severity="info" 
+                                [value]="col" 
+                                class="mr-1 mb-1">
+                            </p-tag>
+                        </div>
+                        
+                        <div class="mt-4 p-3 bg-blue-50 text-blue-800 border-round border-left-3 border-blue-500 text-sm">
+                            <i class="pi pi-exclamation-triangle mr-2"></i>
+                            <strong>Nota:</strong> Los nombres de las columnas en la primera fila de su archivo Excel deben coincidir con estos nombres para una correcta identificación.
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Zona de Carga de Archivos -->
+                <div class="col-12 lg:col-7">
+                    <div class="surface-card p-4 shadow-1 border-round border-1 border-300 h-full flex flex-column">
+                        <div class="flex align-items-center mb-3">
+                            <i class="pi pi-file-excel text-green-500 mr-2 text-2xl"></i>
+                            <span class="text-xl font-medium text-900">Subir Plantilla Excel</span>
+                        </div>
+                        
+                        <div class="flex-grow-1">
+                            <p-fileUpload 
+                                name="file" 
+                                [url]="urlSubirArchivo" 
+                                accept=".xlsx,.xls,.csv" 
+                                [maxFileSize]="10000000" 
+                                [auto]="false"
+                                (onUpload)="onUpload($event)" 
+                                (onError)="onError($event)"
+                                chooseLabel="Seleccionar Archivo" 
+                                uploadLabel="Cargar a Preparación" 
+                                cancelLabel="Cancelar"
+                                class="w-full">
+                            </p-fileUpload>
+                        </div>
+
+                        <!-- Flujo de Migración para Carga Completa -->
+                        <div class="mt-4 p-4 bg-gray-50 border-round border-1 border-300" *ngIf="tipoSeleccionado.value === 'completa' && batchId">
+                            <div class="flex justify-content-between align-items-center flex-wrap gap-3">
+                                <div>
+                                    <div class="text-900 font-bold text-lg mb-1">Paso 2: Procesar e Importar Lote</div>
+                                    <div class="text-600 text-sm">El archivo se cargó correctamente con el ID de Lote: <span class="font-semibold text-primary">{{ batchId }}</span>. Ejecute la migración para transferir los datos a las tablas finales de producción.</div>
+                                </div>
+                                <div>
+                                    <button 
+                                        pButton 
+                                        pRipple 
+                                        label="Procesar y Migrar" 
+                                        icon="pi pi-play" 
+                                        class="p-button-success p-button-raised w-full md:w-auto" 
+                                        (click)="procesarMigracion()" 
+                                        [loading]="migrando"
+                                        [disabled]="migrando">
+                                    </button>
+                                </div>
+                            </div>
+
+                            <!-- Cargando o Procesando -->
+                            <div class="mt-4" *ngIf="migrando">
+                                <span class="text-900 font-semibold block mb-2">Migrando registros... Por favor, espere.</span>
+                                <p-progressBar mode="indeterminate" [style]="{'height': '6px'}"></p-progressBar>
+                            </div>
+
+                            <!-- Resultados de Migración -->
+                            <div class="mt-4 p-3 bg-green-50 border-round border-left-3 border-green-500" *ngIf="migradoExito && migradoResumen">
+                                <div class="text-green-800 font-bold mb-2">
+                                    <i class="pi pi-check-circle mr-2"></i>
+                                    Proceso Finalizado Exitosamente
+                                </div>
+                                <div class="grid text-sm text-green-900">
+                                    <div class="col-6 sm:col-4">
+                                        <span class="block text-500 font-medium">Registros Procesados</span>
+                                        <span class="text-2xl font-bold">{{ migradoResumen.procesados }}</span>
+                                    </div>
+                                    <div class="col-6 sm:col-4">
+                                        <span class="block text-500 font-medium">Registros con Error</span>
+                                        <span class="text-2xl font-bold text-red-500">{{ migradoResumen.errores }}</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>

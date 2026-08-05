@@ -28,6 +28,7 @@ export class AppMenuComponent implements OnInit {
                     {label: 'Baterías', icon: 'pi pi-fw pi-tablet', routerLink: ['pages/baterias']},
                     {label: 'Usuarios', icon: 'pi pi-fw pi-user', routerLink: ['pages/usuarios']},
                     {label: 'Clientes', icon: 'pi pi-fw pi-building', routerLink: ['pages/clientes']},
+                    {label: 'Carga Masiva', icon: 'pi pi-fw pi-upload', routerLink: ['pages/carga-masiva']},
                 ]
             },            
             /*{label: 'Agenda', icon: 'pi pi-fw pi-calendar', routerLink: ['pages/agenda/1']},*/
