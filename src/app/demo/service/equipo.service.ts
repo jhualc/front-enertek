@@ -26,6 +26,11 @@ export class EquipoService {
     return this.http.get(url);
   } 
 
+  getBySede(sedeId: any) {
+    let url = URL_SERVICIOS + "/equipo/sede/" + sedeId;
+    return this.http.get(url);
+  }
+
   update(data:any){
     let url = URL_SERVICIOS + "/equipo/" + data.equ_id;
     return this.http.put(url, data);

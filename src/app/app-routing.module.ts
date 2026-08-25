@@ -54,6 +54,7 @@ import { AppBateriasComponent } from './pages/app.baterias.component';
 import { AppClientesComponent } from './pages/app.clientes.component';
 import { AppClientesSedesComponent } from './pages/app.cliente.sedes.component';
 import { AppCargaMasivaComponent } from './pages/app.carga.masiva.component';
+import { AppSedeEquiposComponent } from './pages/app.sede.equipos.component';
 
 export const routes: Routes = [
     { path: 'login', component: AppLoginComponent },
@@ -127,6 +128,7 @@ export const routes: Routes = [
             { path: 'pages/baterias', component: AppBateriasComponent },
             { path: 'pages/clientes', component: AppClientesComponent },
             { path: 'pages/clientes/:id/sedes', component: AppClientesSedesComponent },
+            { path: 'pages/clientes/:cliId/sedes/:sedeId/equipos', component: AppSedeEquiposComponent },
             { path: 'pages/carga-masiva', component: AppCargaMasivaComponent },
         ], canActivate: [AuthGuard]
     },

@@ -6,7 +6,7 @@ import { BreadcrumbService } from '../breadcrumb.service';
 import { Table } from 'primeng/table';
 import { TipoIdentificacion } from '../demo/domain/tipo.identificacion';
 import { URL_SERVICIOS } from '../config/config';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 
 @Component({
   templateUrl: './app.cliente.sedes.component.html',
@@ -54,6 +54,7 @@ export class AppClientesSedesComponent implements OnInit {
     private messageService: MessageService,
     private confirmationService: ConfirmationService,
     private route: ActivatedRoute,
+    private router: Router,
     private breadcrumbService: BreadcrumbService,
     private sedeservice: SedeService) {
     this.breadcrumbService.setItems([
@@ -104,6 +105,10 @@ export class AppClientesSedesComponent implements OnInit {
   editData(sede: Sede) {
     this.sede = { ...sede };
     this.dataDialog = true;
+  }
+
+  verEquipos(sede: Sede) {
+    this.router.navigate(['/pages/clientes/' + this.cli_id + '/sedes/' + sede.cls_id + '/equipos']);
   }
 
   deleteData(sede: Sede) {

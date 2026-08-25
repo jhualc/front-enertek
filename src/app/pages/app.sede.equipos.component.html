@@ -1,0 +1,72 @@
+<div class="grid">
+    <div class="col-12">
+        <div class="card px-6 py-6">
+            <div class="flex flex-column md:flex-row md:justify-content-between md:align-items-center mb-4">
+                <div class="flex align-items-center gap-3">
+                    <button pButton pRipple type="button" icon="pi pi-arrow-left" class="p-button-rounded p-button-text p-button-secondary" (click)="regresar()" title="Regresar a Sedes"></button>
+                    <h5 class="m-0">Equipos de la Sede</h5>
+                </div>
+                <span class="block mt-2 md:mt-0 p-input-icon-left">
+                    <i class="pi pi-search"></i>
+                    <input pInputText type="text" (input)="onGlobalFilter(dt, $event)" placeholder="Buscar..." class="w-full sm:w-auto" />
+                </span>
+            </div>
+
+            <p-table #dt [value]="equipos" responsiveLayout="scroll" [rows]="10" 
+                    [globalFilterFields]="['equ_modelo','equ_serial','equ_cant_baterias','equ_potencia','marca.mar_descripcion','tipo_equipo.teq_descripcion']" 
+                    [paginator]="true" [rowsPerPageOptions]="[10,20,50,100]" [showCurrentPageReport]="true" 
+                    currentPageReportTemplate="Mostrando {first} a {last} de {totalRecords} registros" 
+                    [rowHover]="true" dataKey="equ_id" [loading]="carga" loadingIcon="pi pi-spin pi-spinner">
+                <ng-template pTemplate="header">
+                    <tr>
+                        <th pSortableColumn="equ_id">Id <p-sortIcon field="equ_id"></p-sortIcon></th>
+                        <th pSortableColumn="equ_modelo">Modelo <p-sortIcon field="equ_modelo"></p-sortIcon></th>
+                        <th pSortableColumn="equ_serial">Serial <p-sortIcon field="equ_serial"></p-sortIcon></th>
+                        <th pSortableColumn="equ_cant_baterias">Cantidad Baterías <p-sortIcon field="equ_cant_baterias"></p-sortIcon></th>
+                        <th pSortableColumn="equ_potencia">Potencia <p-sortIcon field="equ_potencia"></p-sortIcon></th>
+                        <th pSortableColumn="marca">Marca <p-sortIcon field="marca"></p-sortIcon></th>
+                        <th pSortableColumn="tipo_equipo">Tipo Equipo <p-sortIcon field="tipo_equipo"></p-sortIcon></th>
+                    </tr>
+                </ng-template>
+                <ng-template pTemplate="body" let-equipo>
+                    <tr>
+                        <td style="width:10%; min-width:6rem;"><span class="p-column-title">Id</span>
+                            {{equipo.equ_id}}
+                        </td>
+                        <td style="width:20%; min-width:10rem;">
+                            <span class="p-column-title">Modelo</span>
+                            {{equipo.equ_modelo}}
+                        </td>                        
+                        <td style="width:20%; min-width:10rem;">
+                            <span class="p-column-title">Serial</span>
+                            {{equipo.equ_serial}}
+                        </td>
+                        <td style="width:15%; min-width:8rem;">
+                            <span class="p-column-title">Cantidad Baterías</span>
+                            {{equipo.equ_cant_baterias}}
+                        </td>
+                        <td style="width:15%; min-width:8rem;">
+                            <span class="p-column-title">Potencia</span>
+                            {{equipo.equ_potencia}}
+                        </td>                        
+                        <td style="width:10%; min-width:10rem;">
+                            <span class="p-column-title">Marca</span>
+                            {{equipo.marca?.mar_descripcion || 'Sin marca'}}
+                        </td>
+                        <td style="width:10%; min-width:10rem;">
+                            <span class="p-column-title">Tipo Equipo</span>
+                            {{equipo.tipo_equipo?.teq_descripcion || 'Sin tipo'}}
+                        </td>                                   
+                    </tr>
+                </ng-template>
+                <ng-template pTemplate="emptymessage">
+                    <tr>
+                        <td colspan="7" class="text-center p-4">
+                            No se encontraron equipos registrados para esta sede.
+                        </td>
+                    </tr>
+                </ng-template>
+            </p-table>
+        </div>
+    </div>
+</div>

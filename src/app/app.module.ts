@@ -115,6 +115,7 @@ import { AppBateriasComponent } from './pages/app.baterias.component';
 import { AppClientesComponent } from './pages/app.clientes.component';
 import { AppClientesSedesComponent } from './pages/app.cliente.sedes.component';
 import { AppCargaMasivaComponent } from './pages/app.carga.masiva.component';
+import { AppSedeEquiposComponent } from './pages/app.sede.equipos.component';
 
 // Demo pages
 import { DashboardDemoComponent } from './demo/view/dashboarddemo.component';
@@ -361,7 +362,8 @@ import { SponsorsViewComponent } from './demo/view/sponsors-view/sponsors-view.c
         AppBateriasComponent,
         AppClientesComponent,
         AppClientesSedesComponent,
-        AppCargaMasivaComponent
+        AppCargaMasivaComponent,
+        AppSedeEquiposComponent
     ],
     providers: [authInterceptorProviders,
         { provide: LocationStrategy, useClass: HashLocationStrategy },
