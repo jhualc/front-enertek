@@ -14,7 +14,7 @@ export class AppCargaMasivaComponent implements OnInit {
     tiposCarga: any[] = [];
     tipoSeleccionado: any = null;
     urlSubirArchivo: string = '';
-    
+
     batchId: any = null;
     migrando: boolean = false;
     migradoExito: boolean = false;
@@ -45,8 +45,8 @@ export class AppCargaMasivaComponent implements OnInit {
                 value: 'equipos',
                 url: '/upload-clienteequipo',
                 helpColumns: [
-                    'equ_modelo', 'equ_serial', 'mar_descripcion', 
-                    'teq_descripcion', 'equ_cant_baterias', 'cli_identificacion', 
+                    'equ_modelo', 'equ_serial', 'mar_descripcion',
+                    'teq_descripcion', 'equ_cant_baterias', 'cli_identificacion',
                     'equ_ubicacion'
                 ],
                 description: 'Registra nuevos equipos asociándolos a marcas, tipos de equipos y clientes ya existentes.'
@@ -56,13 +56,13 @@ export class AppCargaMasivaComponent implements OnInit {
                 value: 'completa',
                 url: '/upload-cliente-full',
                 helpColumns: [
-                    'sector empresa', 'tipo cliente', 'sigla', 'nombre empresa persona',
-                    'tipo identificacion', 'identificacion', 'dv', 'departamento', 'ciudad',
-                    'direccion', 'sede', 'ubicacion equipo', 'nombre contacto 1', 'correo contacto 1',
-                    'telefono contacto 1', 'nombre contacto 2', 'correo contacto 2', 'telefono contacto 2',
-                    'estado cliente', 'tipo relacion comercial', 'marca equipo', 'tipo equipo',
-                    'modelo equipo', 'potencia', 'serial', 'cantidad baterias int', 'cantidad baterias ext',
-                    'marca bateria', 'referencia bateria', 'voltaje bateria', 'amperaje bateria', 'snmps'
+                    'id', 'sector_empresa', 'tipo_cliente', 'sigla', 'nombre_empresa',
+                    'tipo_identificacion', 'identificacion', 'dv', 'departamento', 'ciudad',
+                    'direccion', 'sede', 'ubicacion_equipo', 'contacto1', 'correo_electronico_1',
+                    'movil_1', 'contacto_2', 'correo_electronico_2', 'movil_2', 'estado_cliente',
+                    'relacion_comercial', 'marca', 'modelo', 'potencia', 'serial',
+                    'tipo_equipo', 'cantidad_baterias', 'cantidad_baterias_ext', 'marca_bateria',
+                    'referencia', 'voltaje', 'amperaje', 'snmp'
                 ],
                 description: 'Proceso de dos pasos: primero carga a una zona intermedia (preparación) y luego permite auditar y procesar la migración definitiva de marcas, clientes, sedes, equipos y baterías.'
             }
@@ -92,7 +92,7 @@ export class AppCargaMasivaComponent implements OnInit {
     onUpload(event: any): void {
         const body = event.originalEvent?.body;
         const msg = body?.message || 'Archivo subido y cargado con éxito.';
-        
+
         this.messageService.add({
             severity: 'success',
             summary: 'Subida Exitosa',
@@ -128,7 +128,7 @@ export class AppCargaMasivaComponent implements OnInit {
                 this.migrando = false;
                 this.migradoExito = true;
                 this.migradoResumen = resp.summary;
-                
+
                 this.messageService.add({
                     severity: 'success',
                     summary: 'Migración Completada',
