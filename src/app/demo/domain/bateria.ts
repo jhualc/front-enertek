@@ -4,4 +4,5 @@ export interface Bateria {
     bat_voltaje?: string;
     bat_capacidad?: string;
     mar_id?: string;
+    marca?: any;
 }

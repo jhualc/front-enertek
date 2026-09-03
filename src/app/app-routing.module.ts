@@ -128,7 +128,7 @@ export const routes: Routes = [
             { path: 'pages/baterias', component: AppBateriasComponent },
             { path: 'pages/clientes', component: AppClientesComponent },
             { path: 'pages/clientes/:id/sedes', component: AppClientesSedesComponent },
-            { path: 'pages/clientes/:cliId/sedes/:sedeId/equipos', component: AppSedeEquiposComponent },
+            { path: 'pages/clientes/:cliId/sedes/:sedeId/equipos', component: AppEquiposComponent },
             { path: 'pages/carga-masiva', component: AppCargaMasivaComponent },
         ], canActivate: [AuthGuard]
     },

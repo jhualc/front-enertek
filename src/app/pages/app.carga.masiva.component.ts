@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { MessageService } from 'primeng/api';
+import { Table } from 'primeng/table';
 import { BreadcrumbService } from '../breadcrumb.service';
 import { URL_SERVICIOS } from '../config/config';
 
@@ -19,6 +20,9 @@ export class AppCargaMasivaComponent implements OnInit {
     migrando: boolean = false;
     migradoExito: boolean = false;
     migradoResumen: any = null;
+    migradoResults: any[] = [];
+    filtroEstado: string = 'todos'; // 'todos' | 'error' | 'success'
+    descargandoCsv: boolean = false;
 
     constructor(
         private http: HttpClient,
@@ -87,6 +91,9 @@ export class AppCargaMasivaComponent implements OnInit {
         this.migrando = false;
         this.migradoExito = false;
         this.migradoResumen = null;
+        this.migradoResults = [];
+        this.filtroEstado = 'todos';
+        this.descargandoCsv = false;
     }
 
     onUpload(event: any): void {
@@ -102,6 +109,9 @@ export class AppCargaMasivaComponent implements OnInit {
 
         if (body && body.batch_id) {
             this.batchId = body.batch_id;
+            this.migradoExito = false;
+            this.migradoResumen = null;
+            this.migradoResults = [];
         }
     }
 
@@ -121,29 +131,89 @@ export class AppCargaMasivaComponent implements OnInit {
         this.migrando = true;
         this.migradoExito = false;
         this.migradoResumen = null;
+        this.migradoResults = [];
 
         const url = URL_SERVICIOS + '/import-migrate-clients';
-        this.http.post(url, { batch_id: this.batchId }).subscribe({
+        this.http.post(url, { batch_id: this.batchId, format: 'json' }).subscribe({
             next: (resp: any) => {
                 this.migrando = false;
                 this.migradoExito = true;
                 this.migradoResumen = resp.summary;
 
+                const rawResults = resp.results || [];
+                this.migradoResults = rawResults.map((item: any) => ({
+                    ...item,
+                    identificacion: item.data?.eis_identificacion || '',
+                    nombre: item.data?.eis_nombre_empresa_persona || '',
+                    sede: item.data?.eis_sede || '',
+                    marca: item.data?.eis_marca_equipo || '',
+                    modelo: item.data?.eis_modelo_equipo || '',
+                    serial: item.data?.eis_serial_equipo || '',
+                    tipo_equipo: item.data?.eis_tipo_equipo || '',
+                    descripcion_error: item.error || ''
+                }));
+
+                const tieneErrores = (resp.summary?.errores || 0) > 0;
                 this.messageService.add({
-                    severity: 'success',
-                    summary: 'Migración Completada',
+                    severity: tieneErrores ? 'warn' : 'success',
+                    summary: tieneErrores ? 'Migración con Observaciones' : 'Migración Completada',
                     detail: resp.message || 'Los datos fueron procesados de manera exitosa.',
-                    life: 4000
+                    life: 5000
                 });
             },
             error: (err: any) => {
                 this.migrando = false;
-                const errMessage = err.error?.message || 'Ocurrió un error al intentar migrar el lote.';
+                const errMessage = err.error?.message || err.error?.error || 'Ocurrió un error al intentar migrar el lote.';
                 this.messageService.add({
                     severity: 'error',
                     summary: 'Error de Migración',
                     detail: errMessage,
                     life: 5000
+                });
+            }
+        });
+    }
+
+    get resultadosFiltrados(): any[] {
+        if (this.filtroEstado === 'todos') {
+            return this.migradoResults;
+        }
+        return this.migradoResults.filter(r => r.status === this.filtroEstado);
+    }
+
+    onGlobalFilter(table: Table, event: Event): void {
+        table.filterGlobal((event.target as HTMLInputElement).value, 'contains');
+    }
+
+    descargarReporteCsv(): void {
+        if (!this.batchId) return;
+
+        this.descargandoCsv = true;
+        const url = URL_SERVICIOS + '/import-migrate-clients';
+        this.http.post(url, { batch_id: this.batchId, format: 'csv' }, { responseType: 'blob' }).subscribe({
+            next: (blob: Blob) => {
+                this.descargandoCsv = false;
+                const a = document.createElement('a');
+                const objectUrl = URL.createObjectURL(blob);
+                a.href = objectUrl;
+                a.download = `reporte_migracion_lote_${this.batchId}.csv`;
+                a.click();
+                URL.revokeObjectURL(objectUrl);
+
+                this.messageService.add({
+                    severity: 'info',
+                    summary: 'Descarga Lista',
+                    detail: 'El reporte CSV se ha descargado correctamente.',
+                    life: 3000
+                });
+            },
+            error: () => {
+                this.descargandoCsv = false;
+                this.messageService.add({
+                    severity: 'error',
+                    summary: 'Error en Descarga',
+                    detail: 'No fue posible descargar el archivo CSV del reporte.',
+                    life: 4000
                 });
             }
         });

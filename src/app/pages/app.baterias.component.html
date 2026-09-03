@@ -5,28 +5,34 @@
             <p-toolbar styleClass="mb-4">
                 <ng-template pTemplate="left">
                     <div class="my-2">
-                        <button pButton pRipple label="Agregar" icon="pi pi-plus" class="p-button-success mr-2" (click)="openNew()"></button>
-                        <button pButton pRipple label="Borrar" icon="pi pi-trash" class="p-button-danger" (click)="deleteSelectedRows()" [disabled]="!selectedRows || !selectedRows.length"></button>
+                        <button pButton pRipple label="Agregar" icon="pi pi-plus" class="p-button-success mr-2"
+                            (click)="openNew()"></button>
+                        <button pButton pRipple label="Borrar" icon="pi pi-trash" class="p-button-danger"
+                            (click)="deleteSelectedRows()" [disabled]="!selectedRows || !selectedRows.length"></button>
                     </div>
                 </ng-template>
 
                 <ng-template pTemplate="right">
-                    <p-fileUpload mode="basic" accept="image/*" [maxFileSize]="1000000" label="Import" chooseLabel="Import" class="mr-2 inline-block"></p-fileUpload>
-                    <button pButton pRipple label="Export" icon="pi pi-upload" class="p-button-help" (click)="dt.exportCSV()"></button>
+                    <p-fileUpload mode="basic" accept="image/*" [maxFileSize]="1000000" label="Import"
+                        chooseLabel="Import" class="mr-2 inline-block"></p-fileUpload>
+                    <button pButton pRipple label="Export" icon="pi pi-upload" class="p-button-help"
+                        (click)="dt.exportCSV()"></button>
                 </ng-template>
             </p-toolbar>
 
-            <p-table #dt [value]="baterias" [columns]="cols" responsiveLayout="scroll" [rows]="10" 
-                    [globalFilterFields]="['bat_modelo','bat_voltaje','bat_capacidad','marca.mar_descripcion']" [rows]="10" 
-                    [paginator]="true" [rowsPerPageOptions]="[10,20,50,100]" [showCurrentPageReport]="true" currentPageReportTemplate="Mostrando {first} a {last} de {totalRecords} registros" 
-                    [(selection)]="selectedRows" selectionMode="multiple" [rowHover]="true" dataKey="bat_id"
-                    [loading]="carga" loadingIcon="pi pi-spin pi-spinner">
+            <p-table #dt [value]="baterias" [columns]="cols" responsiveLayout="scroll" [rows]="10"
+                [globalFilterFields]="['bat_modelo','bat_voltaje','bat_capacidad','marca.mar_descripcion']"
+                [paginator]="true" [rowsPerPageOptions]="rowsPerPageOptions" [showCurrentPageReport]="true"
+                currentPageReportTemplate="Mostrando {first} a {last} de {totalRecords} registros"
+                [(selection)]="selectedRows" selectionMode="multiple" [rowHover]="true" dataKey="bat_id"
+                [loading]="carga" loadingIcon="pi pi-spin pi-spinner">
                 <ng-template pTemplate="caption">
                     <div class="flex flex-column md:flex-row md:justify-content-between md:align-items-center">
                         <h5 class="m-0">Administrar Baterías</h5>
                         <span class="block mt-2 md:mt-0 p-input-icon-left">
                             <i class="pi pi-search"></i>
-                            <input pInputText type="text" (input)="onGlobalFilter(dt, $event)" placeholder="Buscar..."  class="w-full sm:w-auto"/>
+                            <input pInputText type="text" (input)="onGlobalFilter(dt, $event)" placeholder="Buscar..."
+                                class="w-full sm:w-auto" />
                         </span>
                     </div>
                 </ng-template>
@@ -35,12 +41,15 @@
                         <th style="width: 3rem">
                             <p-tableHeaderCheckbox></p-tableHeaderCheckbox>
                         </th>
-                        <th pSortableColumn="bat_id">Id <p-sortIcon field="bat_id"></p-sortIcon></th>
+                        <th pSortableColumn="bat_id" style="width: 6rem">Id <p-sortIcon field="bat_id"></p-sortIcon>
+                        </th>
+                        <th pSortableColumn="marca.mar_descripcion">Marca <p-sortIcon
+                                field="marca.mar_descripcion"></p-sortIcon></th>
                         <th pSortableColumn="bat_modelo">Modelo <p-sortIcon field="bat_modelo"></p-sortIcon></th>
-                        <th pSortableColumn="bat_voltaje">Voltaje <p-sortIcon field="bat_voltaje"></p-sortIcon></th>
-                        <th pSortableColumn="bat_capacidad">Capacidad <p-sortIcon field="bat_capacidad"></p-sortIcon></th>
-                        <th pSortableColumn="marca">Marca <p-sortIcon field="marca"></p-sortIcon></th>
-                        <th></th>
+                        <th pSortableColumn="bat_voltaje">Voltaje (V) <p-sortIcon field="bat_voltaje"></p-sortIcon></th>
+                        <th pSortableColumn="bat_capacidad">Capacidad (Ah) <p-sortIcon
+                                field="bat_capacidad"></p-sortIcon></th>
+                        <th>Acciones</th>
                     </tr>
                 </ng-template>
                 <ng-template pTemplate="body" let-bateria>
@@ -48,87 +57,116 @@
                         <td>
                             <p-tableCheckbox [value]="bateria"></p-tableCheckbox>
                         </td>
-                        <td style="width:14%; min-width:10rem;"><span class="p-column-title">Id</span>
+                        <td class="text-center">
                             {{bateria.bat_id}}
+                        </td>
+                        <td style="width:20%; min-width:10rem;">
+                            <span class="p-column-title">Marca</span>
+                            {{bateria.marca?.mar_descripcion || 'Sin marca'}}
                         </td>
                         <td style="width:20%; min-width:10rem;">
                             <span class="p-column-title">Modelo</span>
                             {{bateria.bat_modelo}}
-                        </td>                        
-                        <td style="width:20%; min-width:10rem;">
+                        </td>
+                        <td style="width:15%; min-width:8rem;">
                             <span class="p-column-title">Voltaje</span>
-                            {{bateria.bat_voltaje}}
+                            {{bateria.bat_voltaje}} V
                         </td>
-                        <td style="width:15%; min-width:10rem;">
+                        <td style="width:15%; min-width:8rem;">
                             <span class="p-column-title">Capacidad</span>
-                            {{bateria.bat_capacidad}}
+                            {{bateria.bat_capacidad}} Ah
                         </td>
-                        <td style="width:15%; min-width:10rem;">
-                            <span class="p-column-title">Marca</span>
-                            {{bateria.marca.mar_descripcion}}
-                        </td>
-                        <td style="text-align: rigth;">
-                            <div class="flex" style="margin-left: auto; width: fit-content;">
-                                <button pButton pRipple icon="pi pi-pencil" class="p-button-rounded p-button-success mr-2" (click)="editData(bateria)"></button>
-                                <button pButton pRipple icon="pi pi-trash" class="p-button-rounded p-button-warning" (click)="deleteData(bateria)"></button>
+                        <td style="text-align: right;">
+                            <div class="flex justify-content-end gap-1">
+                                <button pButton pRipple icon="pi pi-pencil"
+                                    class="p-button-rounded p-button-success p-button-sm mr-2"
+                                    (click)="editData(bateria)"></button>
+                                <button pButton pRipple icon="pi pi-trash"
+                                    class="p-button-rounded p-button-warning p-button-sm"
+                                    (click)="deleteData(bateria)"></button>
                             </div>
+                        </td>
+                    </tr>
+                </ng-template>
+                <ng-template pTemplate="emptymessage">
+                    <tr>
+                        <td colspan="7" class="text-center p-4 text-500">
+                            <i class="pi pi-inbox mr-2 text-lg"></i>No se encontraron baterías registradas.
                         </td>
                     </tr>
                 </ng-template>
             </p-table>
         </div>
 
-        <p-dialog [(visible)]="dataDialog" [style]="{width: '450px'}" header="Guardar Batería" [modal]="true" class="p-fluid" (onHide)="hideDialog()">
+        <p-dialog [(visible)]="dataDialog" [style]="{width: '480px'}" header="Guardar Batería" [modal]="true"
+            class="p-fluid" (onHide)="hideDialog()">
             <ng-template pTemplate="content">
                 <div class="field">
-                    <label for="marca">Marca</label>
-                    <p-dropdown [(ngModel)]="bateria.mar_id" optionValue="mar_id" filter="true" optionLabel="mar_descripcion" [options]="marcas" placeholder="Seleccione..." [ngClass]="{'ng-invalid ng-dirty' : submitted && !bateria.mar_id}">
+                    <label for="mar_id">Marca *</label>
+                    <p-dropdown [(ngModel)]="bateria.mar_id" optionValue="mar_id" [filter]="true"
+                        optionLabel="mar_descripcion" [options]="marcas" placeholder="Seleccione Marca..."
+                        [ngClass]="{'ng-invalid ng-dirty' : submitted && !bateria.mar_id}">
                     </p-dropdown>
-                    <small class="ng-dirty ng-invalid" *ngIf="submitted && !bateria.mar_id">Requerido.</small>
-                </div>     
+                    <small class="ng-dirty ng-invalid text-red-500" *ngIf="submitted && !bateria.mar_id">Marca
+                        requerida.</small>
+                </div>
                 <div class="field">
-                    <label for="equ_modelo">Modelo</label>
-                    <input type="text" pInputText id="bat_modelo" [(ngModel)]="bateria.bat_modelo" required autofocus [ngClass]="{'ng-invalid ng-dirty' : submitted && !bateria.bat_modelo}"/>
-                    <small class="ng-dirty ng-invalid" *ngIf="submitted && !bateria.bat_modelo">Requerido.</small>
+                    <label for="bat_modelo">Modelo / Referencia *</label>
+                    <input type="text" pInputText id="bat_modelo" [(ngModel)]="bateria.bat_modelo" required autofocus
+                        [ngClass]="{'ng-invalid ng-dirty' : submitted && !bateria.bat_modelo}" />
+                    <small class="ng-dirty ng-invalid text-red-500" *ngIf="submitted && !bateria.bat_modelo">Modelo
+                        requerido.</small>
                 </div>
                 <div class="formgrid grid">
-                    <div class="field col">
-                        <label for="equ_serial">Voltaje</label>
-                        <input type="number" pInputText id="bat_voltaje" [(ngModel)]="bateria.bat_voltaje" required autofocus [ngClass]="{'ng-invalid ng-dirty' : submitted && !bateria.bat_voltaje}"/>
-                        <small class="ng-dirty ng-invalid" *ngIf="submitted && !bateria.bat_voltaje">Requerido.</small>
+                    <div class="field col-12 md:col-6">
+                        <label for="bat_voltaje">Voltaje (V) *</label>
+                        <input type="number" pInputText id="bat_voltaje" [(ngModel)]="bateria.bat_voltaje" required
+                            [ngClass]="{'ng-invalid ng-dirty' : submitted && !bateria.bat_voltaje}" />
+                        <small class="ng-dirty ng-invalid text-red-500"
+                            *ngIf="submitted && !bateria.bat_voltaje">Voltaje requerido.</small>
                     </div>
-                    <div class="field col">
-                        <label for="equ_cant_baterias">Capacidad</label>
-                        <input type="text" pInputText id="bat_capacidad" [(ngModel)]="bateria.bat_capacidad" [ngClass]="{'ng-invalid ng-dirty' : submitted && !bateria.bat_capacidad}" />
-                        <small class="ng-dirty ng-invalid" *ngIf="submitted && !bateria.bat_capacidad">Requerido.</small>
+                    <div class="field col-12 md:col-6">
+                        <label for="bat_capacidad">Capacidad (Ah) *</label>
+                        <input type="number" pInputText id="bat_capacidad" [(ngModel)]="bateria.bat_capacidad" required
+                            [ngClass]="{'ng-invalid ng-dirty' : submitted && !bateria.bat_capacidad}" />
+                        <small class="ng-dirty ng-invalid text-red-500"
+                            *ngIf="submitted && !bateria.bat_capacidad">Capacidad requerida.</small>
                     </div>
-                </div>                
+                </div>
             </ng-template>
             <ng-template pTemplate="footer">
-                <button pButton pRipple label="Cancelar" icon="pi pi-times" class="p-button-text" (click)="hideDialog()"></button>
-                <button pButton pRipple label="Guardar" icon="pi pi-check" class="p-button-text" (click)="saveData()"></button>
+                <button pButton pRipple label="Cancelar" icon="pi pi-times" class="p-button-text"
+                    (click)="hideDialog()"></button>
+                <button pButton pRipple label="Guardar" icon="pi pi-check" class="p-button-text p-button-success"
+                    (click)="saveData()"></button>
             </ng-template>
         </p-dialog>
 
         <p-dialog [(visible)]="deleteDataDialog" header="Confirmación" [modal]="true" [style]="{width:'450px'}">
             <div class="flex align-items-center justify-content-center">
-                <i class="pi pi-exclamation-triangle mr-3" style="font-size: 2rem"></i>
-                <span *ngIf="bateria">Seguro que desea eliminar el registro, modelo <b>{{bateria.bat_modelo}}</b>, voltaje <b>{{bateria.bat_voltaje}}</b>?</span>
+                <i class="pi pi-exclamation-triangle mr-3 text-red-500" style="font-size: 2rem"></i>
+                <span *ngIf="bateria">¿Seguro que desea eliminar el registro, modelo <b>{{bateria.bat_modelo}}</b>,
+                    voltaje <b>{{bateria.bat_voltaje}}V</b>?</span>
             </div>
             <ng-template pTemplate="footer">
-                <button pButton pRipple icon="pi pi-times" class="p-button-text" label="No" (click)="deleteDataDialog = false"></button>
-                <button pButton pRipple icon="pi pi-check" class="p-button-text" label="Si" (click)="confirmDelete()"></button>
+                <button pButton pRipple icon="pi pi-times" class="p-button-text" label="No"
+                    (click)="deleteDataDialog = false"></button>
+                <button pButton pRipple icon="pi pi-check" class="p-button-text p-button-danger" label="Sí, Eliminar"
+                    (click)="confirmDelete()"></button>
             </ng-template>
         </p-dialog>
 
         <p-dialog [(visible)]="deleteRowsDialog" header="Confirmación" [modal]="true" [style]="{width:'450px'}">
             <div class="flex align-items-center justify-content-center">
-                <i class="pi pi-exclamation-triangle mr-3" style="font-size: 2rem"></i>
-                <span>Seguro que desea eliminar los registros seleccionados?</span>
+                <i class="pi pi-exclamation-triangle mr-3 text-red-500" style="font-size: 2rem"></i>
+                <span>¿Seguro que desea eliminar las <strong>{{ selectedRows.length }}</strong> baterías
+                    seleccionadas?</span>
             </div>
             <ng-template pTemplate="footer">
-                <button pButton pRipple icon="pi pi-times" class="p-button-text" label="No" (click)="deleteRowsDialog = false"></button>
-                <button pButton pRipple icon="pi pi-check" class="p-button-text" label="Si" (click)="confirmDeleteSelected()"></button>
+                <button pButton pRipple icon="pi pi-times" class="p-button-text" label="No"
+                    (click)="deleteRowsDialog = false"></button>
+                <button pButton pRipple icon="pi pi-check" class="p-button-text p-button-danger" label="Sí, Eliminar"
+                    (click)="confirmDeleteSelected()"></button>
             </ng-template>
         </p-dialog>
     </div>

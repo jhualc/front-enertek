@@ -19,8 +19,18 @@ export class SedeService {
     return this.http.post(url, data);
   }
 
-  get(id: number) {
+  get(id: number | string) {
     let url = URL_SERVICIOS + "/cliente-sedes/cliente/" + id.toString();
+    return this.http.get(url);
+  }
+
+  getSede(id: any) {
+    let url = URL_SERVICIOS + "/cliente-sedes/" + id.toString();
+    return this.http.get(url);
+  }
+
+  getAll() {
+    let url = URL_SERVICIOS + "/cliente-sedes";
     return this.http.get(url);
   }
 

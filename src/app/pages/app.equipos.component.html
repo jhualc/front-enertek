@@ -2,173 +2,322 @@
     <div class="col-12">
         <div class="card px-6 py-6">
             <p-toast></p-toast>
+
+            <!-- Toolbar de Acciones -->
             <p-toolbar styleClass="mb-4">
                 <ng-template pTemplate="left">
                     <div class="my-2">
-                        <button pButton pRipple label="Agregar" icon="pi pi-plus" class="p-button-success mr-2" (click)="openNew()"></button>
-                        <button pButton pRipple label="Borrar" icon="pi pi-trash" class="p-button-danger mr-2" (click)="deleteSelectedRows()" [disabled]="!selectedRows || !selectedRows.length"></button>
-                        <button pButton pRipple label="Cargar Excel" icon="pi pi-file" class="p-button-warning mr-2" (click)="openCargar()"></button>
+                        <button pButton pRipple label="Agregar" icon="pi pi-plus" class="p-button-success mr-2"
+                            (click)="openNew()"></button>
+                        <button pButton pRipple label="Borrar" icon="pi pi-trash" class="p-button-danger mr-2"
+                            (click)="deleteSelectedRows()" [disabled]="!selectedRows || !selectedRows.length"></button>
+                        <!--<button pButton pRipple label="Cargar Excel" icon="pi pi-file" class="p-button-warning mr-2" (click)="openCargar()"></button>-->
                     </div>
                 </ng-template>
 
                 <ng-template pTemplate="right">
-                    <p-fileUpload mode="basic" accept="image/*" [maxFileSize]="1000000" label="Import" chooseLabel="Import" class="mr-2 inline-block"></p-fileUpload>
-                    <button pButton pRipple label="Export" icon="pi pi-upload" class="p-button-help" (click)="dt.exportCSV()"></button>
+                    <button pButton pRipple label="Exportar CSV" icon="pi pi-upload" class="p-button-help"
+                        (click)="dt.exportCSV()"></button>
                 </ng-template>
             </p-toolbar>
 
-            <p-table #dt [value]="equipos" [columns]="cols" responsiveLayout="scroll" [rows]="10" 
-                    [globalFilterFields]="['equ_modelo','equ_serial','equ_cant_baterias','equ_potencia','marca.mar_descripcion','tipo_equipo.teq_descripcion']" [rows]="10" 
-                    [paginator]="true" [rowsPerPageOptions]="[10,20,50,100]" [showCurrentPageReport]="true" currentPageReportTemplate="Mostrando {first} a {last} de {totalRecords} registros" 
-                    [(selection)]="selectedRows" selectionMode="multiple" [rowHover]="true" dataKey="equ_id"
-                    [loading]="carga" loadingIcon="pi pi-spin pi-spinner">
+            <!-- Tabla de Equipos -->
+            <p-table #dt [value]="equipos" [columns]="cols" responsiveLayout="scroll" [rows]="10"
+                [globalFilterFields]="['equ_modelo','equ_serial','equ_cant_baterias','equ_potencia','equ_ubicacion','marca.mar_descripcion','tipo_equipo.teq_descripcion','sede.cls_descripcion','sede.cliente.cli_nombre','sede.cliente.cli_identificacion']"
+                [paginator]="true" [rowsPerPageOptions]="rowsPerPageOptions" [showCurrentPageReport]="true"
+                currentPageReportTemplate="Mostrando {first} a {last} de {totalRecords} registros"
+                [(selection)]="selectedRows" selectionMode="multiple" [rowHover]="true" dataKey="equ_id"
+                [loading]="carga" loadingIcon="pi pi-spin pi-spinner">
+
                 <ng-template pTemplate="caption">
-                    <div class="flex flex-column md:flex-row md:justify-content-between md:align-items-center">
-                        <h5 class="m-0">Administrar Equipos</h5>
+                    <div class="flex flex-column md:flex-row md:justify-content-between md:align-items-center gap-2">
+                        <div class="flex align-items-center gap-3">
+                            <button *ngIf="isSedeContext" pButton pRipple type="button" icon="pi pi-arrow-left"
+                                class="p-button-rounded p-button-text p-button-secondary" (click)="regresarASedes()"
+                                title="Regresar a Sedes">
+                            </button>
+                            <div>
+                                <h5 class="m-0">
+                                    {{ isSedeContext ? ('Equipos de la Sede: ' + (sedeActual?.cls_descripcion || ('Sede
+                                    #' + sedeId))) : 'Administrar Equipos' }}
+                                </h5>
+                                <small class="text-500 block" *ngIf="isSedeContext && sedeActual?.cliente">
+                                    Cliente: <strong>{{ sedeActual.cliente.cli_nombre }}</strong> ({{
+                                    sedeActual.cliente.cli_identificacion }})
+                                </small>
+                            </div>
+                        </div>
                         <span class="block mt-2 md:mt-0 p-input-icon-left">
                             <i class="pi pi-search"></i>
-                            <input pInputText type="text" (input)="onGlobalFilter(dt, $event)" placeholder="Buscar..."  class="w-full sm:w-auto"/>
+                            <input pInputText type="text" (input)="onGlobalFilter(dt, $event)" placeholder="Buscar..."
+                                class="w-full sm:w-auto" />
                         </span>
                     </div>
                 </ng-template>
+
                 <ng-template pTemplate="header">
                     <tr>
                         <th style="width: 3rem">
                             <p-tableHeaderCheckbox></p-tableHeaderCheckbox>
                         </th>
-                        <th pSortableColumn="equ_id">Id <p-sortIcon field="equ_id"></p-sortIcon></th>
+                        <th pSortableColumn="equ_id" style="width: 5rem">Id <p-sortIcon field="equ_id"></p-sortIcon>
+                        </th>
+                        <th pSortableColumn="sede.cliente.cli_nombre" *ngIf="!isSedeContext">Cliente <p-sortIcon
+                                field="sede.cliente.cli_nombre"></p-sortIcon></th>
+                        <th pSortableColumn="sede.cls_descripcion" *ngIf="!isSedeContext">Sede <p-sortIcon
+                                field="sede.cls_descripcion"></p-sortIcon></th>
                         <th pSortableColumn="equ_modelo">Modelo <p-sortIcon field="equ_modelo"></p-sortIcon></th>
                         <th pSortableColumn="equ_serial">Serial <p-sortIcon field="equ_serial"></p-sortIcon></th>
-                        <th pSortableColumn="equ_cant_baterias">Cantidad Baterías <p-sortIcon field="equ_cant_baterias"></p-sortIcon></th>
+                        <th pSortableColumn="marca.mar_descripcion">Marca <p-sortIcon
+                                field="marca.mar_descripcion"></p-sortIcon></th>
+                        <th pSortableColumn="tipo_equipo.teq_descripcion">Tipo Equipo <p-sortIcon
+                                field="tipo_equipo.teq_descripcion"></p-sortIcon></th>
                         <th pSortableColumn="equ_potencia">Potencia <p-sortIcon field="equ_potencia"></p-sortIcon></th>
-                        <th pSortableColumn="marca">Marca <p-sortIcon field="marca"></p-sortIcon></th>
-                        <th pSortableColumn="tipoequipo">Tipo Equipo <p-sortIcon field="tipoequipo"></p-sortIcon></th>
-                        <th></th>
+                        <th pSortableColumn="equ_cant_baterias">Cantidad Baterías <p-sortIcon
+                                field="equ_cant_baterias"></p-sortIcon></th>
+                        <th>Acciones</th>
                     </tr>
                 </ng-template>
-                <ng-template pTemplate="body" let-equipo>
+
+                <ng-template pTemplate="body" let-item>
                     <tr>
                         <td>
-                            <p-tableCheckbox [value]="equipo"></p-tableCheckbox>
+                            <p-tableCheckbox [value]="item"></p-tableCheckbox>
                         </td>
-                        <td style="width:14%; min-width:10rem;"><span class="p-column-title">Id</span>
-                            {{equipo.equ_id}}
+                        <td class="text-center">
+                            {{ item.equ_id }}
                         </td>
-                        <td style="width:20%; min-width:10rem;">
-                            <span class="p-column-title">Modelo</span>
-                            {{equipo.equ_modelo}}
-                        </td>                        
-                        <td style="width:20%; min-width:10rem;">
-                            <span class="p-column-title">Serial</span>
-                            {{equipo.equ_serial}}
+                        <td *ngIf="!isSedeContext" style="min-width:11rem;">
+                            <span class="p-column-title font-semibold">Cliente</span>
+                            <span *ngIf="item.sede?.cliente">
+                                {{ item.sede.cliente.cli_nombre }}
+                            </span>
+                            <span *ngIf="!item.sede?.cliente" class="text-400">Sin cliente</span>
                         </td>
-                        <td style="width:15%; min-width:10rem;">
-                            <span class="p-column-title">Cantidad Baterías</span>
-                            {{equipo.equ_cant_baterias}}
+                        <td *ngIf="!isSedeContext" style="min-width:10rem;">
+                            <span class="p-column-title font-semibold">Sede</span>
+                            <span *ngIf="item.sede">
+                                {{ item.sede.cls_descripcion }}
+                            </span>
+                            <span *ngIf="!item.sede" class="text-400">Sin sede</span>
                         </td>
-                        <td style="width:15%; min-width:10rem;">
-                            <span class="p-column-title">Potencia</span>
-                            {{equipo.equ_potencia}}
-                        </td>                        
-                        <td style="width:15%; min-width:10rem;">
-                            <span class="p-column-title">Marca</span>
-                            {{equipo.marca.mar_descripcion}}
+                        <td style="min-width:10rem;">
+                            <span class="p-column-title font-semibold">Modelo</span>
+                            <span>{{ item.equ_modelo }}</span>
+                            <small class="block" *ngIf="item.equ_ubicacion">Ubicación: {{ item.equ_ubicacion }}</small>
                         </td>
-                        <td style="width:15%; min-width:10rem;">
-                            <span class="p-column-title">Tipo Equipo</span>
-                            {{equipo.tipo_equipo.teq_descripcion}}
-                        </td>                                   
-                        <td style="text-align: rigth;">
-                            <div class="flex" style="margin-left: auto; width: fit-content;">
-                                <button pButton pRipple icon="pi pi-pencil" class="p-button-rounded p-button-success mr-2" (click)="editData(equipo)"></button>
-                                <button pButton pRipple icon="pi pi-trash" class="p-button-rounded p-button-warning" (click)="deleteData(equipo)"></button>
+                        <td style="min-width:10rem;">
+                            <span class="p-column-title font-semibold">Serial</span>
+                            <span>{{ item.equ_serial }}</span>
+                        </td>
+                        <td style="min-width:9rem;">
+                            <span class="p-column-title font-semibold">Marca</span>
+                            {{ item.marca?.mar_descripcion || 'Sin marca' }}
+                        </td>
+                        <td style="min-width:9rem;">
+                            <span class="p-column-title font-semibold">Tipo Equipo</span>
+                            {{ item.tipo_equipo?.teq_descripcion || 'Sin tipo' }}
+                        </td>
+                        <td style="min-width:8rem;">
+                            <span class="p-column-title font-semibold">Potencia</span>
+                            {{ item.equ_potencia || '-' }}
+                        </td>
+                        <td class="text-center" style="min-width:8rem;">
+                            <span class="p-column-title font-semibold">Cantidad Baterías</span>
+                            <span class="p-badge p-badge-info">{{ item.equ_cant_baterias || 0 }}</span>
+                        </td>
+                        <td style="text-align: right;">
+                            <div class="flex justify-content-end gap-1">
+                                <button pButton pRipple icon="pi pi-pencil"
+                                    class="p-button-rounded p-button-success p-button-sm mr-1"
+                                    (click)="editData(item)"></button>
+                                <button pButton pRipple icon="pi pi-trash"
+                                    class="p-button-rounded p-button-warning p-button-sm"
+                                    (click)="deleteData(item)"></button>
                             </div>
+                        </td>
+                    </tr>
+                </ng-template>
+
+                <ng-template pTemplate="emptymessage">
+                    <tr>
+                        <td [attr.colspan]="isSedeContext ? 9 : 11" class="text-center p-4 text-500">
+                            <i class="pi pi-inbox mr-2 text-lg"></i>No se encontraron equipos registrados.
                         </td>
                     </tr>
                 </ng-template>
             </p-table>
         </div>
 
-        <p-dialog [(visible)]="dataDialog" [style]="{width: '450px'}" header="Guardar Equipo" [modal]="true" class="p-fluid" (onHide)="hideDialog()">
+        <!-- Modal Dialog para Guardar / Editar Equipo -->
+        <p-dialog [(visible)]="dataDialog" [style]="{width: '520px'}"
+            [header]="isSedeContext ? 'Registrar Equipo en Sede' : (equipo.equ_id ? 'Editar Equipo' : 'Guardar Equipo')"
+            [modal]="true" class="p-fluid" (onHide)="hideDialog()">
             <ng-template pTemplate="content">
-                <div class="field">
-                    <label for="marca">Marca</label>
-                    <p-dropdown [(ngModel)]="equipo.mar_id" optionValue="mar_id" filter="true" optionLabel="mar_descripcion" [options]="marcas" placeholder="Seleccione..." [ngClass]="{'ng-invalid ng-dirty' : submitted && !equipo.mar_id}">
-                    </p-dropdown>
-                    <small class="ng-dirty ng-invalid" *ngIf="submitted && !equipo.mar_id">Requerido.</small>
-                </div>     
-                <div class="field">
-                    <label for="tipoequipo">Tipo Equipo</label>
-                    <p-dropdown [(ngModel)]="equipo.teq_id" optionValue="teq_id" filter="true" optionLabel="teq_descripcion" [options]="tiposequipo" placeholder="Seleccione..." [ngClass]="{'ng-invalid ng-dirty' : submitted && !equipo.teq_id}">
-                    </p-dropdown>
-                    <small class="ng-dirty ng-invalid" *ngIf="submitted && !equipo.teq_id">Requerido.</small>
-                </div>                  
-                <div class="field">
-                    <label for="equ_modelo">Modelo</label>
-                    <input type="text" pInputText id="equ_modelo" [(ngModel)]="equipo.equ_modelo" required autofocus [ngClass]="{'ng-invalid ng-dirty' : submitted && !equipo.equ_modelo}"/>
-                    <small class="ng-dirty ng-invalid" *ngIf="submitted && !equipo.equ_modelo">Requerido.</small>
-                </div>
-                <div class="field">
-                    <label for="equ_serial">Serial</label>
-                    <input type="text" pInputText id="equ_serial" [(ngModel)]="equipo.equ_serial" required [ngClass]="{'ng-invalid ng-dirty' : submitted && !equipo.equ_serial}"/>
-                    <small class="ng-dirty ng-invalid" *ngIf="submitted && !equipo.equ_serial">Requerido.</small>
-                </div>
-                <div class="formgrid grid">
-                    <div class="field col">
-                        <label for="equ_cant_baterias">Cantidad Baterías</label>
-                        <input type="number" pInputText id="equ_cant_baterias" [(ngModel)]="equipo.equ_cant_baterias" [ngClass]="{'ng-invalid ng-dirty' : submitted && !equipo.equ_cant_baterias}" />
-                        <small class="ng-dirty ng-invalid" *ngIf="submitted && !equipo.equ_cant_baterias">Requerido.</small>
+
+                <!-- Contexto Sede: Información fija -->
+                <div class="p-3 mb-3 bg-blue-50 border-round border-left-3 border-blue-500 text-blue-900 text-sm"
+                    *ngIf="isSedeContext">
+                    <div class="font-bold mb-1 flex align-items-center">
+                        <i class="pi pi-building mr-2"></i>
+                        <span>Sede de Destino: {{ sedeActual?.cls_descripcion || ('Sede #' + sedeId) }}</span>
                     </div>
-                    <div class="field col">
+                    <div *ngIf="sedeActual?.cliente" class="text-blue-800">
+                        Cliente: <strong>{{ sedeActual.cliente.cli_nombre }}</strong> ({{
+                        sedeActual.cliente.cli_identificacion }})
+                    </div>
+                </div>
+
+                <!-- Contexto Global: Selección en cascada de Cliente y Sede -->
+                <div *ngIf="!isSedeContext">
+                    <div class="field">
+                        <label for="cliente_select">Cliente *</label>
+                        <p-dropdown [options]="clientes" [(ngModel)]="selectedClienteId" optionLabel="cli_nombre"
+                            optionValue="cli_id" placeholder="Seleccione un Cliente..." [filter]="true"
+                            filterBy="cli_nombre,cli_identificacion" (onChange)="onClienteChange($event.value)"
+                            [ngClass]="{'ng-invalid ng-dirty' : submitted && !selectedClienteId}">
+                            <ng-template let-c pTemplate="item">
+                                <div>
+                                    <span class="font-medium">{{ c.cli_nombre }}</span>
+                                    <small class="text-500 block">ID: {{ c.cli_identificacion }}</small>
+                                </div>
+                            </ng-template>
+                        </p-dropdown>
+                        <small class="ng-dirty ng-invalid text-red-500" *ngIf="submitted && !selectedClienteId">Debe
+                            seleccionar un cliente.</small>
+                    </div>
+
+                    <div class="field">
+                        <label for="sede_select">Sede del Cliente *</label>
+                        <p-dropdown [options]="sedesCliente" [(ngModel)]="equipo.cls_id" optionLabel="cls_descripcion"
+                            optionValue="cls_id" placeholder="Seleccione la Sede..." [filter]="true"
+                            filterBy="cls_descripcion,cls_ciudad" [disabled]="!selectedClienteId || cargandoSedes"
+                            [ngClass]="{'ng-invalid ng-dirty' : submitted && !equipo.cls_id}">
+                            <ng-template let-s pTemplate="item">
+                                <div>
+                                    <span class="font-medium">{{ s.cls_descripcion }}</span>
+                                    <small class="text-500 block" *ngIf="s.cls_ciudad">{{ s.cls_ciudad }} - {{
+                                        s.cls_direccion }}</small>
+                                </div>
+                            </ng-template>
+                        </p-dropdown>
+                        <small class="ng-dirty ng-invalid text-red-500" *ngIf="submitted && !equipo.cls_id">Debe
+                            seleccionar una sede.</small>
+                        <small class="text-500 block mt-1" *ngIf="cargandoSedes"><i
+                                class="pi pi-spin pi-spinner mr-1"></i>Cargando sedes...</small>
+                    </div>
+                </div>
+
+                <!-- Campos Técnicos del Equipo -->
+                <div class="formgrid grid">
+                    <div class="field col-12 md:col-6">
+                        <label for="marca">Marca *</label>
+                        <p-dropdown [(ngModel)]="equipo.mar_id" optionValue="mar_id" [filter]="true"
+                            optionLabel="mar_descripcion" [options]="marcas" placeholder="Seleccione..."
+                            [ngClass]="{'ng-invalid ng-dirty' : submitted && !equipo.mar_id}">
+                        </p-dropdown>
+                        <small class="ng-dirty ng-invalid text-red-500"
+                            *ngIf="submitted && !equipo.mar_id">Requerido.</small>
+                    </div>
+                    <div class="field col-12 md:col-6">
+                        <label for="tipoequipo">Tipo Equipo *</label>
+                        <p-dropdown [(ngModel)]="equipo.teq_id" optionValue="teq_id" [filter]="true"
+                            optionLabel="teq_descripcion" [options]="tiposequipo" placeholder="Seleccione..."
+                            [ngClass]="{'ng-invalid ng-dirty' : submitted && !equipo.teq_id}">
+                        </p-dropdown>
+                        <small class="ng-dirty ng-invalid text-red-500"
+                            *ngIf="submitted && !equipo.teq_id">Requerido.</small>
+                    </div>
+                </div>
+
+                <div class="formgrid grid">
+                    <div class="field col-12 md:col-6">
+                        <label for="equ_modelo">Modelo *</label>
+                        <input type="text" pInputText id="equ_modelo" [(ngModel)]="equipo.equ_modelo" required autofocus
+                            [ngClass]="{'ng-invalid ng-dirty' : submitted && !equipo.equ_modelo}" />
+                        <small class="ng-dirty ng-invalid text-red-500"
+                            *ngIf="submitted && !equipo.equ_modelo">Requerido.</small>
+                    </div>
+                    <div class="field col-12 md:col-6">
+                        <label for="equ_serial">Serial *</label>
+                        <input type="text" pInputText id="equ_serial" [(ngModel)]="equipo.equ_serial" required
+                            [ngClass]="{'ng-invalid ng-dirty' : submitted && !equipo.equ_serial}" />
+                        <small class="ng-dirty ng-invalid text-red-500"
+                            *ngIf="submitted && !equipo.equ_serial">Requerido.</small>
+                    </div>
+                </div>
+
+                <div class="formgrid grid">
+                    <div class="field col-12 md:col-6">
+                        <label for="equ_cant_baterias">Cantidad Baterías</label>
+                        <input type="number" pInputText id="equ_cant_baterias" [(ngModel)]="equipo.equ_cant_baterias"
+                            min="0" />
+                    </div>
+                    <div class="field col-12 md:col-6">
                         <label for="equ_potencia">Potencia</label>
-                        <input type="text" pInputText id="equ_potencia" [(ngModel)]="equipo.equ_potencia" [ngClass]="{'ng-invalid ng-dirty' : submitted && !equipo.equ_potencia}" />
-                        <small class="ng-dirty ng-invalid" *ngIf="submitted && !equipo.equ_potencia">Requerido.</small>
-                    </div>                    
-                </div>                
-                <div class="field">
-                    <label for="equ_qr_code">Código QR</label>
-                    <input type="text" pInputText id="equ_qr_code" [(ngModel)]="equipo.equ_qr_code" required autofocus [ngClass]="{'ng-invalid ng-dirty' : submitted && !equipo.equ_qr_code}"/>
-                    <small class="ng-dirty ng-invalid" *ngIf="submitted && !equipo.equ_qr_code">Requerido.</small>
-                </div>  
+                        <input type="text" pInputText id="equ_potencia" [(ngModel)]="equipo.equ_potencia"
+                            placeholder="Ej: 10 kVA" />
+                    </div>
+                </div>
+
+                <div class="formgrid grid">
+                    <div class="field col-12 md:col-6">
+                        <label for="equ_ubicacion">Ubicación del Equipo</label>
+                        <input type="text" pInputText id="equ_ubicacion" [(ngModel)]="equipo.equ_ubicacion"
+                            placeholder="Ej: Piso 2, RACK 1" />
+                    </div>
+                    <div class="field col-12 md:col-6">
+                        <label for="equ_qr_code">Código QR</label>
+                        <input type="text" pInputText id="equ_qr_code" [(ngModel)]="equipo.equ_qr_code"
+                            placeholder="Opcional" />
+                    </div>
+                </div>
             </ng-template>
+
             <ng-template pTemplate="footer">
-                <button pButton pRipple label="Cancelar" icon="pi pi-times" class="p-button-text" (click)="hideDialog()"></button>
-                <button pButton pRipple label="Guardar" icon="pi pi-check" class="p-button-text" (click)="saveData()"></button>
+                <button pButton pRipple label="Cancelar" icon="pi pi-times" class="p-button-text"
+                    (click)="hideDialog()"></button>
+                <button pButton pRipple label="Guardar" icon="pi pi-check" class="p-button-text p-button-success"
+                    (click)="saveData()"></button>
             </ng-template>
         </p-dialog>
 
-        <p-dialog [(visible)]="dataCargar" [style]="{width: '450px'}" header="Carga Masiva Equipos" [modal]="true" class="p-fluid" (onHide)="hideDialog()">
-            <p-fileUpload name="file" 
-            accept=".xlsx"
-            url="{{urlsubirarchivo}}"
-            [maxFileSize]="10000000"
-            [auto]="false"
-            (onUpload)="onUpload($event)"
-            (onError)="onError($event)"
-            chooseLabel="Seleccionar"
-            uploadLabel="Cargar"
-            cancelLabel="Cancelar">></p-fileUpload>
+        <!-- Modal de Carga Masiva -->
+        <p-dialog [(visible)]="dataCargar" [style]="{width: '450px'}" header="Carga Masiva Equipos" [modal]="true"
+            class="p-fluid" (onHide)="hideDialog()">
+            <p-fileUpload name="file" accept=".xlsx,.xls,.csv" url="{{urlsubirarchivo}}" [maxFileSize]="10000000"
+                [auto]="false" (onUpload)="onUpload($event)" (onError)="onError($event)" chooseLabel="Seleccionar"
+                uploadLabel="Cargar" cancelLabel="Cancelar">
+            </p-fileUpload>
         </p-dialog>
 
+        <!-- Modal Confirmar Eliminación Individual -->
         <p-dialog [(visible)]="deleteDataDialog" header="Confirmación" [modal]="true" [style]="{width:'450px'}">
             <div class="flex align-items-center justify-content-center">
-                <i class="pi pi-exclamation-triangle mr-3" style="font-size: 2rem"></i>
-                <span *ngIf="equipo">Seguro que desea eliminar el registro, modelo <b>{{equipo.equ_modelo}}</b>, serial <b>{{equipo.equ_serial}}</b>?</span>
+                <i class="pi pi-exclamation-triangle mr-3 text-red-500" style="font-size: 2rem"></i>
+                <span *ngIf="equipo">¿Seguro que desea eliminar el equipo modelo <b>{{equipo.equ_modelo}}</b> (Serial:
+                    <b>{{equipo.equ_serial}}</b>)?</span>
             </div>
             <ng-template pTemplate="footer">
-                <button pButton pRipple icon="pi pi-times" class="p-button-text" label="No" (click)="deleteDataDialog = false"></button>
-                <button pButton pRipple icon="pi pi-check" class="p-button-text" label="Si" (click)="confirmDelete()"></button>
+                <button pButton pRipple icon="pi pi-times" class="p-button-text" label="No"
+                    (click)="deleteDataDialog = false"></button>
+                <button pButton pRipple icon="pi pi-check" class="p-button-text p-button-danger" label="Sí, Eliminar"
+                    (click)="confirmDelete()"></button>
             </ng-template>
         </p-dialog>
 
+        <!-- Modal Confirmar Eliminación Múltiple -->
         <p-dialog [(visible)]="deleteRowsDialog" header="Confirmación" [modal]="true" [style]="{width:'450px'}">
             <div class="flex align-items-center justify-content-center">
-                <i class="pi pi-exclamation-triangle mr-3" style="font-size: 2rem"></i>
-                <span>Seguro que desea eliminar los registros seleccionados?</span>
+                <i class="pi pi-exclamation-triangle mr-3 text-red-500" style="font-size: 2rem"></i>
+                <span>¿Seguro que desea eliminar los <strong>{{ selectedRows.length }}</strong> equipos
+                    seleccionados?</span>
             </div>
             <ng-template pTemplate="footer">
-                <button pButton pRipple icon="pi pi-times" class="p-button-text" label="No" (click)="deleteRowsDialog = false"></button>
-                <button pButton pRipple icon="pi pi-check" class="p-button-text" label="Si" (click)="confirmDeleteSelected()"></button>
+                <button pButton pRipple icon="pi pi-times" class="p-button-text" label="No"
+                    (click)="deleteRowsDialog = false"></button>
+                <button pButton pRipple icon="pi pi-check" class="p-button-text p-button-danger" label="Sí, Eliminar"
+                    (click)="confirmDeleteSelected()"></button>
             </ng-template>
         </p-dialog>
     </div>
