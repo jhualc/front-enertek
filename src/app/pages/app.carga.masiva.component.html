@@ -94,19 +94,21 @@
 
                             <!-- Mensaje Rápido de Estado en Paso 2 -->
                             <div class="mt-4 p-3 border-round border-left-3"
-                                [ngClass]="migradoResumen?.errores > 0 ? 'bg-orange-50 border-orange-500 text-orange-900' : 'bg-green-50 border-green-500 text-green-900'"
+                                [ngClass]="tieneObservaciones ? 'bg-orange-50 border-orange-500 text-orange-900' : 'bg-green-50 border-green-500 text-green-900'"
                                 *ngIf="migradoExito && migradoResumen">
                                 <div class="font-bold mb-1 flex align-items-center">
                                     <i class="pi mr-2 text-xl"
-                                        [ngClass]="migradoResumen.errores > 0 ? 'pi-exclamation-circle text-orange-500' : 'pi-check-circle text-green-500'"></i>
-                                    <span>{{ migradoResumen.errores > 0 ? 'Migración finalizada con observaciones' :
+                                        [ngClass]="tieneObservaciones ? 'pi-exclamation-circle text-orange-500' : 'pi-check-circle text-green-500'"></i>
+                                    <span>{{ tieneObservaciones ? 'Migración finalizada con observaciones' :
                                         'Migración completada con éxito' }}</span>
                                 </div>
                                 <div class="text-sm">
                                     Se procesaron <strong>{{ migradoResumen.total }}</strong> registros:
-                                    <strong>{{ migradoResumen.exitosos }}</strong> exitosos y
-                                    <strong [class.text-red-600]="migradoResumen.errores > 0">{{ migradoResumen.errores
-                                        }}</strong> con error.
+                                    <strong>{{ migradoResumen.exitosos }}</strong> exitosos,
+                                    <strong *ngIf="(migradoResumen.duplicados || 0) > 0" class="text-orange-600">{{ migradoResumen.duplicados }} duplicado(s)</strong>
+                                    <span *ngIf="(migradoResumen.duplicados || 0) > 0 && (migradoResumen.errores || 0) > 0"> y </span>
+                                    <strong *ngIf="(migradoResumen.errores || 0) > 0" class="text-red-600">{{ migradoResumen.errores }} con error</strong>
+                                    <span *ngIf="!(migradoResumen.duplicados || 0) && !(migradoResumen.errores || 0)"> sin observaciones</span>.
                                     Revise la auditoría detallada a continuación.
                                 </div>
                             </div>
@@ -148,7 +150,7 @@
 
                         <!-- Tarjetas Métricas KPI -->
                         <div class="grid mb-4">
-                            <div class="col-12 sm:col-4">
+                            <div class="col-12 sm:col-6 lg:col-3">
                                 <div
                                     class="p-3 border-round bg-blue-50 border-left-3 border-blue-500 flex justify-content-between align-items-center shadow-1">
                                     <div>
@@ -158,24 +160,32 @@
                                     <i class="pi pi-database text-blue-500 text-3xl"></i>
                                 </div>
                             </div>
-                            <div class="col-12 sm:col-4">
+                            <div class="col-12 sm:col-6 lg:col-3">
                                 <div
                                     class="p-3 border-round bg-green-50 border-left-3 border-green-500 flex justify-content-between align-items-center shadow-1">
                                     <div>
                                         <span class="text-green-900 block font-medium mb-1">Migrados Exitosamente</span>
-                                        <span class="text-3xl font-bold text-green-600">{{ migradoResumen.exitosos
-                                            }}</span>
+                                        <span class="text-3xl font-bold text-green-600">{{ migradoResumen.exitosos }}</span>
                                     </div>
                                     <i class="pi pi-check-circle text-green-500 text-3xl"></i>
                                 </div>
                             </div>
-                            <div class="col-12 sm:col-4">
+                            <div class="col-12 sm:col-6 lg:col-3">
+                                <div
+                                    class="p-3 border-round bg-orange-50 border-left-3 border-orange-500 flex justify-content-between align-items-center shadow-1">
+                                    <div>
+                                        <span class="text-orange-900 block font-medium mb-1">Clientes Duplicados</span>
+                                        <span class="text-3xl font-bold text-orange-500">{{ migradoResumen.duplicados || 0 }}</span>
+                                    </div>
+                                    <i class="pi pi-copy text-orange-500 text-3xl"></i>
+                                </div>
+                            </div>
+                            <div class="col-12 sm:col-6 lg:col-3">
                                 <div
                                     class="p-3 border-round bg-red-50 border-left-3 border-red-500 flex justify-content-between align-items-center shadow-1">
                                     <div>
                                         <span class="text-red-900 block font-medium mb-1">Registros con Error</span>
-                                        <span class="text-3xl font-bold text-red-500">{{ migradoResumen.errores
-                                            }}</span>
+                                        <span class="text-3xl font-bold text-red-500">{{ migradoResumen.errores || 0 }}</span>
                                     </div>
                                     <i class="pi pi-times-circle text-red-500 text-3xl"></i>
                                 </div>
@@ -193,19 +203,24 @@
                                 <div
                                     class="flex flex-column md:flex-row md:justify-content-between md:align-items-center gap-2">
                                     <!-- Filtro por Estado -->
-                                    <div class="flex gap-2">
+                                    <div class="flex flex-wrap gap-2">
                                         <button pButton type="button" label="Todos ({{ migradoResumen.total }})"
                                             [class.p-button-outlined]="filtroEstado !== 'todos'" class="p-button-sm"
                                             (click)="filtroEstado = 'todos'">
                                         </button>
-                                        <button pButton type="button"
-                                            label="Solo Errores ({{ migradoResumen.errores }})"
-                                            [class.p-button-outlined]="filtroEstado !== 'error'"
-                                            class="p-button-danger p-button-sm" (click)="filtroEstado = 'error'">
-                                        </button>
                                         <button pButton type="button" label="Exitosos ({{ migradoResumen.exitosos }})"
                                             [class.p-button-outlined]="filtroEstado !== 'success'"
                                             class="p-button-success p-button-sm" (click)="filtroEstado = 'success'">
+                                        </button>
+                                        <button pButton type="button" *ngIf="(migradoResumen.duplicados || 0) > 0"
+                                            label="Duplicados ({{ migradoResumen.duplicados || 0 }})"
+                                            [class.p-button-outlined]="filtroEstado !== 'duplicate'"
+                                            class="p-button-warning p-button-sm" (click)="filtroEstado = 'duplicate'">
+                                        </button>
+                                        <button pButton type="button"
+                                            label="Solo Errores ({{ migradoResumen.errores || 0 }})"
+                                            [class.p-button-outlined]="filtroEstado !== 'error'"
+                                            class="p-button-danger p-button-sm" (click)="filtroEstado = 'error'">
                                         </button>
                                     </div>
                                     <!-- Buscador Global -->
@@ -238,13 +253,12 @@
                                 </tr>
                             </ng-template>
                             <ng-template pTemplate="body" let-item>
-                                <tr [ngClass]="{'bg-red-50': item.status === 'error'}">
+                                <tr [ngClass]="{'bg-red-50': item.status === 'error', 'bg-orange-50': item.status === 'duplicate'}">
                                     <td class="font-bold text-center">{{ item.row }}</td>
                                     <td class="text-center">
-                                        <p-tag [severity]="item.status === 'success' ? 'success' : 'danger'"
-                                            [icon]="item.status === 'success' ? 'pi pi-check' : 'pi pi-times'"
-                                            [value]="item.status === 'success' ? 'Exitoso' : 'Error'">
-                                        </p-tag>
+                                        <p-tag *ngIf="item.status === 'success'" severity="success" icon="pi pi-check" value="Exitoso"></p-tag>
+                                        <p-tag *ngIf="item.status === 'duplicate'" severity="warning" icon="pi pi-exclamation-circle" value="Duplicado"></p-tag>
+                                        <p-tag *ngIf="item.status === 'error'" severity="danger" icon="pi pi-times" value="Error"></p-tag>
                                     </td>
                                     <td>
                                         <span class="font-semibold">{{ item.identificacion || '-' }}</span>
@@ -263,6 +277,9 @@
                                     <td>
                                         <div *ngIf="item.status === 'error'" class="text-red-700 font-semibold text-sm">
                                             <i class="pi pi-exclamation-triangle mr-1"></i>{{ item.descripcion_error }}
+                                        </div>
+                                        <div *ngIf="item.status === 'duplicate'" class="text-orange-700 font-semibold text-sm">
+                                            <i class="pi pi-info-circle mr-1"></i>{{ item.descripcion_error }}
                                         </div>
                                         <div *ngIf="item.status === 'success'" class="text-green-700 text-sm">
                                             <i class="pi pi-check-circle mr-1"></i>Migrado correctamente a producción

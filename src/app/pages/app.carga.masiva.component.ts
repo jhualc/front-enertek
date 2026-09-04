@@ -21,7 +21,7 @@ export class AppCargaMasivaComponent implements OnInit {
     migradoExito: boolean = false;
     migradoResumen: any = null;
     migradoResults: any[] = [];
-    filtroEstado: string = 'todos'; // 'todos' | 'error' | 'success'
+    filtroEstado: string = 'todos'; // 'todos' | 'error' | 'duplicate' | 'success'
     descargandoCsv: boolean = false;
 
     constructor(
@@ -99,12 +99,13 @@ export class AppCargaMasivaComponent implements OnInit {
     onUpload(event: any): void {
         const body = event.originalEvent?.body;
         const msg = body?.message || 'Archivo subido y cargado con éxito.';
+        const hasErrors = (body?.errorCount && body.errorCount > 0) || !!body?.error_file;
 
         this.messageService.add({
-            severity: 'success',
-            summary: 'Subida Exitosa',
-            detail: msg,
-            life: 4000
+            severity: hasErrors ? 'warn' : 'success',
+            summary: hasErrors ? 'Subida con Observaciones' : 'Subida Exitosa',
+            detail: msg + (body?.errorCount ? ` (${body.errorCount} registros con error)` : ''),
+            life: 5000
         });
 
         if (body && body.batch_id) {
@@ -138,7 +139,11 @@ export class AppCargaMasivaComponent implements OnInit {
             next: (resp: any) => {
                 this.migrando = false;
                 this.migradoExito = true;
-                this.migradoResumen = resp.summary;
+                this.migradoResumen = {
+                    ...resp.summary,
+                    duplicados: resp.summary?.duplicados || 0,
+                    errores: resp.summary?.errores || 0
+                };
 
                 const rawResults = resp.results || [];
                 this.migradoResults = rawResults.map((item: any) => ({
@@ -153,10 +158,10 @@ export class AppCargaMasivaComponent implements OnInit {
                     descripcion_error: item.error || ''
                 }));
 
-                const tieneErrores = (resp.summary?.errores || 0) > 0;
+                const tieneObs = this.tieneObservaciones;
                 this.messageService.add({
-                    severity: tieneErrores ? 'warn' : 'success',
-                    summary: tieneErrores ? 'Migración con Observaciones' : 'Migración Completada',
+                    severity: tieneObs ? 'warn' : 'success',
+                    summary: tieneObs ? 'Migración con Observaciones' : 'Migración Completada',
                     detail: resp.message || 'Los datos fueron procesados de manera exitosa.',
                     life: 5000
                 });
@@ -172,6 +177,10 @@ export class AppCargaMasivaComponent implements OnInit {
                 });
             }
         });
+    }
+
+    get tieneObservaciones(): boolean {
+        return ((this.migradoResumen?.errores || 0) > 0) || ((this.migradoResumen?.duplicados || 0) > 0);
     }
 
     get resultadosFiltrados(): any[] {
